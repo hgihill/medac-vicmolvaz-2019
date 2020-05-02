@@ -1,9 +1,9 @@
 package model.project;
 
-public class Tipo_Financiacion implements ITipo_Financiacion, LimitsDB {
+public class TipoFinanciacion implements ITipo_Financiacion, LimitsDB {
 	private byte bTipoFinanciacion;
 
-	public Tipo_Financiacion(byte bTipoFinanciacion) {
+	public TipoFinanciacion(byte bTipoFinanciacion) {
 		setbTipoFinanciacion(bTipoFinanciacion);
 	}
 
@@ -41,7 +41,7 @@ public class Tipo_Financiacion implements ITipo_Financiacion, LimitsDB {
 	@Override
 	public boolean equals(Object obj) {
 		boolean bExito = false;
-		Tipo_Financiacion otro = (Tipo_Financiacion) obj;
+		TipoFinanciacion otro = (TipoFinanciacion) obj;
 		if (checkTipoFinanciacion() && otro.checkTipoFinanciacion() && this.bTipoFinanciacion == (otro.bTipoFinanciacion)) {
 			bExito = true;
 		}

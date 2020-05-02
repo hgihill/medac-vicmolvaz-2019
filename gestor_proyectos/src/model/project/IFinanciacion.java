@@ -11,7 +11,7 @@ public interface IFinanciacion {
 	public boolean setsEntidad(String sEntidad);
 	
 	//FK
-	public Tipo_Financiacion getoTipoFin();
+	public TipoFinanciacion getoTipoFin();
 
 	public Proyecto getoProyecto();
 

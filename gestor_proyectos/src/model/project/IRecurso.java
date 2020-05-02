@@ -11,7 +11,7 @@ public interface IRecurso {
 	public boolean setiCant(int iCant);
 
 	//FK
-	public Tipo_Recurso getoTipoRec();
+	public TipoRecurso getoTipoRec();
 
 	
 	public boolean checkRecurso();

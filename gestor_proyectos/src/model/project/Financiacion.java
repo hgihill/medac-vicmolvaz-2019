@@ -2,10 +2,10 @@ package model.project;
 
 public class Financiacion implements IFinanciacion, LimitsDB {
 	private String sCuenta, sEntidad;
-	private Tipo_Financiacion oTipoFin;
+	private TipoFinanciacion oTipoFin;
 	private Proyecto oProyecto;
 
-	public Financiacion(String sCuenta, String sEntidad, Tipo_Financiacion oTipoFin, Proyecto oProyecto) {
+	public Financiacion(String sCuenta, String sEntidad, TipoFinanciacion oTipoFin, Proyecto oProyecto) {
 		setsCuenta(sCuenta);
 		setsEntidad(sEntidad);
 		this.oTipoFin = oTipoFin;
@@ -45,7 +45,7 @@ public class Financiacion implements IFinanciacion, LimitsDB {
 	}
 
 	@Override
-	public Tipo_Financiacion getoTipoFin() {
+	public TipoFinanciacion getoTipoFin() {
 		return oTipoFin;
 	}
 

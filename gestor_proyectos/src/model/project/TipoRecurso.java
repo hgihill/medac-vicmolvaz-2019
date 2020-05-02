@@ -1,10 +1,10 @@
 package model.project;
 
-public class Tipo_Recurso implements ITipo_Recurso, LimitsDB {
+public class TipoRecurso implements ITipo_Recurso, LimitsDB {
 
 	private byte bTipoRecurso;
 
-	public Tipo_Recurso(byte bTipoRecurso) {
+	public TipoRecurso(byte bTipoRecurso) {
 		setbTipoRecurso(bTipoRecurso);
 	}
 
@@ -42,7 +42,7 @@ public class Tipo_Recurso implements ITipo_Recurso, LimitsDB {
 	@Override
 	public boolean equals(Object obj) {
 		boolean bExito = false;
-		Tipo_Recurso otro = (Tipo_Recurso) obj;
+		TipoRecurso otro = (TipoRecurso) obj;
 		if (checkTipoRecurso() && otro.checkTipoRecurso() && this.bTipoRecurso == (otro.bTipoRecurso)) {
 			bExito = true;
 		}

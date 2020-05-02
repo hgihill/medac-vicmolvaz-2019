@@ -22,6 +22,12 @@ public class Usuario implements IUsuario, LimitsDB {
 	public Usuario(String sDniCif) {
 		setsDniCif(sDniCif);
 	}
+	
+	public Usuario(String sNombre, String sMail) {
+		setsNombre(sNombre);
+		setsMail(sMail);
+	}
+		
 
 	@Override
 	public String getsDniCif() {
@@ -148,7 +154,10 @@ public class Usuario implements IUsuario, LimitsDB {
 		sResultado += "DNI/CIF: " + getsDniCif() + "\n";
 		sResultado += "Nombre: " + getsNombre() + "\n";
 		sResultado += "Mail: " + getsMail() + "\n";
-		sResultado += "Teléfono: " + getsTelefono() + "\n";
+		if(getsTelefono() != null) {
+			sResultado += "Teléfono: " + getsTelefono() + "\n";
+		}
+		
 		sResultado += "Contraseña: " + getsContrasena() + "\n";
 		sResultado += "Dirección: " + getoDir();
 

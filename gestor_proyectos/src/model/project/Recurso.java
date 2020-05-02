@@ -3,9 +3,9 @@ package model.project;
 public class Recurso implements IRecurso, LimitsDB {
 	private String sNombre;
 	private int iCant;
-	private Tipo_Recurso oTipoRec;
+	private TipoRecurso oTipoRec;
 
-	public Recurso(String sNombre, int iCant, Tipo_Recurso oTipoRec) {
+	public Recurso(String sNombre, int iCant, TipoRecurso oTipoRec) {
 		setsNombre(sNombre);
 		setiCant(iCant);
 		this.oTipoRec = oTipoRec;
@@ -44,7 +44,7 @@ public class Recurso implements IRecurso, LimitsDB {
 	}
 
 	@Override
-	public Tipo_Recurso getoTipoRec() {
+	public TipoRecurso getoTipoRec() {
 		return oTipoRec;
 	}
 
