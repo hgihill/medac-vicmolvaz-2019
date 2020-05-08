@@ -1,10 +1,10 @@
 package model.dir;
 
-import model.project.LimitsDB;
+import limites.LimitsDB;
 
 public class Provincia implements IProvincia, LimitsDB {
 
-	private String sNombreProv;
+	private String sProv;
 	private Pais oPais;
 
 	public Provincia(String sNombreProv, Pais oPais) {
@@ -18,13 +18,13 @@ public class Provincia implements IProvincia, LimitsDB {
 
 	@Override
 	public String getsNombreProv() {
-		return sNombreProv;
+		return sProv;
 	}
 
 	public boolean setsNombreProv(String sNombreProv) {
 		boolean bExito = false;
 		if (sNombreProv != null && sNombreProv.length() > 0 && sNombreProv.length() <= MAXCHARACTERS) {
-			this.sNombreProv = sNombreProv;
+			this.sProv = sNombreProv;
 			bExito = true;
 		}
 		return bExito;
@@ -48,7 +48,7 @@ public class Provincia implements IProvincia, LimitsDB {
 	@Override
 	public boolean checkProvincia() {
 		boolean bExito = false;
-		if (this.sNombreProv != null && oPais.checkPais()) {
+		if (this.sProv != null && oPais.checkPais()) {
 			bExito = true;
 		}
 		return bExito;
@@ -59,7 +59,7 @@ public class Provincia implements IProvincia, LimitsDB {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((oPais == null) ? 0 : oPais.hashCode());
-		result = prime * result + ((sNombreProv == null) ? 0 : sNombreProv.hashCode());
+		result = prime * result + ((sProv == null) ? 0 : sProv.hashCode());
 		return result;
 	}
 
@@ -67,12 +67,12 @@ public class Provincia implements IProvincia, LimitsDB {
 	public boolean equals(Object obj) {
 		boolean bIgual = false;
 		Provincia otro = (Provincia) obj;
-		if (checkProvincia() && otro.checkProvincia() && sNombreProv.equals(otro.sNombreProv)) {
+		if (checkProvincia() && otro.checkProvincia() && sProv.equals(otro.sProv)) {
 			bIgual = true;
 		}
 		return bIgual;
 	}
-	
+
 	@Override
 	public String toString() {
 		String sResultado = "";

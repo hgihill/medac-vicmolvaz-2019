@@ -1,19 +1,29 @@
 package model.user;
 
+import limites.LimitsDB;
 import model.dir.Direccion;
-import model.project.LimitsDB;
 
 public class Usuario implements IUsuario, LimitsDB {
 	private String sDniCif, sNombre, sMail, sTelefono, sContrasena;
-	private Tipo_Usuario oTipoUs;
+	private TipoUsuario oTipoUs;
 	private Direccion oDir;
 
 	public Usuario(String sDniCif, String sNombre, String sMail, String sTelefono, String sContrasena,
-			Tipo_Usuario oTipoUs, Direccion oDir) {
+			TipoUsuario oTipoUs, Direccion oDir) {
 		setsDniCif(sDniCif);
 		setsNombre(sNombre);
 		setsMail(sMail);
 		setsTelefono(sTelefono);
+		setsContrasena(sContrasena);
+		this.oTipoUs = oTipoUs;
+		this.oDir = oDir;
+	}
+	
+	public Usuario(String sDniCif, String sNombre, String sMail, String sContrasena,
+			TipoUsuario oTipoUs, Direccion oDir) {
+		setsDniCif(sDniCif);
+		setsNombre(sNombre);
+		setsMail(sMail);
 		setsContrasena(sContrasena);
 		this.oTipoUs = oTipoUs;
 		this.oDir = oDir;
@@ -104,7 +114,7 @@ public class Usuario implements IUsuario, LimitsDB {
 	}
 
 	@Override
-	public Tipo_Usuario getoTipoUs() {
+	public TipoUsuario getoTipoUs() {
 		return oTipoUs;
 	}
 
@@ -157,7 +167,6 @@ public class Usuario implements IUsuario, LimitsDB {
 		if(getsTelefono() != null) {
 			sResultado += "Teléfono: " + getsTelefono() + "\n";
 		}
-		
 		sResultado += "Contraseña: " + getsContrasena() + "\n";
 		sResultado += "Dirección: " + getoDir();
 

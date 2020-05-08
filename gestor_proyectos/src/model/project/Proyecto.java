@@ -1,5 +1,6 @@
 package model.project;
 
+import limites.LimitsDB;
 import model.user.Usuario;
 
 public class Proyecto implements IProyecto, LimitsDB {

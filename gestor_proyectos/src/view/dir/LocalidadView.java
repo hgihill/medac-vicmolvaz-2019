@@ -1,304 +1,167 @@
 package view.dir;
 
 import controllers.GeneralController;
+import limites.LimitsDB;
 import medac.validaciones.LibFrontend;
 import model.dir.Localidad;
 import model.dir.Pais;
 import model.dir.Provincia;
-import model.project.LimitsDB;
 
 public class LocalidadView implements LimitsDB {
 
-	public static void menuLocalidad(GeneralController controller) {
-		byte bOpcion = 0;
+	public static void subMenuLocalidad(GeneralController controller) {
+		byte bOpcionSubMenu = 0;
+		
 		do {
-			bOpcion = opcionMenuLocalidad();
-			switch (bOpcion) {
-			case 1: // Alta
 
-				if (aniadir(controller) != 0) {
-					System.out.println("Se ha registrado la localidad.");
-				} else {
-					System.out.println("Ya existe una localidad con este nombre.");
-				}
+			bOpcionSubMenu = DireccionView.subMenu(Localidad.class.getSimpleName());
 
-				break;
-			case 2: // Modificar
-				int iError = modificar(controller);
-				if (iError == 0) {
-					System.out.println("No se ha podido modificar la localidad.");
-				} else if (iError == -1) {
-					System.out.println("No existe nigunauna localidad con el codigo postal introducido.");
-				} else {
-					System.out.println("La localidad se ha  modificado con exito.");
-				}
-				break;
-			case 3: // Eliminar
-				if (eliminar(controller) != 0) {
-					System.out.println("La localidad se ha  eliminado con exito.");
-				} else {
-					System.out.println("Esta localidad no existe en el sistema.");
-				}
-				break;
-			case 4: // Busquedas
-				menuBusquedasLocalidad(controller);
-				break;
-			default:
-				System.out.println("Volviendo...");
-			}
+			opcionGestionarLocalidad(bOpcionSubMenu, controller);
 
-		} while (bOpcion != 5);
+		} while (bOpcionSubMenu < 5);
+
 	}
 
-	public static byte opcionMenuLocalidad() {
-		byte bOpcion = 0;
-		boolean errorControl = true;
+	public static int opcionGestionarLocalidad(byte bOpcion, GeneralController controller) {
+		int iOperacionExito = 0;
 
-		System.out.println("\n\nGestion de localidades");
-		System.out.println("#############################");
-		System.out.println("1. Aniadir");
-		System.out.println("2. Modificar");
-		System.out.println("3. Eliminar");
-		System.out.println("4. Buscar");
-		System.out.println("5. Regresar");
+		switch (bOpcion) {
+		case 1: // Anadir
+			iOperacionExito = anadir(controller);
+			if (iOperacionExito != 0)
+				System.out.println("Localidad anadida con exito.\n");
+			else
+				System.out.println("No se pudo anadir la localidad.\n");
+			break;
+
+		case 2: // Borrar
+			iOperacionExito = eliminar(controller);
+			if (iOperacionExito != 0) {
+				System.out.println("Localidad eliminada con exito.\n");
+			} else {
+				System.out.println("No se pudo eliminar la provincia.\n");
+			}
+			break;
+
+		case 3: // Modificar
+			iOperacionExito = modificar(controller);
+			if (iOperacionExito != 0) {
+				System.out.println("Localidad modificada con exito..\n");
+			} else {
+				System.out.println("No se pudo modificar la localidad.\n");
+			}
+			break;
+
+		case 4: // Mostar
+			mostrar(controller);
+
+			break;
+
+		default:
+			System.out.println("Regreso al menu anterior");
+
+		}
+
+		return iOperacionExito;
+	}
+
+	public static int anadir(GeneralController controller) {
+		boolean errorControl = true;
+		String sCp = null, sLocalidad = null, sProvincia = null, sPais = null;
+		int addLocalidad = 0;
 
 		while (errorControl) {
 			try {
-				bOpcion = (byte) LibFrontend.valida("Introduzca una opcion: ", 1, 5, 3);
-				errorControl = false;
+				sPais = LibFrontend.leer("Indique en que pais se encuentra: ");
+				if (sPais.length() <= LIMITGENERICO) {
+					errorControl = false;
+				}
+			} catch (Exception ex) {
+				System.out.println("Error: " + ex.getMessage());
+			}
+		}
+		errorControl = true;
+		
+		while (errorControl) {
+			try {
+				sProvincia = LibFrontend.leer("Indique en que provincia se encuentra: ");
+				if (sProvincia.length() <= LIMITGENERICO) {
+					errorControl = false;
+				}
+			} catch (Exception ex) {
+				System.out.println("Error: " + ex.getMessage());
+			}
+		}
+		errorControl = true;
+		
+		while (errorControl) {
+			try {
+				sCp = LibFrontend.leer("Indique el CP de la localidad: ");
+				if (sCp.length() == NUMCODPOSTAL) {
+					errorControl = false;
+				}
+			} catch (Exception ex) {
+				System.out.println("Error: " + ex.getMessage());
+			}
+		}
+		errorControl = true;
+		
+		while (errorControl) {
+			try {
+				sLocalidad = LibFrontend.leer("Introduzca una localidad: ");
+				if (sLocalidad.length() <= LIMITGENERICO) {
+					errorControl = false;
+				}
 			} catch (Exception ex) {
 				System.out.println("Error: " + ex.getMessage());
 			}
 		}
 
-		return bOpcion;
+		Pais oPais = new Pais(sPais);
+		Provincia oProvincia = new Provincia(sProvincia, oPais);
+		Localidad oLocalidad = new Localidad(sCp, sLocalidad, oProvincia);
+		if (controller.getDireccionCtrl().exisateLocalidad(oLocalidad) == 0) {
+			System.out.println(oLocalidad);
+			addLocalidad = controller.getDireccionCtrl().addLocalidad(oLocalidad);
+		}
+		return addLocalidad;
 	}
 
-	public static byte menuBusquedasLocalidad(GeneralController controller) {
-		byte bOpcion = 0;
-		do {
-			bOpcion = opcionMenusBusquedasLocalidad();
-			switch (bOpcion) {
-			case 1: // Visualizar todas las localidades.
-
-				break;
-			case 2: // Visualizar localidades por provincia.
-
-				break;
-			case 3: // Visualizar provincias por pais.
-
-				break;
-			case 4: // .....
-
-				break;
-			default:
-				System.out.println("Volviendo...");
-			}
-
-		} while (bOpcion != 5);
-		return bOpcion;
+	public static int eliminar(GeneralController c) {
+		int iRes = 0;
+		iRes = c.getDireccionCtrl().getLocalidadCtrl()
+				.remove(new Localidad(LibFrontend.leer("Introduzca el CP de la localidad a eliminar: ")));
+		return iRes;
 	}
-
-	public static byte opcionMenusBusquedasLocalidad() {
-		byte bOpcion = 0;
-		boolean errorControl = true;
-
-		System.out.println("\n\nGestion de localidades");
-		System.out.println("#############################");
-		System.out.println("1. Visualizar todas las localidades");
-		System.out.println("2. Visualizar localidades por provincia");
-		System.out.println("3. Visualizar provincias por pais");
-		System.out.println("4. .....");
-		System.out.println("5. Regresar");
-
-		while (errorControl) {
-			try {
-				bOpcion = (byte) LibFrontend.valida("Introduce una opcion: ", 1, 5, 3);
-				errorControl = false;
-			} catch (Exception ex) {
-				System.out.println("Error: " + ex.getMessage());
-			}
-		}
-
-		return bOpcion;
-	}
-
-	public static int aniadir(GeneralController controller) {
-		boolean errorControl = true;
-		String sCodigoPostal = null, sLocalidad = null, sProvincia = null, sPais = null;
-
-		while (errorControl) {
-			try {
-				sCodigoPostal = LibFrontend.leer("Introduzca un Codigo Postal: ");
-				if (sCodigoPostal.length() == NUMCODPOSTAL) {
-					errorControl = false;
-				}
-			} catch (Exception ex) {
-				System.out.println("Error en email: " + ex.getMessage());
-			}
-		}
-
-		errorControl = true;
-		while (errorControl) {
-			try {
-				sLocalidad = LibFrontend.leer("Introduce una localidad: ");
-				if (sLocalidad.length() <= MAXCHARACTERS) {
-					errorControl = false;
-				}
-			} catch (Exception ex) {
-				System.out.println("Error en email: " + ex.getMessage());
-			}
-		}
-
-		errorControl = true;
-		while (errorControl) {
-			try {
-				sProvincia = LibFrontend.leer("Introduce una provincia: ");
-				if (sProvincia.length() <= MAXCHARACTERS) {
-					errorControl = false;
-				}
-			} catch (Exception ex) {
-				System.out.println("Error en email: " + ex.getMessage());
-			}
-		}
-
-		errorControl = true;
-		while (errorControl) {
-			try {
-				sPais = LibFrontend.leer("Introduce un pais: ");
-				if (sPais.length() <= MAXCHARACTERS) {
-					errorControl = false;
-				}
-			} catch (Exception ex) {
-				System.out.println("Error en email: " + ex.getMessage());
-			}
-		}
-
-		Localidad oLocalidad = new Localidad(sCodigoPostal, sLocalidad, new Provincia(sProvincia, new Pais(sPais)));
-
-		return controller.getDireccionCtrl().addLocalidad(oLocalidad);
-	}
-
-	public static int modificar(GeneralController controller) {
-
-		boolean errorControl = true;
+	
+	public static int modificar(GeneralController c) {
+		int iRes = 0;
 		Localidad oLocalidad = null;
-		String sCodigoPostal = null, sLocalidad = null, sProvincia = null, sPais = null;
-		int iError = 0;
-
-		// 1) Busco en la base de datos la localidad por su codigo postal
-		while (errorControl) {
-			try {
-				sCodigoPostal = LibFrontend.leer("Introduzca el Codigo Postal de la localidad que desee modificar: ");
-				if (sCodigoPostal.length() == NUMCODPOSTAL) {
-					oLocalidad = controller.getDireccionCtrl().getLocalidadCtrl().searchLocalidadByPk(sCodigoPostal);
-					errorControl = false;
-				}
-			} catch (Exception ex) {
-				System.out.println("Error en email: " + ex.getMessage());
-			}
+		String sCP, sNombre = "", sProvincia = "", sPais = ""; 
+		
+		sCP = LibFrontend.leer("Escribe el CP de la localidad a modificar: ");
+		
+		//Busqueda de la localiada por el cp.
+		
+		oLocalidad = c.getDireccionCtrl().getLocalidadCtrl().searchLocalidadByPk(new Localidad(sCP),c);
+		
+		if(oLocalidad != null) {
+			sNombre = LibFrontend.leer("Escribe el nombre de la localidad (5 caracteres): ");
+			sProvincia= LibFrontend.leer("Escribe el nombre de la provincia: ");
+			sPais= LibFrontend.leer("Escribe el nombre del pais: ");
 		}
+		
+		oLocalidad.setsNombreLoc(sNombre);
+		oLocalidad.setoProv(new Provincia(sProvincia,new Pais(sPais)));
+		
+		
+		
+		iRes = c.direccionCtrl.getLocalidadCtrl().update(oLocalidad, c.direccionCtrl.getProvinciaCtrl(), c.direccionCtrl.getPaisCtrl());
 
-		if (oLocalidad != null) {
-			// 2) Pido el nombre, la provincia y el pais de la localidad a modificar
-			errorControl = true;
-			while (errorControl) {
-				try {
-					sLocalidad = LibFrontend
-							.leer("Introduce el nombre de una localidad (" + oLocalidad.getsNombreLoc() + "): ");
-					if (sLocalidad.length() <= MAXCHARACTERS) {
-						errorControl = false;
-					}
-				} catch (Exception ex) {
-					System.out.println("Error en email: " + ex.getMessage());
-				}
-			}
-
-			errorControl = true;
-			while (errorControl) {
-				try {
-					sProvincia = LibFrontend
-							.leer("Introduce una provincia (" + oLocalidad.getoProv().getsNombreProv() + "): ");
-					if (sProvincia.length() <= MAXCHARACTERS) {
-
-						errorControl = false;
-					}
-				} catch (Exception ex) {
-					System.out.println("Error en email: " + ex.getMessage());
-				}
-			}
-
-			errorControl = true;
-			while (errorControl) {
-				try {
-					sPais = LibFrontend
-							.leer("Introduce un pais (" + oLocalidad.getoProv().getoPais().getsNombrePais() + "): ");
-					if (sPais.length() <= MAXCHARACTERS) {
-						errorControl = false;
-					}
-				} catch (Exception ex) {
-					System.out.println("Error en email: " + ex.getMessage());
-				}
-			}
-
-			// 3) Modifico los valores nuevos
-			oLocalidad.setsNombreLoc(sLocalidad);
-			oLocalidad.setoProv(new Provincia(sProvincia, new Pais(sPais)));
-
-			iError = controller.getDireccionCtrl().updateLocalidad(oLocalidad);
-
-		} else {
-			iError = -1;
-		}
-
-		return iError;
+		return iRes;
 	}
 
-	public static int eliminar(GeneralController controller) {
-		boolean errorControl = true;
-		String sNombre = null;
-		int iError = 0;
-
-		System.out.println("¿Que deseas eliminar?");
-		System.out.println("1 para localidad");
-		System.out.println("2 para provincia");
-		System.out.println("3 para pais");
-		int iOpcion = (int) LibFrontend.valida("Escriba una opcion (1-3): ", 1, 3, 1);
-
-		if (iOpcion == 1) {
-			while (errorControl) {
-				try {
-					sNombre = LibFrontend.leer("Introduzca Codigo Postal de la localidad: ");
-					if (sNombre.length() == NUMCODPOSTAL) {
-						errorControl = false;
-					}
-				} catch (Exception ex) {
-					System.out.println("Error: " + ex.getMessage());
-				}
-			}
-			iError = controller.getDireccionCtrl().getLocalidadCtrl().remove(new Localidad(sNombre));
-		} else if (iOpcion == 2) {
-			while (errorControl) {
-				try {
-					sNombre = LibFrontend.leer("Introduzca el nombre de la provincia: ");
-					errorControl = false;
-				} catch (Exception ex) {
-					System.out.println("Error: " + ex.getMessage());
-				}
-			}
-			iError = controller.getDireccionCtrl().getProvinciaCtrl().remove(new Provincia(sNombre));
-		} else {
-			while (errorControl) {
-				try {
-					sNombre = LibFrontend.leer("Introduzca el nombre del pais: ");
-					errorControl = false;
-				} catch (Exception ex) {
-					System.out.println("Error: " + ex.getMessage());
-				}
-			}
-			iError = controller.getDireccionCtrl().getPaisCtrl().remove(new Pais(sNombre));
-		}
-		return iError;
+	public static void mostrar(GeneralController controller) {
+		System.out.println(controller.direccionCtrl.getLocalidadCtrl().mostrarLocalidad());
 	}
-
 }

@@ -1,6 +1,6 @@
 package model.user;
 
-import model.project.LimitsDB;
+import limites.LimitsDB;
 
 public class Aptitud implements IAptitud, LimitsDB {
 

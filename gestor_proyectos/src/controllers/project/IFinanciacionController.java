@@ -1,5 +1,7 @@
 package controllers.project;
 
+import java.util.List;
+
 import model.project.Financiacion;
 
 public interface IFinanciacionController {
@@ -12,5 +14,7 @@ public interface IFinanciacionController {
 	public int update(Financiacion oFinanciacion);
 
 	// Queries
-	public int existeDescuento(Financiacion oFinanciacion);
+	public List<Financiacion> searchFinanciacion(Financiacion oFinanciacion);
+	
+	public int existeFinanciacion(Financiacion oFinanciacion);
 }

@@ -10,5 +10,5 @@ public interface IConocimientoController {
 	public int remove(Conocimiento oCon);
 
 	//Queries
-	public int ExisteConocimiento(Conocimiento oCon);
+	public int existeConocimiento(Conocimiento oCon);
 }

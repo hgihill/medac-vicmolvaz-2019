@@ -1,14 +1,14 @@
 package controllers.user;
 
-import model.user.Tipo_Usuario;
+import model.user.TipoUsuario;
 
 public interface ITipoUsuarioController {
 
 	//Crud
-	public int add(Tipo_Usuario oTipoUs);
+	public int add(TipoUsuario oTipoUs);
 
-	public int remove(Tipo_Usuario oTipoUs);
+	public int remove(TipoUsuario oTipoUs);
 
 	//Queries
-	public int ExisteTipoUsuario(Tipo_Usuario oTipoUs);
+	public int existeTipoUsuario(TipoUsuario oTipoUs);
 }

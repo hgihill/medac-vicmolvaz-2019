@@ -1,5 +1,7 @@
 package model.project;
 
+import limites.LimitsDB;
+
 public class TipoRecurso implements ITipo_Recurso, LimitsDB {
 
 	private byte bTipoRecurso;

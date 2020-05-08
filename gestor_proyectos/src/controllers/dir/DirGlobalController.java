@@ -9,13 +9,13 @@ public class DirGlobalController {
 	private PaisController paisCtrl;
 	private ProvinciaController provinciaCtrl;
 	private LocalidadController localidadCtrl;
-	private DireccionController addressCtrl;
+	private DireccionController direccionCtrl;
 
 	public DirGlobalController() {
 	paisCtrl = new PaisController();
 	provinciaCtrl = new ProvinciaController();
 	localidadCtrl = new LocalidadController();
-	addressCtrl = new DireccionController();
+	direccionCtrl = new DireccionController();
     }
 
 	public PaisController getPaisCtrl() {
@@ -30,14 +30,21 @@ public class DirGlobalController {
 		return localidadCtrl;
 	}
 
-	public DireccionController getAddressCtrl() {
-		return addressCtrl;
+	public DireccionController getDireccionCtrl() {
+		return direccionCtrl;
 	}
 
-	// ADDRESS
+	// DIRECCION
 	// ##############
-	public int addAddress(Direccion oDir) {
-		return addressCtrl.add(oDir, localidadCtrl, provinciaCtrl, paisCtrl);
+	public int addDireccion(Direccion oDireccion) {
+		return direccionCtrl.add(oDireccion, localidadCtrl, provinciaCtrl, paisCtrl);
+	}
+	public int removeDireccion(Direccion oDir) {
+		return direccionCtrl.remove(oDir);
+	}
+
+	public int exisateDireccion(Direccion oDireccion) {
+		return direccionCtrl.existeDireccion(oDireccion);
 	}
 
 	// LOCALIDAD
@@ -45,9 +52,8 @@ public class DirGlobalController {
 	public int addLocalidad(Localidad oLoc) {
 		return localidadCtrl.add(oLoc, provinciaCtrl, paisCtrl);
 	}
-
-	public int updateLocalidad(Localidad oLocalidad) {
-		return localidadCtrl.update(oLocalidad, provinciaCtrl, paisCtrl);
+	public int exisateLocalidad(Localidad oLocalidad) {
+		return localidadCtrl.existeLocalidad(oLocalidad);
 	}
 
 	// PROVINCIA
@@ -55,11 +61,17 @@ public class DirGlobalController {
 	public int addProvincia(Provincia oProv) {
 		return provinciaCtrl.add(oProv, paisCtrl);
 	}
+	public int existeProvincia(Provincia oProvincia) {
+		return provinciaCtrl.existeProvincia(oProvincia);
+	}
 
 	// PAIS
 	// ##############
 	public int addPais(Pais oPais) {
 		return paisCtrl.add(oPais);
+	}
+	public int exisatePais(Pais oPais) {
+		return paisCtrl.existePais(oPais);
 	}
 
 }

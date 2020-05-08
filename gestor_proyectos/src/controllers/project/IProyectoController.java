@@ -13,5 +13,7 @@ public interface IProyectoController {
 	public int update(Proyecto oProyecto);
 
 	// Queries
+	public Proyecto searchProyecto(Proyecto oObjeto);
+	
 	public int existeProyecto(Proyecto oProyecto);
 }

@@ -1,7 +1,5 @@
 package model.project;
 
-import java.util.Date;
-
 import model.user.Usuario;
 
 public interface IAporte {
@@ -11,10 +9,6 @@ public interface IAporte {
 
 	public Financiacion getoFin();
 
-	
-	public Date getdFecha();
-
-	public void setdFecha(Date dFecha);
 
 	public int getiImporte();
 

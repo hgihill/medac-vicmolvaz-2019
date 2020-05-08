@@ -13,13 +13,13 @@ public class TipoFinanciacionController implements ITipoFinanciacionController{
 
 	@Override
 	public int remove(TipoFinanciacion oTipoFinanciacion) {
-		String sql = "DELETE FROM tipo_financiacion WHERE tipo_financiacion = (\"" + oTipoFinanciacion.getbTipoFinanciacion() + "\"))";
+		String sql = "DELETE FROM tipo_financiacion WHERE tipo_financ = (\"" + oTipoFinanciacion.getbTipoFinanciacion() + "\"))";
 		return ConexionDB.executeUpdate(sql);
 	}
 
 	@Override
 	public int existeTipoFinanciacion(TipoFinanciacion oTipoFinanciacion) {
-		String sql = "SELECT COUNT (*) FROM tipo_financiacion WHERE tipo_financiacion = (\"" + oTipoFinanciacion.getbTipoFinanciacion() + "\"))";
+		String sql = "SELECT COUNT (*) FROM tipo_financiacion WHERE tipo_financ = (\"" + oTipoFinanciacion.getbTipoFinanciacion() + "\"))";
 		return ConexionDB.executeCount(sql);
 	}
 }

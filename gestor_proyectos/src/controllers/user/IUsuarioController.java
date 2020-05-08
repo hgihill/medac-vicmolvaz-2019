@@ -14,7 +14,9 @@ public interface IUsuarioController {
 	public int update(Usuario oUsuario);
 
 	// Queries
-	public int ExisteUsuario(Usuario oUsuario);
+	public int existeUsuario(Usuario oUsuario);
+	
+	public List<Usuario> searchUsuario(Usuario oUsuario);
 
 	public List<Usuario> ususarioPorDireccion(Usuario oUsuario);
 }

@@ -1,24 +1,24 @@
 package model.user;
 
-import model.project.LimitsDB;
+import limites.LimitsDB;
 
 public class Conocimiento implements IConocimiento, LimitsDB {
 
-	private String sNombreCon;
+	private String sNombre;
 
 	public Conocimiento(String sNombreCon) {
-		setsNombreCon(sNombreCon);
+		setsNombre(sNombre);
 	}
 
 	@Override
-	public String getsNombreCon() {
-		return sNombreCon;
+	public String getsNombre() {
+		return sNombre;
 	}
 
-	private boolean setsNombreCon(String sNombreCon) {
+	private boolean setsNombre(String sNombreCon) {
 		boolean bExito = false;
-		if (sNombreCon != null && sNombreCon.length() > 0 && sNombreCon.length() < MAXCHARACTERS) {
-			this.sNombreCon = sNombreCon;
+		if (sNombreCon != null && sNombreCon.length() > 0 && sNombreCon.length() < LIMITGENERICO) {
+			this.sNombre = sNombreCon;
 			bExito = true;
 		}
 		return bExito;
@@ -27,7 +27,7 @@ public class Conocimiento implements IConocimiento, LimitsDB {
 	@Override
 	public boolean checkConocimiento() {
 		boolean bExito = false;
-		if (sNombreCon != null) {
+		if (sNombre != null) {
 			bExito = true;
 		}
 		return bExito;
@@ -37,7 +37,7 @@ public class Conocimiento implements IConocimiento, LimitsDB {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((sNombreCon == null) ? 0 : sNombreCon.hashCode());
+		result = prime * result + ((sNombre == null) ? 0 : sNombre.hashCode());
 		return result;
 	}
 
@@ -45,7 +45,7 @@ public class Conocimiento implements IConocimiento, LimitsDB {
 	public boolean equals(Object obj) {
 		boolean bIgual = false;
 		Conocimiento otro = (Conocimiento) obj;
-		if (checkConocimiento() && otro.checkConocimiento() && this.sNombreCon == (otro.sNombreCon)) {
+		if (checkConocimiento() && otro.checkConocimiento() && this.sNombre == (otro.sNombre)) {
 			bIgual = true;
 		}
 		return bIgual;
@@ -54,7 +54,7 @@ public class Conocimiento implements IConocimiento, LimitsDB {
 	public String toString() {
 		String sResultado = "";
 
-		sResultado += "Conocimiento requerido: " + getsNombreCon() + "\n";
+		sResultado += "Conocimiento requerido: " + getsNombre() + "\n";
 
 		return sResultado;
 	}

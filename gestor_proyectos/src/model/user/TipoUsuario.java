@@ -1,11 +1,11 @@
 package model.user;
 
-import model.project.LimitsDB;
+import limites.LimitsDB;
 
-public class Tipo_Usuario implements ITipo_Usuario, LimitsDB {
+public class TipoUsuario implements ITipo_Usuario, LimitsDB {
 	private byte bTipoUsuario;
 
-	public Tipo_Usuario(byte bTipoUsuario) {
+	public TipoUsuario(byte bTipoUsuario) {
 		setbTipoUsuario(bTipoUsuario);
 	}
 
@@ -43,7 +43,7 @@ public class Tipo_Usuario implements ITipo_Usuario, LimitsDB {
 	@Override
 	public boolean equals(Object obj) {
 		boolean bExito = false;
-		Tipo_Usuario otro = (Tipo_Usuario) obj;
+		TipoUsuario otro = (TipoUsuario) obj;
 		if (checkTipoUsuario() && otro.checkTipoUsuario() && this.bTipoUsuario == (otro.bTipoUsuario)) {
 			bExito = true;
 		}

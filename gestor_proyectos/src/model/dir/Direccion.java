@@ -1,6 +1,6 @@
 package model.dir;
 
-import model.project.LimitsDB;
+import limites.LimitsDB;
 
 public class Direccion implements IDreccion, LimitsDB {
 
@@ -20,6 +20,16 @@ public class Direccion implements IDreccion, LimitsDB {
 		setsCalle(sCalle);
 		setbNum(bNum);
 		this.oLoc = oLoc;
+	}
+	
+	public Direccion(String sCalle, byte bNum) {
+		setsCalle(sCalle);
+		setbNum(bNum);
+	}
+	
+	public Direccion(byte bBloque, byte bPortal) {
+		setbBloque(bBloque);
+		setbPortal(bPortal);
 	}
 
 	@Override

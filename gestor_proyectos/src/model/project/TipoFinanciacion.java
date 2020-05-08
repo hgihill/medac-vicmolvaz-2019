@@ -1,5 +1,7 @@
 package model.project;
 
+import limites.LimitsDB;
+
 public class TipoFinanciacion implements ITipo_Financiacion, LimitsDB {
 	private byte bTipoFinanciacion;
 

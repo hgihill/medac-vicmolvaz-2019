@@ -1,6 +1,6 @@
 package model.user;
 
-import model.project.LimitsDB;
+import limites.LimitsDB;
 import model.project.Proyecto;
 
 public class Rol implements IRol, LimitsDB {

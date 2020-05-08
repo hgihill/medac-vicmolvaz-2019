@@ -4,6 +4,7 @@ import controllers.ConexionDB;
 import model.project.Proyecto;
 
 public class ProyectoController implements IProyectoController{
+	private Proyecto vProyecto[];
 
 	@Override
 	public int add(Proyecto oProyecto) {
@@ -29,6 +30,19 @@ public class ProyectoController implements IProyectoController{
 				+ "\"" + oProyecto.getoUs() + "\","
 				+ "\"" + oProyecto.getoInv() + "\")";
 		return ConexionDB.executeUpdate(sql);
+	}
+	
+	@Override
+	public Proyecto searchProyecto(Proyecto oObjeto) {
+		Proyecto oProyecto= null;
+		int iContador = 0;
+		while (oProyecto == null && iContador < vProyecto.length) {
+			if(oObjeto.equals(vProyecto[iContador])) {
+				oProyecto = vProyecto[iContador];
+			}
+			iContador++;
+		}
+		return oProyecto;
 	}
 
 	@Override

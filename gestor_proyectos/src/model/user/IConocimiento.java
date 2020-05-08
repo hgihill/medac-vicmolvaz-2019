@@ -11,7 +11,7 @@ public interface IConocimiento {
 	
 	
 	//PK
-	public String getsNombreCon();
+	public String getsNombre();
 	
 	public boolean checkConocimiento();
 

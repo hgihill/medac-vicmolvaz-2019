@@ -1,5 +1,7 @@
 package model.project;
 
+import limites.LimitsDB;
+
 public class Recurso implements IRecurso, LimitsDB {
 	private String sNombre;
 	private int iCant;

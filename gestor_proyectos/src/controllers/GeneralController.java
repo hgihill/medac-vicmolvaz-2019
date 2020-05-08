@@ -1,34 +1,31 @@
 package controllers;
 
 import controllers.dir.DirGlobalController;
+import controllers.project.ProjectGlobalController;
+import controllers.user.UserGlobalController;
 
 public class GeneralController {
-	private DirGlobalController direccionCtrl;
-    //private RrhhPackageController rrhhCtrl;
-    
-    public GeneralController(String sDatabase) {
-	direccionCtrl = new DirGlobalController();
-	//rrhhCtrl = new RrhhPackageController();
-	new ConexionDB(sDatabase);	
-    }    
+	public DirGlobalController direccionCtrl;
+	public ProjectGlobalController proyectoCtrl;
+	public UserGlobalController usuarioCtrl;
 
-    public DirGlobalController getDireccionCtrl () {
-	return direccionCtrl;
-    }
+	public GeneralController(String sDatabase) {
+		direccionCtrl = new DirGlobalController();
+		proyectoCtrl = new ProjectGlobalController();
+		usuarioCtrl = new UserGlobalController();
+		new ConexionDB(sDatabase);
+	}
 
-//    public RrhhPackageController getRrhhCtrl () {
-//	return rrhhCtrl;
-//    }
-//    
-//    // RRHH (Cliente) <-> ADDRESS (Address - Localidad - Provincia - Pais)
-//    public int addCliente (Cliente oCliente) {
-//	return rrhhCtrl.getClienteCtrl().add(oCliente, rrhhCtrl.getUserCtrl(), addressCtrl.getAddressCtrl(),
-//		addressCtrl.getLocalidadCtrl(), addressCtrl.getProvinciaCtrl(), addressCtrl.getPaisCtrl());
-//    }
-//
-//    // RRHH (Empleado) <-> ADDRESS (Address - Localidad - Provincia - Pais)
-//    public int addEmpleado (Empleado oEmpleado) {
-//	return rrhhCtrl.getEmpleadoCtrl().add(oEmpleado, rrhhCtrl.getUserCtrl(), addressCtrl.getAddressCtrl(),
-//		addressCtrl.getLocalidadCtrl(), addressCtrl.getProvinciaCtrl(), addressCtrl.getPaisCtrl());
-//    }
+	public DirGlobalController getDireccionCtrl() {
+		return direccionCtrl;
+	}
+
+	public ProjectGlobalController getProyectoCtrl() {
+		return proyectoCtrl;
+	}
+
+	public UserGlobalController getUsuarioCtrl() {
+		return usuarioCtrl;
+	}
+
 }

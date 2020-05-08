@@ -13,6 +13,11 @@ public interface IDireccionController {
 			PaisController paisCtrl);
 
 	public int remove(Direccion oAddress);
+	
+	public int update(Direccion oDireccion, Direccion oOtra, LocalidadController localidadCtrl,
+			ProvinciaController provinciaCtrl, PaisController paisCtrl);
+	
+	public String mostrarDireccion();
 
 	// Queries
 	public int existeDireccion(Direccion oDireccion);
@@ -20,4 +25,6 @@ public interface IDireccionController {
 	public List<Direccion> searchAddressesPorLocalidad(Localidad oLocalidad);
 
 	public List<Direccion> searchAddressesPorProvincia(Provincia oProvincia);
+
+	
 }

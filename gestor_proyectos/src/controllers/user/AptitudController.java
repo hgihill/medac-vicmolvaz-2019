@@ -18,7 +18,7 @@ public class AptitudController implements IAptitudController{
 	}
 
 	@Override
-	public int ExisteUsuario(Aptitud oApt) {
+	public int ExisteAptitud(Aptitud oApt) {
 		String sql = "SELECT COUNT(*) FROM aptitud WHERE nombre_apt = (\"" + oApt.getsNombreApt() + "\")";
 		return ConexionDB.executeCount(sql);
 	}

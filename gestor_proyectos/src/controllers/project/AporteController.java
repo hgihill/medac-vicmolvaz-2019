@@ -9,8 +9,7 @@ public class AporteController implements IAporteController{
 	public int add(Aporte oAporte) {
 		String sql = "INSERT INTO aporte VALUES (\"" + oAporte.getoUs() + "\"," 
 				+ "\"" + oAporte.getoFin() + "\","
-				+ "\"" + oAporte.getiImporte() + "\"," 
-				+ "\"" + oAporte.getdFecha() + "\")";
+				+ "\"" + oAporte.getiImporte() + "\")"; 
 		return ConexionDB.executeUpdate(sql);
 	}
 
@@ -25,8 +24,7 @@ public class AporteController implements IAporteController{
 	public int update(Aporte oAporte) {
 		String sql = "UPDATE aporte SET (\"" + oAporte.getoUs() + "\","  
 				+ "\"" + oAporte.getoFin() + "\","  
-				+ "\"" + oAporte.getiImporte() + "\","  
-				+ "\"" + oAporte.getdFecha() + "\")";
+				+ "\"" + oAporte.getiImporte() + "\")";
 		return ConexionDB.executeUpdate(sql);
 	}
 

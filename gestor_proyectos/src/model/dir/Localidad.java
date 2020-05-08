@@ -1,14 +1,19 @@
 package model.dir;
 
-import model.project.LimitsDB;
+import limites.LimitsDB;
 
 public class Localidad implements ILocalidad, LimitsDB {
-	private String sNombreLoc, sCP;
+	private String sLoc, sCP;
 	private Provincia oProv;
 
 	public Localidad(String sCP, String sNombreLoc, Provincia oProv) {
 		setsCP(sCP);
 		setsNombreLoc(sNombreLoc);
+		setoProv(oProv);
+	}
+	
+	public Localidad(String sCP, Provincia oProv) {
+		setsCP(sCP);
 		setoProv(oProv);
 	}
 
@@ -32,14 +37,14 @@ public class Localidad implements ILocalidad, LimitsDB {
 
 	@Override
 	public String getsNombreLoc() {
-		return sNombreLoc;
+		return sLoc;
 	}
 
 	@Override
 	public boolean setsNombreLoc(String sNombreLoc) {
 		boolean bExito = false;
 		if (sNombreLoc != null && sNombreLoc.length() > 0 && sNombreLoc.length() <= MAXCHARACTERS) {
-			this.sNombreLoc = sNombreLoc;
+			this.sLoc = sNombreLoc;
 			bExito = true;
 		}
 		return bExito;
@@ -63,7 +68,7 @@ public class Localidad implements ILocalidad, LimitsDB {
 	@Override
 	public boolean checkLocalidad() {
 		boolean bExito = false;
-		if (this.sCP != null && this.sNombreLoc != null && oProv.checkProvincia()) {
+		if (this.sCP != null && this.sLoc != null && oProv.checkProvincia()) {
 			bExito = true;
 		}
 		return bExito;
@@ -75,7 +80,7 @@ public class Localidad implements ILocalidad, LimitsDB {
 		int result = 1;
 		result = prime * result + ((oProv == null) ? 0 : oProv.hashCode());
 		result = prime * result + ((sCP == null) ? 0 : sCP.hashCode());
-		result = prime * result + ((sNombreLoc == null) ? 0 : sNombreLoc.hashCode());
+		result = prime * result + ((sLoc == null) ? 0 : sLoc.hashCode());
 		return result;
 	}
 

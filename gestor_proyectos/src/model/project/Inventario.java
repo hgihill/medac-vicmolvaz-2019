@@ -1,5 +1,7 @@
 package model.project;
 
+import limites.LimitsDB;
+
 public class Inventario implements IInventario, LimitsDB {
 	private int iIdInv, iCant;
 	private Recurso oRec;

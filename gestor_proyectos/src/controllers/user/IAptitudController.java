@@ -10,5 +10,5 @@ public interface IAptitudController {
 	public int remove(Aptitud oApt);
 
 	// Queries
-	public int ExisteUsuario(Aptitud oApt);
+	public int ExisteAptitud(Aptitud oApt);
 }

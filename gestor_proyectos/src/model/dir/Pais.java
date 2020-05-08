@@ -1,24 +1,24 @@
 package model.dir;
 
-import model.project.LimitsDB;
+import limites.LimitsDB;
 
 public class Pais implements IPais, LimitsDB {
 
-	private String sNombrePais;
+	private String sNombre;
 
-	public Pais(String sNombrePais) {
-		setsNombrePais(sNombrePais);
+	public Pais(String sNombre) {
+		setsNombre(sNombre);
 	}
 
 	@Override
-	public String getsNombrePais() {
-		return sNombrePais;
+	public String getsNombre() {
+		return sNombre;
 	}
 
-	public boolean setsNombrePais(String sNombrePais) {
+	public boolean setsNombre(String sNombre) {
 		boolean bExito = false;
-		if (sNombrePais != null && sNombrePais.length() > 0 && sNombrePais.length() < MAXCHARACTERS) {
-			this.sNombrePais = sNombrePais;
+		if (sNombre != null && sNombre.length() > 0 && sNombre.length() < MAXCHARACTERS) {
+			this.sNombre = sNombre;
 			bExito = true;
 		}
 		return bExito;
@@ -27,7 +27,7 @@ public class Pais implements IPais, LimitsDB {
 	@Override
 	public boolean checkPais() {
 		boolean bExito = false;
-		if (this.sNombrePais != null) {
+		if (this.sNombre != null) {
 			bExito = true;
 		}
 		return bExito;
@@ -37,7 +37,7 @@ public class Pais implements IPais, LimitsDB {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((sNombrePais == null) ? 0 : sNombrePais.hashCode());
+		result = prime * result + ((sNombre == null) ? 0 : sNombre.hashCode());
 		return result;
 	}
 
@@ -45,7 +45,7 @@ public class Pais implements IPais, LimitsDB {
 	public boolean equals(Object obj) {
 		boolean bIgual = false;
 		Pais otro = (Pais) obj;
-		if (checkPais() && otro.checkPais() && sNombrePais.equals(otro.sNombrePais)) {
+		if (checkPais() && otro.checkPais() && sNombre.equals(otro.sNombre)) {
 			bIgual = true;
 		}
 		return bIgual;
@@ -55,7 +55,7 @@ public class Pais implements IPais, LimitsDB {
 	public String toString() {
 		String sResultado = "";
 
-		sResultado += "País: " + getsNombrePais() + "\n";
+		sResultado += "País: " + getsNombre() + "\n";
 
 		return sResultado;
 	}

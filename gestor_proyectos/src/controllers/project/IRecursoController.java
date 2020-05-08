@@ -12,5 +12,7 @@ public interface IRecursoController {
 	public int update(Recurso oRecurso);
 
 	// Queries
+	public Recurso searchRecurso(Recurso oObjeto);
+	
 	public int existeRecurso(Recurso oRecurso);
 }

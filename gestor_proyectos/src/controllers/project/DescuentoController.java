@@ -15,8 +15,8 @@ public class DescuentoController implements IDescuentoController{
 
 	@Override
 	public int remove(Descuento oDescuento) {
-		String sql = "DELETE FROM descuento WHERE usuario = (\"" + oDescuento.getoUs() + "\" and "
-				+ "inventario = (\"" + oDescuento.getoInv() + "\"))";
+		String sql = "DELETE FROM descuento WHERE dni_cif = (\"" + oDescuento.getoUs() + "\" and "
+				+ "id_inv = (\"" + oDescuento.getoInv() + "\"))";
 		return ConexionDB.executeUpdate(sql);
 	}
 
@@ -30,8 +30,8 @@ public class DescuentoController implements IDescuentoController{
 
 	@Override
 	public int existeDescuento(Descuento oDescuento) {
-		String sql = "SELECT COUNT (*) FROM descuento WHERE usuario = (\"" + oDescuento.getoUs() + "\" and "
-				+ "inventario = (\"" + oDescuento.getoInv() + "\"))";
+		String sql = "SELECT COUNT (*) FROM descuento WHERE dni_cif = (\"" + oDescuento.getoUs() + "\" and "
+				+ "id_inv = (\"" + oDescuento.getoInv() + "\"))";
 		return ConexionDB.executeCount(sql);
 	}
 }

@@ -15,5 +15,9 @@ public interface IProvinciaController {
 	// Queries
 	public int existeProvincia(Provincia oProvincia);
 
-	public List<Provincia> searchProvinciasPorPais(Pais oPais);
+	public List<Provincia> searchProvincia(Pais oPais);
+	
+	public String mostrarProvincia();
+	
+	public int Update(Provincia oProvincia, Provincia oOtra, PaisController paisCtrl);
 }

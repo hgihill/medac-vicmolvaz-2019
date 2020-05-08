@@ -7,9 +7,11 @@ public interface IProvincia {
 
 	// FK: NN
 	public Pais getoPais();
-
-	public boolean setoPais(Pais oPais);
+	
+	boolean setoPais(Pais oPais);
 
 	// Control methods
 	public boolean checkProvincia();
+
+	
 }

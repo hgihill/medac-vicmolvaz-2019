@@ -1,5 +1,7 @@
 package model.project;
 
+import limites.LimitsDB;
+
 public class Financiacion implements IFinanciacion, LimitsDB {
 	private String sCuenta, sEntidad;
 	private TipoFinanciacion oTipoFin;
@@ -12,6 +14,12 @@ public class Financiacion implements IFinanciacion, LimitsDB {
 		this.oProyecto = oProyecto;
 	}
 
+	public Financiacion(String sCuenta, TipoFinanciacion oTipoFin, Proyecto oProyecto) {
+		setsCuenta(sCuenta);
+		this.oTipoFin = oTipoFin;
+		this.oProyecto = oProyecto;
+	}
+	
 	public Financiacion(String sCuenta) {
 		setsCuenta(sCuenta);
 	}
@@ -89,8 +97,10 @@ public class Financiacion implements IFinanciacion, LimitsDB {
 		String sResultado = "";
 
 		sResultado += "Cuenta: " + getsCuenta() + "\n";
-		sResultado += "Entidad: " + getsEntidad() + "\n";
-		sResultado += "Tipo de financiación: " + getoTipoFin() + ".\n";
+		if(getsEntidad() != null) {
+			sResultado += "Entidad: " + getsEntidad() + "\n";
+		}
+		sResultado += "Tipo de financiación: " + getoTipoFin() + "\n";
 		sResultado += "Proyecto asociado: " + getoProyecto();
 
 		return sResultado;

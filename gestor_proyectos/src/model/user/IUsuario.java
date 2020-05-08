@@ -25,7 +25,7 @@ public interface IUsuario {
 	public boolean setsContrasena(String sContrasena);
 	
     //FK
-	public Tipo_Usuario getoTipoUs();
+	public TipoUsuario getoTipoUs();
 	
 	public Direccion getoDir();
 	

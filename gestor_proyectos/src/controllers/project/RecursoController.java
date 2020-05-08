@@ -4,6 +4,7 @@ import controllers.ConexionDB;
 import model.project.Recurso;
 
 public class RecursoController implements IRecursoController{
+	private Recurso vRecurso[];
 	
 	@Override
 	public int add(Recurso oRecurso) {
@@ -15,7 +16,7 @@ public class RecursoController implements IRecursoController{
 
 	@Override
 	public int remove(Recurso oRecurso) {
-		String sql = "DELETE FROM recurso WHERE nombre = (\"" + oRecurso.getsNombre() + "\"))";
+		String sql = "DELETE FROM recurso WHERE nombre_rec = (\"" + oRecurso.getsNombre() + "\"))";
 		return ConexionDB.executeUpdate(sql);
 	}
 
@@ -26,10 +27,23 @@ public class RecursoController implements IRecursoController{
 				+ "\"" + oRecurso.getoTipoRec() + "\")";
 		return ConexionDB.executeUpdate(sql);
 	}
+	
+	@Override
+	public Recurso searchRecurso(Recurso oObjeto) {
+		Recurso oRecurso= null;
+		int iContador = 0;
+		while (oRecurso == null && iContador < vRecurso.length) {
+			if(oObjeto.equals(vRecurso[iContador])) {
+				oRecurso = vRecurso[iContador];
+			}
+			iContador++;
+		}
+		return oRecurso;
+	}
 
 	@Override
 	public int existeRecurso(Recurso oRecurso) {
-		String sql = "SELECT COUNT (*) FROM recurso WHERE nombre = (\"" + oRecurso.getsNombre() + "\"))";
+		String sql = "SELECT COUNT (*) FROM recurso WHERE nombre_rec = (\"" + oRecurso.getsNombre() + "\"))";
 		return ConexionDB.executeCount(sql);
 	}
 }
