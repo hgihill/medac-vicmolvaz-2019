@@ -4,59 +4,67 @@ import controllers.GeneralController;
 import main.Main;
 import medac.validaciones.LibFrontend;
 import model.project.Proyecto;
+import model.project.Recurso;
 import model.user.Rol;
 import model.user.TipoUsuario;
 import model.user.Usuario;
+import view.project.ProyectoView;
 
 public class RolView {
 
-	public static void subMenuRol(GeneralController Controller) {
-		byte bOpcionSubMenu;
-		boolean bOperacionExito = false, errorControl;
-		int iOpcion;
+	public static void subMenuRol(GeneralController controller) {
+		byte bOpcionSubMenu = 0;
 		do {
-			bOpcionSubMenu = Main.subMenu(Rol.class.getSimpleName());
-			errorControl = true;
-			while (errorControl) {
-				try {
-					iOpcion = opcionGestionarRol(bOpcionSubMenu, Controller);
-					errorControl = false;
-				} catch (NullPointerException ex) {
-					System.out.println(ex.getMessage());
-				}
-			}
+			bOpcionSubMenu = ProyectoView.subMenu(Recurso.class.getSimpleName());
 
-			if (bOpcionSubMenu > 0 && bOpcionSubMenu <= 4) {
-				if (bOperacionExito) {
-					System.out.println("Operacion realizada con exito.\n");
-				} else {
-					System.out.println("ERROR: No se ha realizado la operacion.\n");
-				}
-			}
-		} while (bOpcionSubMenu != 4);
+			opcionMenuRol(bOpcionSubMenu, controller);
+
+		} while (bOpcionSubMenu < 5);
+
 	}
 
-	public static int opcionGestionarRol(byte bOpcion, GeneralController Controller) {
+	public static int opcionMenuRol(byte bOpcion, GeneralController controller) {
 		int iOperacionExito = 0;
+
 		switch (bOpcion) {
-		case 1: // Anadir Rol
-			iOperacionExito = anadirRol(Controller);
+		case 1: // Anadir
+			iOperacionExito = anadir(controller);
+			if (iOperacionExito != 0) {
+				System.out.println("Se ha asignado un rol al usuario.\n");
+			} else {
+				System.out.println("El usuario ya tiene rol asignado.\n");
+			}
 			break;
-		case 2: // Eliminar Rol
-			iOperacionExito = eliminarRol(Controller);
+
+		case 2: // Eliminar
+			iOperacionExito = eliminar(controller);
+			if (iOperacionExito != 0) {
+				System.out.println("Se ha eliminado el rol del usuario.");
+			} else {
+				System.out.println("El usuario no tiene rol asignado.\n");
+			}
 			break;
-		case 3: // Buscar Rol
-			iOperacionExito = buscarRol(Controller);
+
+		case 3: // Modificar
+			iOperacionExito = modificar(controller);
+			if (iOperacionExito != 0) {
+				System.out.println("Se ha modificado el rol del usuario.");
+			} else {
+				System.out.println("El usuario no tiene rol asignado.\\n");
+			}
 			break;
-		case 4:
-			System.out.println("Volviendo al menu anterior...");
+
+		case 4: // Mostrar
+			mostrar(controller);
+
 		default:
-			System.out.println("Opcion incorrecta.");
+			System.out.println("Regreso al menu anterior.");
 		}
+
 		return iOperacionExito;
 	}
 
-	private static int anadirRol(GeneralController Controller) {
+	private static int anadir(GeneralController Controller) {
 		byte bRol = 0;
 		String sDniCif;
 		boolean errorControl;
@@ -67,7 +75,7 @@ public class RolView {
 		Usuario u1 = Controller.usuarioCtrl.existeUsuario(new Usuario(sDniCif));
 	}
 
-	private static int eliminarRol(GeneralController Controller) {
+	private static int eliminar(GeneralController Controller) {
 		byte bTipoUsuario = 0;
 		boolean errorControl;
 		int iExito = 0;
@@ -91,7 +99,7 @@ public class RolView {
 		return iExito;
 	}
 
-	private static int buscarRol(GeneralController Controller) {
+	private static int modificar(GeneralController Controller) {
 		byte bTipoUsuario = 0;
 		boolean errorControl;
 		int iExito = 0;
@@ -113,5 +121,9 @@ public class RolView {
 		TipoUsuario oTipoUsuario = new TipoUsuario(bTipoUsuario);
 		iExito = Controller.getUsuarioCtrl().existeTipoUsuario(oTipoUsuario);
 		return iExito;
+	}
+	
+	public static void mostrar(GeneralController controller) {
+		System.out.println(controller.usuarioCtrl.getRolCtrl());
 	}
 }

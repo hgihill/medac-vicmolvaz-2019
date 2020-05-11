@@ -7,53 +7,48 @@ import model.user.Aptitud;
 
 public class AptitudView implements LimitsDB {
 
-	
-	public static void subMenuAptitud(GeneralController Controller) {
+	public static void subMenuAptitud(GeneralController controller) {
 		byte bOpcionSubMenu;
-		boolean bOperacionExito = false, errorControl;
-		int iOpcion = 0;
 		do {
-			bOpcionSubMenu = UsuarioView.subMenu(AptitudView.class.getSimpleName());
-			errorControl = true;
-			while (errorControl) {
-				try {
-					iOpcion = opcionGestionarAptitud(bOpcionSubMenu, Controller);
-					errorControl = false;
-				} catch (NullPointerException ex) {
-					System.out.println(ex.getMessage());
-				}
-			}
+			bOpcionSubMenu = UsuarioView.subMenu(Aptitud.class.getSimpleName());
+			opcionMenuAptitud(bOpcionSubMenu, controller);
 
-			if (bOpcionSubMenu > 0 && bOpcionSubMenu <= 4) {
-				if (bOperacionExito) {
-					System.out.println("Operacion realizada con exito.\n");
-				} else {
-					System.out.println("ERROR: No se ha realizado la operacion.\n");
-				}
-			}
-		} while (bOpcionSubMenu != 4);
+		} while (bOpcionSubMenu < 5);
 	}
-	
-	public static int  opcionGestionarAptitud(byte bOpcion, GeneralController controller) {
+
+	public static int opcionMenuAptitud(byte bOpcion, GeneralController controller) {
 		int iOperacionExito = 0;
-		do {
-			switch (bOpcion) {
-			case 1: // Anadir
-				iOperacionExito = anadir(controller);
-				break;
 
-			case 2: // Eliminar
-				iOperacionExito = eliminar(controller);
-				break;
-
-			case 3: // Buscar
-				iOperacionExito = buscar(controller);
-				break;
-
-			default:
-				System.out.println("Regreso al menu anterior.");
+		switch (bOpcion) {
+		case 1: // Anadir
+			iOperacionExito = anadir(controller);
+			if (iOperacionExito != 0) {
+				System.out.println("Se ha anadido la aptitud.\n");
+			} else {
+				System.out.println("No se pudo anadir la aptitud.\n");
 			}
-		} while (bOpcion != 4);
+			break;
+
+		case 2: // Eliminar
+			iOperacionExito = eliminar(controller);
+			if (iOperacionExito != 0) {
+				System.out.println("La aptitud ha sido eliminada.");
+			} else {
+				System.out.println("No se pudo eliminar la aptitud.\n");
+			}
+			break;
+
+		case 3: // Buscar
+			System.out.println("Opción no contemplada, puede generar aptitudes o eliminarlas");
+			break;
+
+		case 4: // Mostrar
+			mostrar(controller);
+
+		default:
+			System.out.println("Regreso al menu anterior.");
+		}
+
 		return iOperacionExito;
 	}
 
@@ -72,7 +67,7 @@ public class AptitudView implements LimitsDB {
 			}
 		}
 		errorControl = true;
-		
+
 		Aptitud oAptitud = new Aptitud(sNombre);
 		return controller.getUsuarioCtrl().addAptitud(oAptitud);
 	}
@@ -96,24 +91,8 @@ public class AptitudView implements LimitsDB {
 		}
 		return iError;
 	}
-	
-	public static int buscar(GeneralController controller) {
-		boolean errorControl = true;
-		String sNombre = null;
-		byte bOpcion = 0;
 
-		while (errorControl) {
-			try {
-				sNombre = LibFrontend.leer("Introduzca el nombre de la aptitud que desea buscar: ");
-				if (sNombre.length() <= LIMITGENERICO) {
-					errorControl = false;
-				}
-			} catch (Exception ex) {
-				System.out.println("Error: " + ex.getMessage());
-			}
-			Aptitud oAptitud = new Aptitud(sNombre);
-			bOpcion = (byte) controller.getUsuarioCtrl().existeAptitud(oAptitud);
-		}
-		return bOpcion;
+	public static void mostrar(GeneralController controller) {
+		System.out.println(controller.usuarioCtrl.getAptCtrl());
 	}
 }

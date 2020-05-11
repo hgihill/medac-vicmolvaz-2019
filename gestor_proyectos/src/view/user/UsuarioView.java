@@ -5,7 +5,6 @@ import limites.LimitsDB;
 import main.Main;
 import medac.validaciones.LibFrontend;
 import model.dir.Direccion;
-import model.project.Proyecto;
 import model.user.TipoUsuario;
 import model.user.Usuario;
 
@@ -15,7 +14,7 @@ public class UsuarioView implements LimitsDB{
 		byte bOpcionSubMenu;
 
 		do {
-			bOpcionSubMenu = Main.subMenuUser(Proyecto.class.getSimpleName());
+			bOpcionSubMenu = Main.subMenuUser(Usuario.class.getSimpleName());
 
 			opcionGestionarUsuario(bOpcionSubMenu, controller);
 
@@ -25,38 +24,38 @@ public class UsuarioView implements LimitsDB{
 	public static int opcionGestionarUsuario(byte bOpcion, GeneralController controller) {
 		int iOperacionExito = 0;
 		switch (bOpcion) {
-		case 1: // Anadir usuario
-			iOperacionExito = anadirUsuario(controller);
+		case 1: // Anadir usuarios
+			iOperacionExito = anadir(controller);
 			if (iOperacionExito != 0)
 				System.out.println("Usuario anadido con exito.\n");
 			else
 				System.out.println("No se pudo anadir el usuario.\n");
 			break;
-		case 2: // Eliminar usuario
-			iOperacionExito = eliminarUsuario(controller);
+		case 2: // Eliminar usuarios
+			iOperacionExito = eliminar(controller);
 			if (iOperacionExito != 0)
 				System.out.println("Proyecto eliminado con exito.\n");
 			else
 				System.out.println("No se pudo eliminar el proyecto.\n");
 			break;
-		case 3: // Modificar usuario
-			iOperacionExito = modificarUsuario(controller);
+		case 3: // Modificar usuarios
+			iOperacionExito = modificar(controller);
 			if (iOperacionExito != 0)
 				System.out.println("Proyecto actualizado con exito.\n");
 			else
 				System.out.println("No se pudo actualizar el proyecto.\n");
 			break;
-		case 4: // Buscar usuarios
+		case 4: // Mostrar usuarios
 			mostrar(controller);
 			
 		case 5:
 			AptitudView.subMenuAptitud(controller);
 			break;
 		case 6:
-			AptitudView.subMenuConocimineto(controller);
+			ConocimientoView.subMenuConocimineto(controller);
 			break;
 		case 7:
-			AptitudView.subMenuRol(controller);
+			RolView.subMenuRol(controller);
 			break;
 		case 8:
 			System.out.println("Volviendo al menu anterior...");
@@ -88,7 +87,7 @@ public class UsuarioView implements LimitsDB{
 		return bOpcion;
 	}
 
-	private static int anadirUsuario(GeneralController Controller) {
+	private static int anadir(GeneralController Controller) {
 		String sDniCif = null, sNombre = null, sMail = null, sTelefono = null, sContrasena = null, sCalle = null;
 		byte bTipoUsuario = 0, bNum = 0;
 		boolean errorControl;
@@ -208,7 +207,7 @@ public class UsuarioView implements LimitsDB{
 
 	}
 
-	private static int eliminarUsuario(GeneralController Controller) {
+	private static int eliminar(GeneralController Controller) {
 		String sDniCif = null;
 		boolean errorControl = false;
 		while (errorControl) {
@@ -225,7 +224,7 @@ public class UsuarioView implements LimitsDB{
 		return Controller.getUsuarioCtrl().removeUsuario(new Usuario(sDniCif));
 	}
 
-	private static int modificarUsuario(GeneralController Controller) {
+	private static int modificar(GeneralController Controller) {
 		String sDniCif = null, sNombre = null, sMail = null, sTelefono = null, sContrasena = null, sCalle = null;
 		byte bTipoUsuario = 0, bNum = 0;
 		boolean errorControl = false;
@@ -352,21 +351,8 @@ public class UsuarioView implements LimitsDB{
 		}
 		return iExito;
 	}
-
-	private static int buscarUsuario(GeneralController Controller) {
-		String sDniCif = null;
-		boolean errorControl = false;
-		while (errorControl) {
-			try {
-				sDniCif = LibFrontend.leer("Introduzca el dni/cif del ususario que desea buscar: ");
-				errorControl = false;
-			} catch (NumberFormatException ex) {
-				System.out.println(ex.getMessage());
-			} catch (Exception ex) {
-				errorControl = false;
-				System.out.println("Error generico: " + ex.getMessage());
-			}
-		}
-		return Controller.getUsuarioCtrl().existeUsuario(new Usuario(sDniCif));
+	
+	public static void mostrar(GeneralController controller) {
+		System.out.println(controller.usuarioCtrl.getUsCtrl());
 	}
 }
