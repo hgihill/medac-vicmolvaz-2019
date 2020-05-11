@@ -1,10 +1,7 @@
 package controllers.dir;
 
-import java.util.List;
-
 import controllers.GeneralController;
 import model.dir.Localidad;
-import model.dir.Provincia;
 
 public interface ILocalidadController {
 

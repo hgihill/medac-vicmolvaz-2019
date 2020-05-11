@@ -120,7 +120,7 @@ public class LocalidadView implements LimitsDB {
 		Pais oPais = new Pais(sPais);
 		Provincia oProvincia = new Provincia(sProvincia, oPais);
 		Localidad oLocalidad = new Localidad(sCp, sLocalidad, oProvincia);
-		if (controller.getDireccionCtrl().exisateLocalidad(oLocalidad) == 0) {
+		if (controller.getDireccionCtrl().existeLocalidad(oLocalidad) == 0) {
 			System.out.println(oLocalidad);
 			addLocalidad = controller.getDireccionCtrl().addLocalidad(oLocalidad);
 		}

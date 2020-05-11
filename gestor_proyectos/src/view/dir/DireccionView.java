@@ -60,10 +60,10 @@ public class DireccionView implements LimitsDB {
 			PaisView.subMenuPais(controller);
 			break;
 		case 8:
-			System.out.println("Volviendo al menu anterior...");
+			System.out.println("Volviendo al menu anterior");
 			break;
 		default:
-			System.out.println("Opcion incorrecta.");
+			System.out.println("Introduzca una opcion valida");
 			break;
 		}
 		return iOperacionExito;
@@ -77,7 +77,7 @@ public class DireccionView implements LimitsDB {
 		System.out.println("2. Eliminar " + sClase);
 		System.out.println("3. Modificar " + sClase);
 		System.out.println("4. Mostrar " + sClase);
-		System.out.println("5. Volver al menu principal\n");
+		System.out.println("5. Volver al menu anterior\n");
 		boolean errorControl = true;
 		while (errorControl) {
 			try {

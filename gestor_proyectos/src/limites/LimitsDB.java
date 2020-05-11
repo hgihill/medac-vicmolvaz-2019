@@ -29,18 +29,24 @@ public interface LimitsDB {
 	// PROYECTO
 	public final int MINIDPROYECTO = 1;
 	public final int MAXIDPROYECTO = 100000;
+	public final int MINCHARDESC = 0;
+	public final int MAXCHARDESC = 400;
 
 	// TIPO_RECURSO
 	public final int MINTIPOREC = 1;
-	public final int MAXTIPOREC = 20;
+	public final int MAXTIPOREC = 5;
 
 	// APORTE
 	public final int MINAPORTE = 5;
 	public final int MAXAPORTE = 100000;
 
 	// INVENTARIO
+	public final int MININV = 1;
+	public final int MAXINV = 1000;
 	public final int MINCANT = 1;
 	public final int MAXCANT = 1000;
+	public final int MINPORC = 0;
+	public final int MAXPORC = 100;
 
 	// DIRECCION
 	public final int MINNUM = 0;
@@ -49,4 +55,6 @@ public interface LimitsDB {
 	public final int MAXPORTAL = 10;
 	public final int MINBLOQUE = 1;
 	public final int MAXBLOQUE = 10;
+	
+	
 }

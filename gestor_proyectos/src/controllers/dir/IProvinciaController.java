@@ -1,8 +1,5 @@
 package controllers.dir;
 
-import java.util.List;
-
-import model.dir.Pais;
 import model.dir.Provincia;
 
 public interface IProvinciaController {
@@ -14,8 +11,6 @@ public interface IProvinciaController {
 
 	// Queries
 	public int existeProvincia(Provincia oProvincia);
-
-	public List<Provincia> searchProvincia(Pais oPais);
 	
 	public String mostrarProvincia();
 	

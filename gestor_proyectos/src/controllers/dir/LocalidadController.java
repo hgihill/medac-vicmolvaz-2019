@@ -3,12 +3,9 @@ package controllers.dir;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 import controllers.ConexionDB;
 import controllers.GeneralController;
-import model.dir.Pais;
 import model.dir.Localidad;
 import model.dir.Provincia;
 
@@ -44,28 +41,30 @@ public class LocalidadController implements ILocalidadController {
 	@Override
 	public Localidad searchLocalidadByPk(Localidad oLoc, GeneralController c) {
 		Localidad oLocalidad = null;
-		if(existeLocalidad(oLoc) > 0) {
-		String sql = "SELECT localidad.cp, localidad.nombre_loc, localidad.nombre_prov FROM localidad, provincia, pais  WHERE localidad.nombre_prov=provincia.nombre_prov AND provincia.nombre_pais=pais.nombre_pais AND localidad.cp='"+oLoc.getsCP()+"'";
+		if (existeLocalidad(oLoc) > 0) {
+			String sql = "SELECT localidad.cp, localidad.nombre_loc, localidad.nombre_prov FROM localidad, provincia, pais  WHERE localidad.nombre_prov=provincia.nombre_prov AND provincia.nombre_pais=pais.nombre_pais AND localidad.cp='"
+					+ oLoc.getsCP() + "'";
 
-		Statement stm = null;
-		try {
-			stm = ConexionDB.getConnection().createStatement();
-			ResultSet rs = stm.executeQuery(sql);
-			
-			while (rs.next()) {
-				String sLocCodigoPostal = rs.getString(1);
-				String sLocNombre = rs.getString(2);
-				String sNombreProv = rs.getString(3);
-				System.out.println(sNombreProv);
-				Provincia oProv =  c.getDireccionCtrl().getProvinciaCtrl().searchProvincia(new Provincia(sNombreProv), c);
-				System.out.println(oProv);
-				oLocalidad = new Localidad(sLocCodigoPostal, sLocNombre, oProv);
-				
+			Statement stm = null;
+			try {
+				stm = ConexionDB.getConnection().createStatement();
+				ResultSet rs = stm.executeQuery(sql);
+
+				while (rs.next()) {
+					String sLocCodigoPostal = rs.getString(1);
+					String sLocNombre = rs.getString(2);
+					String sNombreProv = rs.getString(3);
+					System.out.println(sNombreProv);
+					Provincia oProv = c.getDireccionCtrl().getProvinciaCtrl()
+							.searchProvincia(new Provincia(sNombreProv), c);
+					System.out.println(oProv);
+					oLocalidad = new Localidad(sLocCodigoPostal, sLocNombre, oProv);
+
+				}
+				stm.close();
+			} catch (SQLException e) {
+				oLocalidad = null;
 			}
-			stm.close();
-		} catch (SQLException e) {
-			oLocalidad = null;
-		}
 		}
 		return oLocalidad;
 	}
@@ -112,8 +111,8 @@ public class LocalidadController implements ILocalidadController {
 	@Override
 	public int existeLocalidad(Localidad oLocalidad) {
 		int iRes = 0;
-			String sql = "SELECT COUNT(*) FROM localidad WHERE cp =" + oLocalidad.getsCP();
-			iRes = ConexionDB.executeCount(sql);
+		String sql = "SELECT COUNT(*) FROM localidad WHERE cp =" + oLocalidad.getsCP();
+		iRes = ConexionDB.executeCount(sql);
 		return iRes;
 	}
 
@@ -138,5 +137,5 @@ public class LocalidadController implements ILocalidadController {
 //			lLocalidad = null;
 //		}
 //		return lLocalidad;
-	
+
 }

@@ -8,72 +8,56 @@ import model.project.Inventario;
 
 public class InventarioView implements LimitsDB {
 
-	public static void menuConocimiento(GeneralController controller) {
-		byte bOpcion = 0;
+	public static void subMenuInventario(GeneralController controller) {
+		byte bOpcionSubMenu = 0;
 		do {
-			bOpcion = opcionMenuAporte();
-			switch (bOpcion) {
-			case 1: // Anadir
+			bOpcionSubMenu = ProyectoView.subMenu(Inventario.class.getSimpleName());
 
-				if (anadir(controller) != 0) {
-					System.out.println("Se ha generado un inventario.");
-				} else {
-					System.out.println("No ha podido generarse el inventario.");
-				}
-				break;
+			opcionMenuInventario(bOpcionSubMenu, controller);
 
-			case 2: // Eliminar
-				if (eliminar(controller) != 0) {
-					System.out.println("Se ha eliminado el inventario.");
-				} else {
-					System.out.println("No se encuentra el inventario.");
-				}
-				break;
+		} while (bOpcionSubMenu < 5);
 
-			case 3: // Modificar
-				if (modificar(controller) != 0) {
-					System.out.println("Se ha modificado el inventario.");
-				} else {
-					System.out.println("No se ha podido modificar el inventario.");
-				}
-				break;
-
-			case 4: // Buscar
-				if (buscar(controller) != 0) {
-					System.out.println("Se ha encontrado el inventario.");
-				} else {
-					System.out.println("No se encuentra el inventario.");
-				}
-				break;
-
-			default:
-				System.out.println("Regreso al menu anterior");
-			}
-		} while (bOpcion != 5);
 	}
 
-	public static byte opcionMenuAporte() {
-		byte bOpcion = 0;
-		boolean errorControl = true;
+	public static int opcionMenuInventario(byte bOpcion, GeneralController controller) {
+		int iOperacionExito = 0;
 
-		System.out.println("\n\nGestion de conocimientos");
-		System.out.println("#############################");
-		System.out.println("1. Anadir inventario.");
-		System.out.println("2. Eliminar inventario.");
-		System.out.println("3. Modificar inventario.");
-		System.out.println("4. Buscar inventario.");
-		System.out.println("5. Volver atras");
-
-		while (errorControl) {
-			try {
-				bOpcion = (byte) LibFrontend.valida("Itroduzca una opcion: ", 1, 5, 3);
-				errorControl = false;
-			} catch (Exception ex) {
-				System.out.println("Error: " + ex.getMessage());
+		switch (bOpcion) {
+		case 1: // Anadir
+			iOperacionExito = anadir(controller);
+			if (iOperacionExito != 0) {
+				System.out.println("Se ha anadido el inventario.\n");
+			} else {
+				System.out.println("No se pudo anadir el inventario.\n");
 			}
+			break;
+
+		case 2: // Eliminar
+			iOperacionExito = eliminar(controller);
+			if (iOperacionExito != 0) {
+				System.out.println("El inventario ha sido eliminado.");
+			} else {
+				System.out.println("No se pudo eliminar el inventario.\n");
+			}
+			break;
+
+		case 3: // Modificar
+			iOperacionExito = modificar(controller);
+			if (iOperacionExito != 0) {
+				System.out.println("Se ha modificado el inventario.");
+			} else {
+				System.out.println("No se pudo modificar el inventario.\n");
+			}
+			break;
+
+		case 4: // Mostrar
+			mostrar(controller);
+
+		default:
+			System.out.println("Regreso al menu anterior.");
 		}
 
-		return bOpcion;
+		return iOperacionExito;
 	}
 
 	public static int anadir(GeneralController controller) {
@@ -83,9 +67,9 @@ public class InventarioView implements LimitsDB {
 
 		while (errorControl) {
 			try {
-				iIdInv = (int) LibFrontend.valida("Introduzca la cantidad de un aporte que haya sido realizado: ", 1,
+				iIdInv = (int) LibFrontend.valida("Introduzca el ID del invetario: ", 1,
 						1000, 1);
-				if (iIdInv >= MINAPORTE && iIdInv <= MAXAPORTE) {
+				if (iIdInv >= MININV && iIdInv <= MAXINV) {
 					errorControl = false;
 				}
 			} catch (Exception ex) {
@@ -105,7 +89,6 @@ public class InventarioView implements LimitsDB {
 			}
 		}
 		errorControl = true;
-		Recurso oRec = controller.getProyectoCtrl().getRecCtrl().searchRecurso(new Recurso(sNombre));
 
 		while (errorControl) {
 			try {
@@ -120,6 +103,7 @@ public class InventarioView implements LimitsDB {
 		}
 		errorControl = true;
 
+		Recurso oRec = new Recurso (sNombre);
 		Inventario oInventario = new Inventario(iIdInv, iCantidad, oRec);
 		if(controller.getProyectoCtrl().existeInventario(oInventario) == 0) {
 			iAdd = controller.getProyectoCtrl().updateInventario(oInventario);
@@ -134,7 +118,7 @@ public class InventarioView implements LimitsDB {
 		while (errorControl) {
 			try {
 				iIdInv = (int) LibFrontend.valida("Introduzca el ID del invantario que desea eliminar: ", 1, 1000, 1);
-				if (iIdInv >= MINAPORTE && iIdInv <= MAXAPORTE) {
+				if (iIdInv >= MININV && iIdInv <= MAXINV) {
 					errorControl = false;
 				}
 			} catch (Exception ex) {
@@ -195,29 +179,11 @@ public class InventarioView implements LimitsDB {
 			iUpdate = controller.getProyectoCtrl().updateInventario(oInventario);
 		}
 		
-		
 		return iUpdate;
 
 	}
 
-	public static int buscar(GeneralController controller) {
-		boolean errorControl = true;
-		byte bOpcion = 0;
-		int iIdInv = 0;
-
-		while (errorControl) {
-			try {
-				iIdInv = (int) LibFrontend.valida("Introduzca el ID del inventario que desea localizar: ", 1, 1000, 1);
-				if (iIdInv >= MINAPORTE && iIdInv <= MAXAPORTE) {
-					errorControl = false;
-				}
-			} catch (Exception ex) {
-				System.out.println("Error: " + ex.getMessage());
-			}
-
-			Inventario oInventario = new Inventario(iIdInv);
-			bOpcion = (byte) controller.getProyectoCtrl().existeInventario(oInventario);
-		}
-		return bOpcion;
+	public static void mostrar(GeneralController controller) {
+		System.out.println(controller.proyectoCtrl.getInvCtrl());
 	}
 }

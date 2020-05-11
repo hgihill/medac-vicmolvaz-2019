@@ -3,7 +3,6 @@ package controllers.dir;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.*;
 import controllers.ConexionDB;
 import controllers.GeneralController;
 import model.dir.Pais;
@@ -105,7 +104,7 @@ public class ProvinciaController implements IProvinciaController {
 		Provincia Provincia = null;
 		System.out.println(existeProvincia(oProvincia));
 		if (existeProvincia(oProvincia) > 0) {
-			String sql = "SELECT * FROM PROVINCIA WHERE NOMBRE_PROV = '"+oProvincia.getsNombreProv()+"'";
+			String sql = "SELECT * FROM PROVINCIA WHERE NOMBRE_PROV = '" + oProvincia.getsNombreProv() + "'";
 			Statement stm = null;
 			System.out.println(ConexionDB.executeCount(sql));
 			try {
@@ -123,12 +122,6 @@ public class ProvinciaController implements IProvinciaController {
 			}
 		}
 		return Provincia;
-	}
-
-	@Override
-	public List<Provincia> searchProvincia(Pais oPais) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

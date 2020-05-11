@@ -1,63 +1,62 @@
 package view.user;
 
 import controllers.GeneralController;
+import limites.LimitsDB;
 import main.Main;
 import medac.validaciones.LibFrontend;
 import model.dir.Direccion;
+import model.project.Proyecto;
 import model.user.TipoUsuario;
 import model.user.Usuario;
 
-public class UsuarioView {
+public class UsuarioView implements LimitsDB{
 
-	public static void subMenuUsuario(GeneralController Controller) {
+	public static void subMenuUsuario(GeneralController controller) {
 		byte bOpcionSubMenu;
-		boolean bOperacionExito = false, errorControl;
-		int iOpcion;
-		do {
-			bOpcionSubMenu = Main.subMenuUser(Usuario.class.getSimpleName());
-			errorControl = true;
-			while (errorControl) {
-				try {
-					iOpcion = opcionGestionarUsuario(bOpcionSubMenu, Controller);
-					errorControl = false;
-				} catch (NullPointerException ex) {
-					System.out.println(ex.getMessage());
-				}
-			}
 
-			if (bOpcionSubMenu > 0 && bOpcionSubMenu <= 5) {
-				if (bOperacionExito) {
-					System.out.println("Operacion realizada con exito.\n");
-				} else {
-					System.out.println("ERROR: No se ha realizado la operacion.\n");
-				}
-			}
-		} while (bOpcionSubMenu <= 4);
+		do {
+			bOpcionSubMenu = Main.subMenuUser(Proyecto.class.getSimpleName());
+
+			opcionGestionarUsuario(bOpcionSubMenu, controller);
+
+		} while (bOpcionSubMenu != 8);
 	}
 
-	public static int opcionGestionarUsuario(byte bOpcion, GeneralController Controller) {
+	public static int opcionGestionarUsuario(byte bOpcion, GeneralController controller) {
 		int iOperacionExito = 0;
 		switch (bOpcion) {
 		case 1: // Anadir usuario
-			iOperacionExito = anadirUsuario(Controller);
+			iOperacionExito = anadirUsuario(controller);
+			if (iOperacionExito != 0)
+				System.out.println("Usuario anadido con exito.\n");
+			else
+				System.out.println("No se pudo anadir el usuario.\n");
 			break;
 		case 2: // Eliminar usuario
-			iOperacionExito = eliminarUsuario(Controller);
+			iOperacionExito = eliminarUsuario(controller);
+			if (iOperacionExito != 0)
+				System.out.println("Proyecto eliminado con exito.\n");
+			else
+				System.out.println("No se pudo eliminar el proyecto.\n");
 			break;
 		case 3: // Modificar usuario
-			iOperacionExito = modificarUsuario(Controller);
+			iOperacionExito = modificarUsuario(controller);
+			if (iOperacionExito != 0)
+				System.out.println("Proyecto actualizado con exito.\n");
+			else
+				System.out.println("No se pudo actualizar el proyecto.\n");
 			break;
-		case 4: // Buscar usuario
-			iOperacionExito = buscarUsuario(Controller);
-			break;
+		case 4: // Buscar usuarios
+			mostrar(controller);
+			
 		case 5:
-			AptitudView.subMenuAptitud(Controller);
+			AptitudView.subMenuAptitud(controller);
 			break;
 		case 6:
-			AptitudView.subMenuConocimineto(Controller);
+			AptitudView.subMenuConocimineto(controller);
 			break;
 		case 7:
-			AptitudView.subMenuRol(Controller);
+			AptitudView.subMenuRol(controller);
 			break;
 		case 8:
 			System.out.println("Volviendo al menu anterior...");
@@ -76,7 +75,7 @@ public class UsuarioView {
 		System.out.println("2. Eliminar " + sClase);
 		System.out.println("3. Modificar " + sClase);
 		System.out.println("4. Buscar " + sClase);
-		System.out.println("5. Volver al menu principal.\n");
+		System.out.println("5. Volver al menu anterior.\n");
 		boolean errorControl = true;
 		while (errorControl) {
 			try {

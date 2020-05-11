@@ -6,8 +6,6 @@ import model.project.Financiacion;
 import model.project.Inventario;
 import model.project.Proyecto;
 import model.project.Recurso;
-import model.project.TipoFinanciacion;
-import model.project.TipoRecurso;
 
 public class ProjectGlobalController {
 	private AporteController aptCtorl;
@@ -16,8 +14,6 @@ public class ProjectGlobalController {
 	private InventarioController invCtrl;
 	private ProyectoController proCtrl;
 	private RecursoController recCtrl;
-	private TipoFinanciacionController tFiCtrl;
-	private TipoRecursoController tRecCtrl;
 
 	public ProjectGlobalController() {
 		aptCtorl = new AporteController();
@@ -26,8 +22,6 @@ public class ProjectGlobalController {
 		invCtrl = new InventarioController();
 		proCtrl = new ProyectoController();
 		recCtrl = new RecursoController();
-		tFiCtrl = new TipoFinanciacionController();
-		tRecCtrl = new TipoRecursoController();
 	}
 
 	public AporteController getAptCtorl() {
@@ -53,15 +47,7 @@ public class ProjectGlobalController {
 	public RecursoController getRecCtrl() {
 		return recCtrl;
 	}
-
-	public TipoFinanciacionController gettFiCtrl() {
-		return tFiCtrl;
-	}
-
-	public TipoRecursoController gettRecCtrl() {
-		return tRecCtrl;
-	}
-
+	
 	// Aporte
 	public int addAporte(Aporte oAporte) {
 		return aptCtorl.add(oAporte);
@@ -162,32 +148,6 @@ public class ProjectGlobalController {
 
 	public int existeRecurso(Recurso oRecurso) {
 		return recCtrl.existeRecurso(oRecurso);
-	}
-
-	// Tipo Financiacion
-	public int addTipoFinanciacion(TipoFinanciacion oTipoFinanciacion) {
-		return tFiCtrl.add(oTipoFinanciacion);
-	}
-
-	public int removeTipoFinanciacion(TipoFinanciacion oTipoFinanciacion) {
-		return tFiCtrl.remove(oTipoFinanciacion);
-	}
-
-	public int existeTipoFinanciacion(TipoFinanciacion oTipoFinanciacion) {
-		return tFiCtrl.existeTipoFinanciacion(oTipoFinanciacion);
-	}
-
-	// Tipo Recurso
-	public int addTipoRecurso(TipoRecurso oTipoRecurso) {
-		return tRecCtrl.add(oTipoRecurso);
-	}
-
-	public int removeTipoRecurso(TipoRecurso oTipoRecurso) {
-		return tRecCtrl.remove(oTipoRecurso);
-	}
-
-	public int existeTipoRecurso(TipoRecurso oTipoRecurso) {
-		return tRecCtrl.existeTipoRecurso(oTipoRecurso);
 	}
 
 }

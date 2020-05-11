@@ -1,7 +1,5 @@
 package controllers.dir;
 
-import java.util.List;
-
 import model.dir.Pais;
 
 public interface IPaisController {

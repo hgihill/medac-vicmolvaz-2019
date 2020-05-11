@@ -12,6 +12,11 @@ public class Recurso implements IRecurso, LimitsDB {
 		setiCant(iCant);
 		this.oTipoRec = oTipoRec;
 	}
+	
+	public Recurso(String sNombre, int iCant) {
+		setsNombre(sNombre);
+		setiCant(iCant);
+	}
 
 	public Recurso(String sNombre) {
 		setsNombre(sNombre);

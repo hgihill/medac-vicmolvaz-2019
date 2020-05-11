@@ -3,11 +3,11 @@ package main;
 import controllers.GeneralController;
 import medac.validaciones.LibFrontend;
 import view.dir.DireccionView;
+import view.project.ProyectoView;
 import view.user.UsuarioView;
 
 public class Main {
 	public static void main(String[] args) {
-		boolean errorControl;
 		byte bOpcionMenuPrincipal = 0;
 
 		String sDatabase = "victor_proyecto_prog";
@@ -22,7 +22,7 @@ public class Main {
 				UsuarioView.subMenuUsuario(Controller);
 				break;
 			case 2: // Gestion de proyectos
-				// vistaProyecto.subMenuProyecto(Controller);
+				ProyectoView.subMenuProyecto(Controller);
 				break;
 			case 3: // Gestion de direcciones
 				DireccionView.subMenuDireccion(Controller);
@@ -66,9 +66,9 @@ public class Main {
 		System.out.println("2. Eliminar " + sClase);
 		System.out.println("3. Modificar " + sClase);
 		System.out.println("4. Buscar " + sClase);
-		System.out.println("5. Aptitud");
-		System.out.println("6. Conocimiento");
-		System.out.println("7. Rol");
+		System.out.println("5. Gestionar aptitud");
+		System.out.println("6. Gestionar conocimiento");
+		System.out.println("7. Gestionar rol");
 		System.out.println("8. Volver al menu anteior\n");
 		boolean errorControl = true;
 		while (errorControl) {
@@ -90,17 +90,16 @@ public class Main {
 		System.out.println("2. Eliminar " + sClase);
 		System.out.println("3. Modificar " + sClase);
 		System.out.println("4. Buscar " + sClase);
-		System.out.println("5. Financiacion");
-		System.out.println("6. Aporte");
-		System.out.println("7. Tipo de recurso");
-		System.out.println("8. Recurso");
-		System.out.println("9. Inventario");
-		System.out.println("10. Descuento");
-		System.out.println("11. Volver al menu anteior\n");
+		System.out.println("5. Gestionar financiacion");
+		System.out.println("6. Gestionar aporte");
+		System.out.println("7. Gestionar recurso");
+		System.out.println("8. Gestionar inventario");
+		System.out.println("9. Gestionar descuento");
+		System.out.println("10. Volver al menu anterior\n");
 		boolean errorControl = true;
 		while (errorControl) {
 			try {
-				bOpcion = (byte) LibFrontend.valida("Indique una opcion: ", 1, 6, 3);
+				bOpcion = (byte) LibFrontend.valida("Indique una opcion: ", 1, 10, 3);
 				errorControl = false;
 			} catch (NumberFormatException ex) {
 				System.out.println(ex.getMessage());

@@ -42,9 +42,11 @@ public class DirGlobalController {
 	public int removeDireccion(Direccion oDir) {
 		return direccionCtrl.remove(oDir);
 	}
-
-	public int exisateDireccion(Direccion oDireccion) {
-		return direccionCtrl.existeDireccion(oDireccion);
+	public int updateDireccion(Direccion oDireccion, Direccion oOtra) {
+		return direccionCtrl.update(oDireccion, oOtra, localidadCtrl, provinciaCtrl, paisCtrl);
+	}
+	public String mostrarDireccion() {
+		return direccionCtrl.mostrarDireccion();
 	}
 
 	// LOCALIDAD
@@ -52,7 +54,17 @@ public class DirGlobalController {
 	public int addLocalidad(Localidad oLoc) {
 		return localidadCtrl.add(oLoc, provinciaCtrl, paisCtrl);
 	}
-	public int exisateLocalidad(Localidad oLocalidad) {
+	public int removeLocalidad(Localidad oLoc) {
+		return localidadCtrl.remove(oLoc);
+	}
+	
+	public int updateLocalidad(Localidad oLocalidad) {
+		return localidadCtrl.update(oLocalidad, provinciaCtrl, paisCtrl);
+	}
+	public String mostrarLocalidad() {
+		return localidadCtrl.mostrarLocalidad();
+	}
+	public int existeLocalidad(Localidad oLocalidad){
 		return localidadCtrl.existeLocalidad(oLocalidad);
 	}
 
@@ -60,6 +72,16 @@ public class DirGlobalController {
 	// ##############
 	public int addProvincia(Provincia oProv) {
 		return provinciaCtrl.add(oProv, paisCtrl);
+	}
+	public int removeProvincia(Provincia oProvincia) {
+		return provinciaCtrl.remove(oProvincia);
+	}
+	
+	public int updateProvincia(Provincia oProvincia, Provincia oOtra) {
+		return provinciaCtrl.Update(oProvincia, oOtra, paisCtrl);
+	}
+	public String mostrarProvincia() {
+		return provinciaCtrl.mostrarProvincia();
 	}
 	public int existeProvincia(Provincia oProvincia) {
 		return provinciaCtrl.existeProvincia(oProvincia);
@@ -70,8 +92,14 @@ public class DirGlobalController {
 	public int addPais(Pais oPais) {
 		return paisCtrl.add(oPais);
 	}
-	public int exisatePais(Pais oPais) {
-		return paisCtrl.existePais(oPais);
+	public int removePais(Pais oPais) {
+		return paisCtrl.remove(oPais);
+	}
+	public int updatePais(Pais oPais, Pais oOtro) {
+		return paisCtrl.Update(oPais, oOtro);
+	}
+	public String mostrarPais() {
+		return paisCtrl.mostrarPais();
 	}
 
 }

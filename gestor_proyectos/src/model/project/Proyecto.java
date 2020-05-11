@@ -16,6 +16,12 @@ public class Proyecto implements IProyecto, LimitsDB {
 		this.oUs = oUs;
 		this.oInv = oInv;
 	}
+	
+	public Proyecto(int iId_Proyecto, String sNombre, String sDescripcion) {
+		setiId_Proyecto(iId_Proyecto);
+		setsNombre(sNombre);
+		setsDescripcion(sDescripcion);
+	}
 
 	public Proyecto(int iId_Proyecto) {
 		setiId_Proyecto(iId_Proyecto);
