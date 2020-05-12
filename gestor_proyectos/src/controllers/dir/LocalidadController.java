@@ -77,9 +77,10 @@ public class LocalidadController implements ILocalidadController {
 
 		if (oLocalidad.checkLocalidad()) {
 			String sql = "UPDATE localidad ";
-			sql += "SET nombre_loc = \"" + oLocalidad.getsNombreLoc() + "\", ";
-			sql += "provincia = \"" + oLocalidad.getoProv().getsNombreProv() + "\" ";
-			sql += "WHERE cp = \"" + oLocalidad.getsCP();
+			sql += "SET cp = \"" + oLocalidad.getsCP() + "\", ";
+			sql += "nombre_loc = \"" + oLocalidad.getsNombreLoc() + "\", ";
+			sql += "nombre_prov = \"" + oLocalidad.getoProv().getsNombreProv() + "\" ";
+			sql += "WHERE cp = \"" + oLocalidad.getsCP()+"\"";
 			iRes = ConexionDB.executeUpdate(sql);
 		}
 		return iRes;
@@ -115,27 +116,5 @@ public class LocalidadController implements ILocalidadController {
 		iRes = ConexionDB.executeCount(sql);
 		return iRes;
 	}
-
-//	@Override
-//	public List<Localidad> searchLocalidad(Provincia oProvincia) {
-//		List<Localidad> lLocalidad = new ArrayList<Localidad>();
-//
-//		String sql = "SELECT * FROM localidad WHERE cp = (\"" + oProvincia.getsNombreProv() + "\")";
-//		Statement stm = null;
-//
-//		try {
-//			stm = ConexionDB.getConnection().createStatement();
-//			ResultSet rs = stm.executeQuery(sql);
-//			while (rs.next()) {
-//				String sCp = Integer.toString(rs.getInt(1));
-//				String sNombre = rs.getString(2);
-//				Provincia oLocProvincia = new Provincia(rs.getString(3));
-//				lLocalidad.add(new Localidad(sCp, sNombre, oLocProvincia));
-//			}
-//			stm.close();
-//		} catch (SQLException e) {
-//			lLocalidad = null;
-//		}
-//		return lLocalidad;
 
 }

@@ -10,7 +10,11 @@ public interface IAporteController {
 	public int remove(Aporte oAporte);
 
 	public int update(Aporte oAporte);
+	
+	public String mostrarAporte();
 
 	// Queries
 	public int existeAporte(Aporte oAporte);
+
+	
 }

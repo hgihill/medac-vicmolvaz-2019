@@ -15,6 +15,4 @@ public interface IPaisController {
 	public Pais searchPais(Pais oPais);
 
 	public String mostrarPais();
-
-	public int Update(Pais oPais, Pais oOtro);
 }

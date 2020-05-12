@@ -3,30 +3,39 @@ package view.project;
 import controllers.GeneralController;
 import limites.LimitsDB;
 import medac.validaciones.LibFrontend;
+import model.dir.Localidad;
 import model.project.Aporte;
 import model.project.Financiacion;
 import model.user.Usuario;
+import view.dir.DireccionView;
 
 public class AporteView implements LimitsDB {
 
 	public static void subMenuAporte(GeneralController controller) {
 		byte bOpcionSubMenu = 0;
+		boolean bOperacionExito = false, errorControl;
+
 		do {
+
 			bOpcionSubMenu = ProyectoView.subMenu(Aporte.class.getSimpleName());
-
-			opcionMenuAporte(bOpcionSubMenu, controller);
-
-		} while (bOpcionSubMenu < 5);
-
+			errorControl = true;
+			while (errorControl) {
+				try {
+					opcionMenuAporte(bOpcionSubMenu, controller);
+					errorControl = false;
+					bOperacionExito = true;
+				} catch (NullPointerException ex) {
+					System.out.println(ex.getMessage());
+				}
+			}
+		} while (bOpcionSubMenu != 5);
 	}
 
-	public static int opcionMenuAporte(byte bOpcion, GeneralController controller) {
-		int iOperacionExito = 0;
+	public static void opcionMenuAporte(byte bOpcion, GeneralController controller) {
 
 		switch (bOpcion) {
 		case 1: // Anadir
-			iOperacionExito = anadir(controller);
-			if (iOperacionExito != 0) {
+			if (anadir(controller) == true) {
 				System.out.println("Se ha anadido el aporte.\n");
 			} else {
 				System.out.println("No se pudo anadir el aporte.\n");
@@ -34,8 +43,7 @@ public class AporteView implements LimitsDB {
 			break;
 
 		case 2: // Eliminar
-			iOperacionExito = eliminar(controller);
-			if (iOperacionExito != 0) {
+			if (eliminar(controller) == true) {
 				System.out.println("El aporte ha sido eliminado.");
 			} else {
 				System.out.println("No se pudo eliminar el aporte.\n");
@@ -43,8 +51,7 @@ public class AporteView implements LimitsDB {
 			break;
 
 		case 3: // Modificar
-			iOperacionExito = modificar(controller);
-			if (iOperacionExito != 0) {
+			if (modificar(controller) == true) {
 				System.out.println("Se ha modificado el aporte.");
 			} else {
 				System.out.println("No se pudo modificar el aporte.\n");
@@ -57,12 +64,10 @@ public class AporteView implements LimitsDB {
 		default:
 			System.out.println("Regreso al menu anterior.");
 		}
-
-		return iOperacionExito;
 	}
 
-	public static int anadir(GeneralController controller) {
-		boolean errorControl = true;
+	public static boolean anadir(GeneralController controller) {
+		boolean errorControl = true, addAporte = false;
 		int iImporte = 0;
 		String sDniCif = null, sCuenta = null;
 
@@ -105,12 +110,16 @@ public class AporteView implements LimitsDB {
 		Usuario oUs = new Usuario(sDniCif);
 		Financiacion oFin = new Financiacion(sCuenta);
 		Aporte oAporte = new Aporte(oUs, oFin, iImporte);
-
-		return controller.getProyectoCtrl().addAporte(oAporte);
+		if (controller.getProyectoCtrl().existeAporte(oAporte) == 0) {
+			System.out.println(oAporte);
+			if (controller.getProyectoCtrl().addAporte(oAporte) > 0);
+			addAporte = true;
+		}
+		return addAporte;
 	}
 
-	public static int eliminar(GeneralController controller) {
-		boolean errorControl = true;
+	public static boolean eliminar(GeneralController controller) {
+		boolean errorControl = true, DelAporte = false;
 		String sDniCif = null, sCuenta = null;
 		int iError = 0;
 
@@ -138,14 +147,16 @@ public class AporteView implements LimitsDB {
 				Usuario oUs = new Usuario(sDniCif);
 				Financiacion oFin = new Financiacion(sCuenta);
 				Aporte oAporte = new Aporte(oUs, oFin);
-				iError = controller.getProyectoCtrl().removeAporte(oAporte);
+				if (controller.getProyectoCtrl().removeAporte(oAporte) > 0) {
+					DelAporte = true;
+				}
 			}
 		}
-		return iError;
+		return DelAporte;
 	}
 
-	public static int modificar(GeneralController controller) {
-		boolean errorControl = true;
+	public static boolean modificar(GeneralController controller) {
+		boolean errorControl = true, ModAporte = false;
 		int iImporte = 0;
 		String sDniCif = null, sCuenta = null;
 
@@ -188,7 +199,10 @@ public class AporteView implements LimitsDB {
 		Usuario oUs = new Usuario(sDniCif);
 		Financiacion oFin = new Financiacion(sCuenta);
 		Aporte oAporte = new Aporte(oUs, oFin, iImporte);
-		return controller.getProyectoCtrl().updateAporte(oAporte);
+		if (controller.getProyectoCtrl().updateAporte(oAporte) > 0) {
+			ModAporte = true;
+		}
+		return ModAporte;
 	}
 
 	public static int buscar(GeneralController controller) {
@@ -224,7 +238,7 @@ public class AporteView implements LimitsDB {
 		}
 		return bOpcion;
 	}
-	
+
 	public static void mostrar(GeneralController controller) {
 		System.out.println(controller.proyectoCtrl.getAptCtorl());
 	}

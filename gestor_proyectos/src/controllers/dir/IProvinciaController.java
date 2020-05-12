@@ -13,6 +13,4 @@ public interface IProvinciaController {
 	public int existeProvincia(Provincia oProvincia);
 	
 	public String mostrarProvincia();
-	
-	public int Update(Provincia oProvincia, Provincia oOtra, PaisController paisCtrl);
 }

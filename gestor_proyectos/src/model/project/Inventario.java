@@ -6,10 +6,10 @@ public class Inventario implements IInventario, LimitsDB {
 	private int iIdInv, iCant;
 	private Recurso oRec;
 
-	public Inventario(int iIdInv, int iCant, Recurso oRec) {
+	public Inventario(int iIdInv, Recurso oRec, int iCant) {
 		setiIdInv(iIdInv);
-		setiCant(iCant);
 		this.oRec = oRec;
+		setiCant(iCant);
 	}
 
 	public Inventario(int iIdInv) {

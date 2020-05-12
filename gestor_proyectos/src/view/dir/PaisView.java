@@ -8,74 +8,59 @@ import model.dir.Pais;
 public class PaisView implements LimitsDB {
 	public static void subMenuPais(GeneralController controller) {
 		byte bOpcionSubMenu;
-		boolean bOperacionExito = false;
-		int iOpcion;
+		boolean bOperacionExito = false, errorControl;
 		do {
 			bOpcionSubMenu = DireccionView.subMenu(Pais.class.getSimpleName());
-
-			iOpcion = opcionGestionarPais(bOpcionSubMenu, controller);
-
-			if (bOpcionSubMenu > 0 && bOpcionSubMenu <= 4) {
-				if (bOperacionExito) {
-					System.out.println("Operacion realizada con exito.\n");
-				} else {
-					System.out.println("ERROR: No se ha realizado la operacion.\n");
+			errorControl = true;
+			while(errorControl) {
+				try {
+					opcionGestionarPais(bOpcionSubMenu, controller);
+					errorControl = false;
+					bOperacionExito = true;
+				}catch(NullPointerException ex) {
+					System.out.println(ex.getMessage());
 				}
 			}
-		} while (bOpcionSubMenu <= 4);
-		if (iOpcion == 5)
-			DireccionView.subMenuDireccion(controller);
+		} while (bOpcionSubMenu != 5);
+		
 	}
 
-	public static int opcionGestionarPais(byte bOpcion, GeneralController controller) {
-		int bOperacionExito = 0;
-		do {
+	public static void opcionGestionarPais(byte bOpcion, GeneralController controller) {
 			switch (bOpcion) {
 			case 1: // Anadir
-				bOperacionExito = anadir(controller);
-				if (bOperacionExito != 0)
+				
+				if (anadir(controller) == true) {
 					System.out.println("Pais anadido con exito.\n");
-				else
+				}else {
 					System.out.println("No se pudo anadir el pais.\n");
-				bOpcion = DireccionView.subMenu(Pais.class.getSimpleName());
+				}
 				break;
 			case 2: // Borrar
-				bOperacionExito = eliminar(controller);
-				if (bOperacionExito != 0) {
+				if (eliminar(controller) == true) {
 					System.out.println("Pais eliminado con exito.\n");
 				} else {
 					System.out.println("No se pudo eliminar el pais.\n");
 				}
-				bOpcion = DireccionView.subMenu(Pais.class.getSimpleName());
 				break;
 			case 3: // Modificar
-				bOperacionExito = modificar(controller);
-				if (bOperacionExito != 0) {
-					System.out.println("Pais modificado con exito..\n");
-				} else {
-					System.out.println("No se pudo modificar el pais.\n");
-				}
-				bOpcion = DireccionView.subMenu(Pais.class.getSimpleName());
+				System.out.println("Opcion no disponible.");
 				break;
 			case 4: // Mostar
 				mostrar(controller);
-				bOpcion = DireccionView.subMenu(Pais.class.getSimpleName());
 				break;
-
-			default:
+			case 5:
 				System.out.println("Regreso al menu anterior");
+				break;
+			default:
+				System.out.println("Introduzca una opcion valida.");
 
 			}
 
-		} while (bOpcion > 0 && bOpcion < 5);
-
-		return bOperacionExito;
 	}
 
-	public static int anadir(GeneralController controller) {
-		boolean errorControl = true;
+	public static boolean anadir(GeneralController controller) {
+		boolean errorControl = true, addPais = false;
 		String sPais = null;
-		int addPais = 0;
 
 		while (errorControl) {
 			try {
@@ -89,28 +74,23 @@ public class PaisView implements LimitsDB {
 		}
 		Pais oPais = new Pais(sPais);
 		if (controller.direccionCtrl.getPaisCtrl().existePais(oPais) == 0) {
-			addPais = controller.getDireccionCtrl().addPais(oPais);
+			if(controller.getDireccionCtrl().addPais(oPais) > 0) {
+				addPais = true;
+			}
 		}
 		return addPais;
 	}
 
-	public static int eliminar(GeneralController c) {
+	public static boolean eliminar(GeneralController c) {
 		int iRes = 0;
+		boolean DelPais = false;
 
 		iRes = c.getDireccionCtrl().getPaisCtrl()
 				.remove(new Pais(LibFrontend.leer("Introduzca el nombre del pais a eliminar: ")));
-
-		return iRes;
-	}
-
-	public static int modificar(GeneralController c) {
-		int iRes = 0;
-		Pais oPais = new Pais(LibFrontend.leer("Introduzca el nombre el pais que desee modificar:"));
-		if (c.getDireccionCtrl().getPaisCtrl().existePais(oPais) != 0) {
-			iRes = c.direccionCtrl.getPaisCtrl().Update(oPais,
-					new Pais(LibFrontend.leer("Introduzca el nuevo nombre del pais: ")));
+		if(iRes > 0) {
+			DelPais = true;
 		}
-		return iRes;
+		return DelPais;
 	}
 
 	public static void mostrar(GeneralController controller) {

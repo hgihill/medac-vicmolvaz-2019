@@ -7,34 +7,40 @@ import model.dir.Pais;
 import model.dir.Provincia;
 
 public class ProvinciaView implements LimitsDB {
-
+	
 	public static void subMenuProvincia(GeneralController controller) {
-		byte bOpcionSubMenu = 0;
+		byte bOpcionSubMenu;
+		boolean bOperacionExito = false, errorControl;
 		do {
-
 			bOpcionSubMenu = DireccionView.subMenu(Provincia.class.getSimpleName());
-
-			opcionGestionarProvincia(bOpcionSubMenu, controller);
-
-		} while (bOpcionSubMenu < 5);
+			errorControl = true;
+			while (errorControl) {
+				try {
+					opcionGestionarProvincia(bOpcionSubMenu, controller);
+					errorControl = false;
+					bOperacionExito = true;
+				}catch(NullPointerException ex) {
+					System.out.println(ex.getMessage());
+				}
+			}
+		} while (bOpcionSubMenu != 5);
 
 	}
 
-	public static int opcionGestionarProvincia(byte bOpcion, GeneralController controller) {
-		int iOperacionExito = 0;
+	public static void opcionGestionarProvincia(byte bOpcion, GeneralController controller) {
 
 		switch (bOpcion) {
+		
 		case 1: // Anadir
-			iOperacionExito = anadir(controller);
-			if (iOperacionExito != 0)
+			if (anadir(controller) == true) {
 				System.out.println("Provincia anadida con exito.\n");
-			else
+			}else {
 				System.out.println("No se pudo anadir la provincia.\n");
+			}
 			break;
 			
 		case 2: // Borrar
-			iOperacionExito = eliminar(controller);
-			if (iOperacionExito != 0) {
+			if (eliminar(controller) == true) {
 				System.out.println("Provincia eliminada con exito.\n");
 			} else {
 				System.out.println("No se pudo eliminar la provincia.\n");
@@ -42,31 +48,25 @@ public class ProvinciaView implements LimitsDB {
 			break;
 			
 		case 3: // Modificar
-			iOperacionExito = modificar(controller);
-			if (iOperacionExito != 0) {
-				System.out.println("Provincia modificada con exito..\n");
-			} else {
-				System.out.println("No se pudo modificar la provincia.\n");
-			}
-			break;
+			System.out.println("Opcion no disponible, puede crear o eliminar provincias.");
 			
 		case 4: // Mostar
 			mostrar(controller);
-
 			break;
-
-		default:
+			
+		case 5:
 			System.out.println("Regreso al menu anterior");
+			break;
+			
+		default:
+			System.out.println("Introduzca una opcion valida.");
 
 		}
-
-		return iOperacionExito;
 	}
 
-	public static int anadir(GeneralController controller) {
-		boolean errorControl = true;
+	public static boolean anadir(GeneralController controller) {
+		boolean errorControl = true, addProvincia = false;
 		String sProvincia = null, sPais = null;
-		int addProvincia = 0;
 
 		while (errorControl) {
 			try {
@@ -95,27 +95,22 @@ public class ProvinciaView implements LimitsDB {
 		Provincia oProvincia = new Provincia(sProvincia, oPais);
 		if (controller.getDireccionCtrl().existeProvincia(oProvincia) == 0) {
 			System.out.println(oProvincia);
-			addProvincia = controller.getDireccionCtrl().addProvincia(oProvincia);
+			if (controller.getDireccionCtrl().addProvincia(oProvincia) > 0);
+			addProvincia = true;
 		}
 		return addProvincia;
 	}
 
-	public static int eliminar(GeneralController c) {
+	public static boolean eliminar(GeneralController c) {
 		int iRes = 0;
+		boolean DelProvincia = false;
 
 		iRes = c.getDireccionCtrl().getProvinciaCtrl()
 				.remove(new Provincia(LibFrontend.leer("Introduzca el nombre de la provincia a eliminar: ")));
-		return iRes;
-	}
-
-	public static int modificar(GeneralController c) {
-		int iRes = 0;
-		iRes = c.direccionCtrl.getProvinciaCtrl().Update(
-				new Provincia(LibFrontend.leer("Introduzca el nombre el provincia que desee modificar: ")),
-				new Provincia(LibFrontend.leer("Introduzca el nuevo nombre del Provincia: ")),
-				c.direccionCtrl.getPaisCtrl());
-
-		return iRes;
+		if(iRes > 0) {
+			DelProvincia = true;
+		}
+		return DelProvincia;
 	}
 
 	public static void mostrar(GeneralController controller) {

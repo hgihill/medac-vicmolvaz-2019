@@ -1,6 +1,8 @@
 package view.dir;
 
 import controllers.GeneralController;
+import controllers.dir.PaisController;
+import controllers.dir.ProvinciaController;
 import limites.LimitsDB;
 import medac.validaciones.LibFrontend;
 import model.dir.Localidad;
@@ -11,42 +13,47 @@ public class LocalidadView implements LimitsDB {
 
 	public static void subMenuLocalidad(GeneralController controller) {
 		byte bOpcionSubMenu = 0;
-		
+		boolean bOperacionExito = false, errorControl;
+
 		do {
 
 			bOpcionSubMenu = DireccionView.subMenu(Localidad.class.getSimpleName());
-
-			opcionGestionarLocalidad(bOpcionSubMenu, controller);
-
-		} while (bOpcionSubMenu < 5);
+			errorControl = true;
+			while (errorControl) {
+				try {
+					opcionGestionarLocalidad(bOpcionSubMenu, controller);
+					errorControl = false;
+					bOperacionExito = true;
+				} catch (NullPointerException ex) {
+					System.out.println(ex.getMessage());
+				}
+			}
+		} while (bOpcionSubMenu != 5);
 
 	}
 
-	public static int opcionGestionarLocalidad(byte bOpcion, GeneralController controller) {
-		int iOperacionExito = 0;
+	public static void opcionGestionarLocalidad(byte bOpcion, GeneralController controller) {
 
 		switch (bOpcion) {
 		case 1: // Anadir
-			iOperacionExito = anadir(controller);
-			if (iOperacionExito != 0)
+			if (anadir(controller) == true) {
 				System.out.println("Localidad anadida con exito.\n");
-			else
+			} else {
 				System.out.println("No se pudo anadir la localidad.\n");
+			}
 			break;
 
 		case 2: // Borrar
-			iOperacionExito = eliminar(controller);
-			if (iOperacionExito != 0) {
+			if (eliminar(controller) == true) {
 				System.out.println("Localidad eliminada con exito.\n");
 			} else {
-				System.out.println("No se pudo eliminar la provincia.\n");
+				System.out.println("No se pudo eliminar la localidad.\n");
 			}
 			break;
 
 		case 3: // Modificar
-			iOperacionExito = modificar(controller);
-			if (iOperacionExito != 0) {
-				System.out.println("Localidad modificada con exito..\n");
+			if (modificar(controller) == true) {
+				System.out.println("Localidad modificada con exito.\n");
 			} else {
 				System.out.println("No se pudo modificar la localidad.\n");
 			}
@@ -54,21 +61,20 @@ public class LocalidadView implements LimitsDB {
 
 		case 4: // Mostar
 			mostrar(controller);
+			break;
 
+		case 5:
+			System.out.println("Regreso al menu anterior");
 			break;
 
 		default:
-			System.out.println("Regreso al menu anterior");
-
+			System.out.println("Introduzca una opcion valida.");
 		}
-
-		return iOperacionExito;
 	}
 
-	public static int anadir(GeneralController controller) {
-		boolean errorControl = true;
+	public static boolean anadir(GeneralController controller) {
+		boolean errorControl = true, addLocalidad = false;
 		String sCp = null, sLocalidad = null, sProvincia = null, sPais = null;
-		int addLocalidad = 0;
 
 		while (errorControl) {
 			try {
@@ -81,7 +87,7 @@ public class LocalidadView implements LimitsDB {
 			}
 		}
 		errorControl = true;
-		
+
 		while (errorControl) {
 			try {
 				sProvincia = LibFrontend.leer("Indique en que provincia se encuentra: ");
@@ -93,7 +99,7 @@ public class LocalidadView implements LimitsDB {
 			}
 		}
 		errorControl = true;
-		
+
 		while (errorControl) {
 			try {
 				sCp = LibFrontend.leer("Indique el CP de la localidad: ");
@@ -105,7 +111,7 @@ public class LocalidadView implements LimitsDB {
 			}
 		}
 		errorControl = true;
-		
+
 		while (errorControl) {
 			try {
 				sLocalidad = LibFrontend.leer("Introduzca una localidad: ");
@@ -122,43 +128,82 @@ public class LocalidadView implements LimitsDB {
 		Localidad oLocalidad = new Localidad(sCp, sLocalidad, oProvincia);
 		if (controller.getDireccionCtrl().existeLocalidad(oLocalidad) == 0) {
 			System.out.println(oLocalidad);
-			addLocalidad = controller.getDireccionCtrl().addLocalidad(oLocalidad);
+			if (controller.getDireccionCtrl().addLocalidad(oLocalidad) > 0);
+			addLocalidad = true;
 		}
 		return addLocalidad;
 	}
 
-	public static int eliminar(GeneralController c) {
+	public static boolean eliminar(GeneralController c) {
 		int iRes = 0;
+		boolean DelLocalidad = false;
+
 		iRes = c.getDireccionCtrl().getLocalidadCtrl()
 				.remove(new Localidad(LibFrontend.leer("Introduzca el CP de la localidad a eliminar: ")));
-		return iRes;
-	}
-	
-	public static int modificar(GeneralController c) {
-		int iRes = 0;
-		Localidad oLocalidad = null;
-		String sCP, sNombre = "", sProvincia = "", sPais = ""; 
-		
-		sCP = LibFrontend.leer("Escribe el CP de la localidad a modificar: ");
-		
-		//Busqueda de la localiada por el cp.
-		
-		oLocalidad = c.getDireccionCtrl().getLocalidadCtrl().searchLocalidadByPk(new Localidad(sCP),c);
-		
-		if(oLocalidad != null) {
-			sNombre = LibFrontend.leer("Escribe el nombre de la localidad (5 caracteres): ");
-			sProvincia= LibFrontend.leer("Escribe el nombre de la provincia: ");
-			sPais= LibFrontend.leer("Escribe el nombre del pais: ");
+		if (iRes > 0) {
+			DelLocalidad = true;
 		}
-		
-		oLocalidad.setsNombreLoc(sNombre);
-		oLocalidad.setoProv(new Provincia(sProvincia,new Pais(sPais)));
-		
-		
-		
-		iRes = c.direccionCtrl.getLocalidadCtrl().update(oLocalidad, c.direccionCtrl.getProvinciaCtrl(), c.direccionCtrl.getPaisCtrl());
+		return DelLocalidad;
+	}
 
-		return iRes;
+	public static boolean modificar(GeneralController c) {
+		boolean errorControl = true, ModLocalidad = false;
+		String sCp = null, sNombre = null, sProvincia = null, sPais = null;
+
+		while (errorControl) {
+			try {
+				sCp = LibFrontend.leer("Introduzca el CP de la localidad que desee modificar: ");
+				errorControl = false;
+
+			} catch (Exception ex) {
+				System.out.println("Error: " + ex.getMessage());
+			}
+		}
+		errorControl = true;
+
+		while (errorControl) {
+			try {
+				sNombre = LibFrontend.leer("Introduzca el nombre actualizado de la localidad: ");
+				errorControl = false;
+
+			} catch (Exception ex) {
+				System.out.println("Error: " + ex.getMessage());
+			}
+		}
+		errorControl = true;
+
+		while (errorControl) {
+			try {
+				sProvincia = LibFrontend.leer("Indique a qué provincia pertenece la localidad: ");
+				errorControl = false;
+
+			} catch (Exception ex) {
+				System.out.println("Error: " + ex.getMessage());
+			}
+		}
+		errorControl = true;
+
+		while (errorControl) {
+			try {
+				sPais = LibFrontend.leer("Indique a qué pais pertenece la localidad: ");
+				errorControl = false;
+
+			} catch (Exception ex) {
+				System.out.println("Error: " + ex.getMessage());
+			}
+		}
+		errorControl = true;
+
+		PaisController paisCtrl = new PaisController();
+		ProvinciaController provinciaCtrl = new ProvinciaController();
+		Pais oPais = new Pais(sPais);
+		Provincia oProvincia = new Provincia(sProvincia, oPais);
+		Localidad oLocalidad = new Localidad(sCp, sNombre, oProvincia);
+		if(c.direccionCtrl.getLocalidadCtrl().update(oLocalidad, provinciaCtrl, paisCtrl) > 0) {
+			ModLocalidad = true;
+		}
+		return ModLocalidad;
+
 	}
 
 	public static void mostrar(GeneralController controller) {

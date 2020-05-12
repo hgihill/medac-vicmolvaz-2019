@@ -49,17 +49,6 @@ public class PaisController implements IPaisController {
 		return sResultado;
 	}
 
-	@Override
-	public int Update(Pais oPais, Pais oOtro) {
-		int iRes = 0;
-
-		if (oPais.checkPais()) {
-			remove(oPais);
-			iRes = add(oOtro);
-		}
-		return iRes;
-	}
-
 	// ###########
 	// # QUERIES #
 	// ###########

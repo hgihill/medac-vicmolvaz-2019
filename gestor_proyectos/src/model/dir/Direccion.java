@@ -72,7 +72,7 @@ public class Direccion implements IDreccion, LimitsDB {
 			this.bBloque = bBloque;
 			bExito = true;
 		} else {
-			bBloque = -1;
+			bExito = false;
 		}
 		return bExito;
 	}
@@ -89,7 +89,7 @@ public class Direccion implements IDreccion, LimitsDB {
 			this.bPortal = bPortal;
 			bExito = true;
 		} else {
-			bPortal = 0;
+			bExito = false;
 		}
 		return bExito;
 	}
@@ -114,7 +114,7 @@ public class Direccion implements IDreccion, LimitsDB {
 
 		sResultado += "Calle: " + getsCalle() + "\n";
 		sResultado += "Número: " + getbNum() + "\n";
-		if (bBloque != -1) {
+		if (bBloque != 0) {
 			sResultado += "Bloque: " + getbBloque() + "\n";
 		}
 		if (bPortal != 0) {

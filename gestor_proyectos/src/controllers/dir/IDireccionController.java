@@ -14,7 +14,7 @@ public interface IDireccionController {
 
 	public int remove(Direccion oAddress);
 	
-	public int update(Direccion oDireccion, Direccion oOtra, LocalidadController localidadCtrl,
+	public int update(Direccion oDireccion, LocalidadController localidadCtrl,
 			ProvinciaController provinciaCtrl, PaisController paisCtrl);
 	
 	public String mostrarDireccion();

@@ -31,22 +31,9 @@ public class ProvinciaController implements IProvinciaController {
 	@Override
 	public int remove(Provincia oProvincia) {
 		int iRes = 0;
-		String sql = "DELETE FROM provincia WHERE nombre LIKE \"" + oProvincia.getsNombreProv() + "\"";
+		String sql = "DELETE FROM provincia WHERE nombre_prov LIKE \"" + oProvincia.getsNombreProv() + "\"";
 		iRes = ConexionDB.executeUpdate(sql);
 		return iRes;
-	}
-
-	@Override
-	public int Update(Provincia oProvincia, Provincia oOtra, PaisController paisCtrl) {
-		int iRes = 0;
-
-		if (oProvincia.checkProvincia()) {
-			remove(oProvincia);
-			iRes = add(oOtra, paisCtrl);
-		}
-
-		return iRes;
-
 	}
 
 	@Override
@@ -78,27 +65,6 @@ public class ProvinciaController implements IProvinciaController {
 		iRes = ConexionDB.executeCount(sql);
 		return iRes;
 	}
-
-//	@Override
-//	public List<Provincia> searchProvincia(Pais oPais) {
-//		List<Provincia> lProvincia = new ArrayList<Provincia>();
-//
-//		String sql = "SELECT * FROM provincia WHERE nombre_prov = (\"" + oPais.getsNombre() + "\")";
-//		Statement stm = null;
-//
-//		try {
-//			stm = ConexionDB.getConnection().createStatement();
-//			ResultSet rs = stm.executeQuery(sql);
-//			while (rs.next()) {
-//				String sNombre = rs.getString(1);
-//				lProvincia.add(new Provincia(sNombre));
-//			}
-//			stm.close();
-//		} catch (SQLException ex) {
-//			lProvincia = null;
-//		}
-//		return lProvincia;
-//	}
 
 	public Provincia searchProvincia(Provincia oProvincia, GeneralController c) {
 		Provincia Provincia = null;

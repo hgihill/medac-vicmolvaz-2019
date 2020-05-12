@@ -68,7 +68,7 @@ public class Localidad implements ILocalidad, LimitsDB {
 	@Override
 	public boolean checkLocalidad() {
 		boolean bExito = false;
-		if (this.sCP != null && this.sLoc != null && oProv.checkProvincia()) {
+		if (this.sCP != null && oProv.checkProvincia()) {
 			bExito = true;
 		}
 		return bExito;
