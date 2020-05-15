@@ -16,7 +16,7 @@ public class TipoUsuario implements ITipo_Usuario, LimitsDB {
 
 	private boolean setbTipoUsuario(byte bTipoUsuario) {
 		boolean bExito = false;
-		if (bTipoUsuario > 0 && bTipoUsuario <= LIMITBYTE) {
+		if (bTipoUsuario >= MINTIPOUS && bTipoUsuario <= MAXTIPOUS) {
 			this.bTipoUsuario = bTipoUsuario;
 			bExito = true;
 		}

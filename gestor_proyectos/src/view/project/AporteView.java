@@ -3,11 +3,9 @@ package view.project;
 import controllers.GeneralController;
 import limites.LimitsDB;
 import medac.validaciones.LibFrontend;
-import model.dir.Localidad;
 import model.project.Aporte;
 import model.project.Financiacion;
 import model.user.Usuario;
-import view.dir.DireccionView;
 
 public class AporteView implements LimitsDB {
 
@@ -74,46 +72,48 @@ public class AporteView implements LimitsDB {
 		while (errorControl) {
 			try {
 				sDniCif = LibFrontend.leer("Introduzca el dni de un usuario existente: ");
-				if (sDniCif.length() == LIMITDNI) {
-					errorControl = false;
-				}
+				errorControl = false;
+				
 			} catch (Exception ex) {
 				System.out.println("Error: " + ex.getMessage());
 			}
 		}
 		errorControl = true;
+		Usuario oUs = controller.getUsuarioCtrl().getUsCtrl().search(new Usuario(sDniCif));
 
 		while (errorControl) {
 			try {
 				sCuenta = LibFrontend.leer("Introduzca una cuenta bancaria existente: ");
-				if (sCuenta.length() == NUMCUENTA) {
-					errorControl = false;
-				}
+				errorControl = false;
+				
 			} catch (Exception ex) {
 				System.out.println("Error: " + ex.getMessage());
 			}
 		}
-		errorControl = true;
+		
+		Financiacion oFin = controller.getProyectoCtrl().getFinCtrl().search(new Financiacion(sCuenta), controller);
 
-		while (errorControl) {
-			try {
-				iImporte = (int) LibFrontend.valida("Introduzca el importe desee aportar: ", 5, 100000, 1);
-				if (iImporte >= MINAPORTE && iImporte <= MAXAPORTE) {
-					errorControl = false;
+		if (oUs != null && oFin != null) {
+			errorControl = true;
+			while (errorControl) {
+				try {
+					iImporte = (int) LibFrontend.valida("Introduzca el importe desee aportar: ", 5, 100000, 1);
+					if (iImporte >= MINAPORTE && iImporte <= MAXAPORTE) {
+						errorControl = false;
+					}
+				} catch (Exception ex) {
+					System.out.println("Error: " + ex.getMessage());
 				}
-			} catch (Exception ex) {
-				System.out.println("Error: " + ex.getMessage());
 			}
 		}
-		errorControl = true;
 
-		Usuario oUs = new Usuario(sDniCif);
-		Financiacion oFin = new Financiacion(sCuenta);
 		Aporte oAporte = new Aporte(oUs, oFin, iImporte);
 		if (controller.getProyectoCtrl().existeAporte(oAporte) == 0) {
 			System.out.println(oAporte);
-			if (controller.getProyectoCtrl().addAporte(oAporte) > 0);
-			addAporte = true;
+			if (controller.getProyectoCtrl().addAporte(oAporte) > 0) {
+				addAporte = true;
+			}
+				
 		}
 		return addAporte;
 	}
@@ -121,7 +121,7 @@ public class AporteView implements LimitsDB {
 	public static boolean eliminar(GeneralController controller) {
 		boolean errorControl = true, DelAporte = false;
 		String sDniCif = null, sCuenta = null;
-		int iError = 0;
+		int iRes = 0;
 
 		while (errorControl) {
 			try {
@@ -132,25 +132,30 @@ public class AporteView implements LimitsDB {
 			} catch (Exception ex) {
 				System.out.println("Error: " + ex.getMessage());
 			}
-			errorControl = true;
+		}
+		errorControl = true;
+		Usuario oUs = controller.getUsuarioCtrl().getUsCtrl().search(new Usuario(sDniCif));
 
-			while (errorControl) {
-				try {
-					sCuenta = LibFrontend.leer("Introduzca la cuenta que desea desvincular: ");
-					if (sCuenta.length() == NUMCUENTA) {
-						errorControl = false;
-					}
-				} catch (Exception ex) {
-					System.out.println("Error: " + ex.getMessage());
+		while (errorControl) {
+			try {
+				sCuenta = LibFrontend.leer("Introduzca la cuenta que desea desvincular: ");
+				if (sCuenta.length() == NUMCUENTA) {
+					errorControl = false;
 				}
-
-				Usuario oUs = new Usuario(sDniCif);
-				Financiacion oFin = new Financiacion(sCuenta);
-				Aporte oAporte = new Aporte(oUs, oFin);
-				if (controller.getProyectoCtrl().removeAporte(oAporte) > 0) {
-					DelAporte = true;
-				}
+			} catch (Exception ex) {
+				System.out.println("Error: " + ex.getMessage());
 			}
+		}
+		Financiacion oFin = controller.getProyectoCtrl().getFinCtrl().search(new Financiacion(sCuenta), controller);
+
+		Aporte oAporte = new Aporte(oUs, oFin);
+		System.out.println("\n--------------------------" + oAporte);
+		if (controller.getProyectoCtrl().existeAporte(oAporte) > 0) {
+			iRes = controller.getProyectoCtrl().getAptCtorl().remove(oAporte);
+			if (iRes > 0) {
+				DelAporte = true;
+			}
+
 		}
 		return DelAporte;
 	}
@@ -171,6 +176,7 @@ public class AporteView implements LimitsDB {
 			}
 		}
 		errorControl = true;
+		Usuario oUs = controller.getUsuarioCtrl().getUsCtrl().search(new Usuario(sDniCif));
 
 		while (errorControl) {
 			try {
@@ -183,64 +189,30 @@ public class AporteView implements LimitsDB {
 			}
 		}
 		errorControl = true;
+		Financiacion oFin = controller.getProyectoCtrl().getFinCtrl().search(new Financiacion(sCuenta), controller);
 
-		while (errorControl) {
-			try {
-				iImporte = (int) LibFrontend.valida("Introduzca la cantidad la nueva cantidad: ", 5, 100000, 1);
-				if (iImporte >= MINAPORTE && iImporte <= MAXAPORTE) {
-					errorControl = false;
-				}
-			} catch (Exception ex) {
-				System.out.println("Error: " + ex.getMessage());
-			}
-		}
-		errorControl = true;
-
-		Usuario oUs = new Usuario(sDniCif);
-		Financiacion oFin = new Financiacion(sCuenta);
-		Aporte oAporte = new Aporte(oUs, oFin, iImporte);
-		if (controller.getProyectoCtrl().updateAporte(oAporte) > 0) {
-			ModAporte = true;
-		}
-		return ModAporte;
-	}
-
-	public static int buscar(GeneralController controller) {
-		boolean errorControl = true;
-		String sDniCif = null, sCuenta = null;
-		byte bOpcion = 0;
-
-		while (errorControl) {
-			try {
-				sDniCif = LibFrontend.leer("Introduzca el dni/cif de usuario para localizar el aporte: ");
-				if (sDniCif.length() == LIMITDNI) {
-					errorControl = false;
-				}
-			} catch (Exception ex) {
-				System.out.println("Error: " + ex.getMessage());
-			}
-
+		if (oUs != null && oFin != null) {
 			while (errorControl) {
 				try {
-					sCuenta = LibFrontend.leer("Introduzca la cuenta del mismo usuario para localizar el aporte: ");
-					if (sCuenta.length() == NUMCUENTA) {
+					iImporte = (int) LibFrontend.valida("Introduzca el importe desee aportar: ", 5, 100000, 1);
+					if (iImporte >= MINAPORTE && iImporte <= MAXAPORTE) {
 						errorControl = false;
 					}
 				} catch (Exception ex) {
 					System.out.println("Error: " + ex.getMessage());
 				}
-
-				Usuario oUs = new Usuario(sDniCif);
-				Financiacion oFin = new Financiacion(sCuenta);
-				Aporte oAporte = new Aporte(oUs, oFin);
-				bOpcion = (byte) controller.getProyectoCtrl().existeAporte(oAporte);
 			}
 		}
-		return bOpcion;
+
+		Aporte oAporte = new Aporte(oUs, oFin, iImporte);
+		if (controller.getProyectoCtrl().getAptCtorl().update(oAporte) > 0) {
+			ModAporte = true;
+		}
+		return ModAporte;
 	}
 
 	public static void mostrar(GeneralController controller) {
-		System.out.println(controller.proyectoCtrl.getAptCtorl());
+		System.out.println(controller.proyectoCtrl.getAptCtorl().mostrarAporte());
 	}
 
 }

@@ -1,8 +1,6 @@
 package view.dir;
 
 import controllers.GeneralController;
-import controllers.dir.PaisController;
-import controllers.dir.ProvinciaController;
 import limites.LimitsDB;
 import medac.validaciones.LibFrontend;
 import model.dir.Localidad;
@@ -126,9 +124,9 @@ public class LocalidadView implements LimitsDB {
 		Pais oPais = new Pais(sPais);
 		Provincia oProvincia = new Provincia(sProvincia, oPais);
 		Localidad oLocalidad = new Localidad(sCp, sLocalidad, oProvincia);
-		if (controller.getDireccionCtrl().existeLocalidad(oLocalidad) == 0) {
+		if (controller.getDireccionCtrl().getLocalidadCtrl().existeLocalidad(oLocalidad) == 0) {
 			System.out.println(oLocalidad);
-			if (controller.getDireccionCtrl().addLocalidad(oLocalidad) > 0);
+			if (controller.getDireccionCtrl().getLocalidadCtrl().add(oLocalidad) > 0);
 			addLocalidad = true;
 		}
 		return addLocalidad;
@@ -193,13 +191,11 @@ public class LocalidadView implements LimitsDB {
 			}
 		}
 		errorControl = true;
-
-		PaisController paisCtrl = new PaisController();
-		ProvinciaController provinciaCtrl = new ProvinciaController();
+		
 		Pais oPais = new Pais(sPais);
 		Provincia oProvincia = new Provincia(sProvincia, oPais);
 		Localidad oLocalidad = new Localidad(sCp, sNombre, oProvincia);
-		if(c.direccionCtrl.getLocalidadCtrl().update(oLocalidad, provinciaCtrl, paisCtrl) > 0) {
+		if(c.direccionCtrl.getLocalidadCtrl().update(oLocalidad) > 0) {
 			ModLocalidad = true;
 		}
 		return ModLocalidad;

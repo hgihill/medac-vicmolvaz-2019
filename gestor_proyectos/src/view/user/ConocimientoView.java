@@ -9,72 +9,83 @@ public class ConocimientoView implements LimitsDB {
 
 	public static void subMenuConocimineto(GeneralController controller) {
 		byte bOpcionSubMenu;
-		do {
-			bOpcionSubMenu = UsuarioView.subMenu(Conocimiento.class.getSimpleName());
-			opcionMenuConocimiento(bOpcionSubMenu, controller);
+		boolean bOperacionExito = false, errorControl;
 
-		} while (bOpcionSubMenu < 5);
+		do {
+
+			bOpcionSubMenu = UsuarioView.subMenu(Conocimiento.class.getSimpleName());
+			errorControl = true;
+			while (errorControl) {
+				try {
+					opcionMenuConocimiento(bOpcionSubMenu, controller);
+					errorControl = false;
+					bOperacionExito = true;
+				} catch (NullPointerException ex) {
+					System.out.println(ex.getMessage());
+				}
+			}
+		} while (bOpcionSubMenu != 5);
+
 	}
 
-	public static int opcionMenuConocimiento(byte bOpcion, GeneralController controller) {
-		int iOperacionExito = 0;
-
+	public static void opcionMenuConocimiento(byte bOpcion, GeneralController controller) {
 		switch (bOpcion) {
 		case 1: // Anadir
-			iOperacionExito = anadir(controller);
-			if (anadir(controller) != 0) {
-				System.out.println("Se ha anadido el conocimiento.");
+			if (anadir(controller) == true) {
+				System.out.println("Se ha anadido el conocimiento.\n");
 			} else {
-				System.out.println("El conocimiento ya se habia registrado previamente.");
+				System.out.println("No se pudo anadir el conocimiento.\n");
 			}
 			break;
 
 		case 2: // Eliminar
-			iOperacionExito = eliminar(controller);
-			if (eliminar(controller) != 0) {
-				System.out.println("El conocimiento ha sido eliminado.");
+			if (eliminar(controller) == true) {
+				System.out.println("El conocimiento ha sido eliminado.\n");
 			} else {
-				System.out.println("El conocimiento no existe.");
+				System.out.println("No se pudo eliminar el conocimiento.\n");
 			}
 			break;
 
 		case 3: // Buscar
-			System.out.println("Opción no contemplada, puede generar conocimientos o eliminarlos");
+			System.out.println("Opción no contemplada, puede generar conocimientos o eliminarlos.\n");
 			break;
 
 		case 4: // Mostrar
 			mostrar(controller);
 
 		default:
-			System.out.println("Regreso al menu anterior");
+			System.out.println("Regreso al menu anterior.\n");
 		}
-		return iOperacionExito;
 	}
 
-	public static int anadir(GeneralController controller) {
-		boolean errorControl = true;
+	public static boolean anadir(GeneralController controller) {
+		boolean errorControl = true, addConocimiento = false;
 		String sNombre = null;
 
 		while (errorControl) {
 			try {
 				sNombre = LibFrontend.leer("Introduzca el nombre del conocimiento: ");
-				if (sNombre.length() <= LIMITGENERICO) {
-					errorControl = false;
-				}
+				errorControl = false;
+
 			} catch (Exception ex) {
 				System.out.println("Error en email: " + ex.getMessage());
 			}
 		}
-		errorControl = true;
 
 		Conocimiento oConocimiento = new Conocimiento(sNombre);
-		return controller.getUsuarioCtrl().addConocimiento(oConocimiento);
+
+		if (controller.getUsuarioCtrl().getConCtrl().existeConocimiento(oConocimiento) == 0) {
+			System.out.println(oConocimiento);
+			if (controller.getUsuarioCtrl().getConCtrl().add(oConocimiento) > 0);
+				addConocimiento = true;
+		}
+		return addConocimiento;
 	}
 
-	public static int eliminar(GeneralController controller) {
-		boolean errorControl = true;
+	public static boolean eliminar(GeneralController controller) {
+		boolean errorControl = true, DelConocimiento = false;
 		String sNombre = null;
-		int iError = 0;
+		int iRes = 0;
 
 		while (errorControl) {
 			try {
@@ -85,13 +96,19 @@ public class ConocimientoView implements LimitsDB {
 			} catch (Exception ex) {
 				System.out.println("Error: " + ex.getMessage());
 			}
-			Conocimiento oConocimiento = new Conocimiento(sNombre);
-			iError = controller.getUsuarioCtrl().removeConocimiento(oConocimiento);
 		}
-		return iError;
+		Conocimiento oConocimiento = new Conocimiento(sNombre);
+
+		if (controller.getUsuarioCtrl().getConCtrl().existeConocimiento(oConocimiento) > 0) {
+			iRes = controller.getUsuarioCtrl().getConCtrl().remove(oConocimiento);
+			if (iRes > 0) {
+				DelConocimiento = true;
+			}
+		}
+		return DelConocimiento;
 	}
 
 	public static void mostrar(GeneralController controller) {
-		System.out.println(controller.usuarioCtrl.getConCtrl());
+		System.out.println(controller.usuarioCtrl.getConCtrl().mostrarConocimiento());
 	}
 }

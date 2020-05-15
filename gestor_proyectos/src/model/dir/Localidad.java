@@ -12,6 +12,7 @@ public class Localidad implements ILocalidad, LimitsDB {
 		setoProv(oProv);
 	}
 	
+	
 	public Localidad(String sCP, Provincia oProv) {
 		setsCP(sCP);
 		setoProv(oProv);
@@ -43,7 +44,7 @@ public class Localidad implements ILocalidad, LimitsDB {
 	@Override
 	public boolean setsNombreLoc(String sNombreLoc) {
 		boolean bExito = false;
-		if (sNombreLoc != null && sNombreLoc.length() > 0 && sNombreLoc.length() <= MAXCHARACTERS) {
+		if (sNombreLoc != null && sNombreLoc.length() > MINGENERICO && sNombreLoc.length() <= LIMITGENERICO) {
 			this.sLoc = sNombreLoc;
 			bExito = true;
 		}
@@ -99,7 +100,7 @@ public class Localidad implements ILocalidad, LimitsDB {
 
 		sResultado += "Codigo Postal: " + getsCP() + "\n";
 		sResultado += "Localidad: " + getsNombreLoc() + "\n";
-		sResultado += oProv;
+		sResultado += "Provincia: "+oProv.toString()+"\n";
 
 		return sResultado;
 	}

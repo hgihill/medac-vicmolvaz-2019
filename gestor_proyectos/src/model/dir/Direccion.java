@@ -39,7 +39,7 @@ public class Direccion implements IDreccion, LimitsDB {
 
 	private boolean setsCalle(String sCalle) {
 		boolean bExito = false;
-		if (sCalle != null && sCalle.length() > 0 && sCalle.length() < MAXCHARACTERS) {
+		if (sCalle != null && sCalle.length() > MINGENERICO && sCalle.length() <= LIMITGENERICO) {
 			this.sCalle = sCalle;
 			bExito = true;
 		}
@@ -53,7 +53,7 @@ public class Direccion implements IDreccion, LimitsDB {
 
 	private boolean setbNum(byte bNum) {
 		boolean bExito = false;
-		if (bNum >= 0 && bNum < LIMITBYTE) {
+		if (bNum >= MINNUM && bNum <= MAXNUM) {
 			this.bNum = bNum;
 			bExito = true;
 		}
@@ -68,7 +68,7 @@ public class Direccion implements IDreccion, LimitsDB {
 	@Override
 	public boolean setbBloque(byte bBloque) {
 		boolean bExito = false;
-		if (bBloque >= 0 && bBloque < LIMITBYTE) {
+		if (bBloque >= MINBLOQUE && bBloque <= MAXBLOQUE) {
 			this.bBloque = bBloque;
 			bExito = true;
 		} else {
@@ -85,7 +85,7 @@ public class Direccion implements IDreccion, LimitsDB {
 	@Override
 	public boolean setbPortal(byte bPortal) {
 		boolean bExito = false;
-		if (bPortal >= 0 && bPortal < LIMITBYTE) {
+		if (bPortal >= MINPORTAL && bPortal <= MAXPORTAL) {
 			this.bPortal = bPortal;
 			bExito = true;
 		} else {

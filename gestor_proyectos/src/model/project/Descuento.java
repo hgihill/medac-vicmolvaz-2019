@@ -37,7 +37,7 @@ public class Descuento implements IDescuento, LimitsDB {
 	@Override
 	public boolean setfPorcentaje(float fPorcentaje) {
 		boolean bExito = false;
-		if (fPorcentaje >= 0 && fPorcentaje <= 100) {
+		if (fPorcentaje >= MINDESC && fPorcentaje <= MAXDESC) {
 			this.fPorcentaje = fPorcentaje;
 			bExito = true;
 		}

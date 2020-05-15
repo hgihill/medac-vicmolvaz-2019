@@ -6,7 +6,7 @@ public class Conocimiento implements IConocimiento, LimitsDB {
 
 	private String sNombre;
 
-	public Conocimiento(String sNombreCon) {
+	public Conocimiento(String sNombre) {
 		setsNombre(sNombre);
 	}
 
@@ -15,10 +15,10 @@ public class Conocimiento implements IConocimiento, LimitsDB {
 		return sNombre;
 	}
 
-	private boolean setsNombre(String sNombreCon) {
+	private boolean setsNombre(String sNombre) {
 		boolean bExito = false;
-		if (sNombreCon != null && sNombreCon.length() > 0 && sNombreCon.length() < LIMITGENERICO) {
-			this.sNombre = sNombreCon;
+		if (sNombre != null && sNombre.length() > MINGENERICO && sNombre.length() <= LIMITGENERICO) {
+			this.sNombre = sNombre;
 			bExito = true;
 		}
 		return bExito;
@@ -54,7 +54,7 @@ public class Conocimiento implements IConocimiento, LimitsDB {
 	public String toString() {
 		String sResultado = "";
 
-		sResultado += "Conocimiento requerido: " + getsNombre() + "\n";
+		sResultado += "Conocimiento: " + getsNombre() + "\n";
 
 		return sResultado;
 	}

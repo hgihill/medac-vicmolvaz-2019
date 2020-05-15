@@ -1,12 +1,9 @@
 package view.user;
 
 import controllers.GeneralController;
-import main.Main;
 import medac.validaciones.LibFrontend;
 import model.project.Proyecto;
-import model.project.Recurso;
 import model.user.Rol;
-import model.user.TipoUsuario;
 import model.user.Usuario;
 import view.project.ProyectoView;
 
@@ -14,22 +11,28 @@ public class RolView {
 
 	public static void subMenuRol(GeneralController controller) {
 		byte bOpcionSubMenu = 0;
+		boolean bOperacionExito = false, errorControl;
+
 		do {
-			bOpcionSubMenu = ProyectoView.subMenu(Recurso.class.getSimpleName());
 
-			opcionMenuRol(bOpcionSubMenu, controller);
-
-		} while (bOpcionSubMenu < 5);
-
+			bOpcionSubMenu = ProyectoView.subMenu(Rol.class.getSimpleName());
+			errorControl = true;
+			while (errorControl) {
+				try {
+					opcionMenuRol(bOpcionSubMenu, controller);
+					errorControl = false;
+					bOperacionExito = true;
+				} catch (NullPointerException ex) {
+					System.out.println(ex.getMessage());
+				}
+			}
+		} while (bOpcionSubMenu != 5);
 	}
 
-	public static int opcionMenuRol(byte bOpcion, GeneralController controller) {
-		int iOperacionExito = 0;
-
+	public static void opcionMenuRol(byte bOpcion, GeneralController controller) {
 		switch (bOpcion) {
 		case 1: // Anadir
-			iOperacionExito = anadir(controller);
-			if (iOperacionExito != 0) {
+			if (anadir(controller) == true) {
 				System.out.println("Se ha asignado un rol al usuario.\n");
 			} else {
 				System.out.println("El usuario ya tiene rol asignado.\n");
@@ -37,20 +40,18 @@ public class RolView {
 			break;
 
 		case 2: // Eliminar
-			iOperacionExito = eliminar(controller);
-			if (iOperacionExito != 0) {
-				System.out.println("Se ha eliminado el rol del usuario.");
+			if (eliminar(controller) == true) {
+				System.out.println("Se ha eliminado el rol del usuario.\n");
 			} else {
 				System.out.println("El usuario no tiene rol asignado.\n");
 			}
 			break;
 
 		case 3: // Modificar
-			iOperacionExito = modificar(controller);
-			if (iOperacionExito != 0) {
-				System.out.println("Se ha modificado el rol del usuario.");
+			if (modificar(controller) == true) {
+				System.out.println("Se ha modificado el rol del usuario.\n");
 			} else {
-				System.out.println("El usuario no tiene rol asignado.\\n");
+				System.out.println("El usuario no tiene rol asignado.\n");
 			}
 			break;
 
@@ -58,72 +59,160 @@ public class RolView {
 			mostrar(controller);
 
 		default:
-			System.out.println("Regreso al menu anterior.");
+			System.out.println("Regreso al menu anterior.\n");
 		}
-
-		return iOperacionExito;
 	}
 
-	private static int anadir(GeneralController Controller) {
+	private static boolean anadir(GeneralController controller) {
 		byte bRol = 0;
-		String sDniCif;
-		boolean errorControl;
-		int iIdProyecto, iExito = 0;
+		String sDniCif = null;
+		boolean errorControl = true, addRol = false;
+		int iIdProyecto = 0;
 
-		// Control de usuario
-		sDniCif = LibFrontend.leer("Introduzca el dni/cif del usuario al que vaya a asignar un rol: ");
-		Usuario u1 = Controller.usuarioCtrl.existeUsuario(new Usuario(sDniCif));
-	}
-
-	private static int eliminar(GeneralController Controller) {
-		byte bTipoUsuario = 0;
-		boolean errorControl;
-		int iExito = 0;
-
-		// Control de tipo
-		errorControl = true;
 		while (errorControl) {
 			try {
-				bTipoUsuario = (byte) LibFrontend.valida(
-						"Introduzca el tipo de usuario que desea eliminar (1 - particular, 2 - empresa): ", 1, 2, 3);
+				sDniCif = LibFrontend.leer("Introduzca dni/cif de un usuario para asignarle rol: ");
 				errorControl = false;
-			} catch (NumberFormatException ex) {
-				System.out.println(ex.getMessage());
 			} catch (Exception ex) {
-				errorControl = false;
-				System.out.println("Error generico: " + ex.getMessage());
+				System.out.println("Error: " + ex.getMessage());
 			}
 		}
-		TipoUsuario oTipoUsuario = new TipoUsuario(bTipoUsuario);
-		iExito = Controller.getUsuarioCtrl().removeTipoUsuario(oTipoUsuario);
-		return iExito;
-	}
-
-	private static int modificar(GeneralController Controller) {
-		byte bTipoUsuario = 0;
-		boolean errorControl;
-		int iExito = 0;
-
-		// Control de tipo
+		Usuario oUs = controller.getUsuarioCtrl().getUsCtrl().search(new Usuario(sDniCif));
 		errorControl = true;
+
 		while (errorControl) {
 			try {
-				bTipoUsuario = (byte) LibFrontend.valida(
-						"Introduzca el tipo de usuario que desea buscar (1 - particular, 2 - empresa): ", 1, 2, 3);
+				iIdProyecto = (int) LibFrontend.valida("Introduzca ID de un proyecto al que asignarle rol: ", 1, 1000,
+						1);
 				errorControl = false;
-			} catch (NumberFormatException ex) {
-				System.out.println(ex.getMessage());
 			} catch (Exception ex) {
-				errorControl = false;
-				System.out.println("Error generico: " + ex.getMessage());
+				System.out.println("Error: " + ex.getMessage());
 			}
 		}
-		TipoUsuario oTipoUsuario = new TipoUsuario(bTipoUsuario);
-		iExito = Controller.getUsuarioCtrl().existeTipoUsuario(oTipoUsuario);
-		return iExito;
+		Proyecto oProyecto = controller.getProyectoCtrl().getProCtrl().searchProyecto(new Proyecto(iIdProyecto),
+				controller);
+		errorControl = true;
+
+		if (oUs != null && oProyecto != null) {
+			while (errorControl) {
+				try {
+					bRol = (byte) LibFrontend.valida("Introduzca un rol: ", 1, 3, 3);
+					errorControl = false;
+				} catch (Exception ex) {
+					System.out.println("Error: " + ex.getMessage());
+				}
+			}
+
+			System.out.println(bRol);
+			System.out.println(oUs);
+			System.out.println(oProyecto);
+
+			Rol oRol = new Rol(bRol, oUs, oProyecto);
+
+			if (controller.getUsuarioCtrl().getRolCtrl().existeRol(oRol) == 0) {
+				if (controller.getUsuarioCtrl().getRolCtrl().add(oRol) > 0) {
+					addRol = true;
+				}
+			}
+
+		}
+		return addRol;
 	}
-	
+
+	private static boolean eliminar(GeneralController controller) {
+		String sDniCif = null;
+		boolean errorControl = true, DelRol = false;
+		int iRes = 0, iIdProyecto = 0;
+
+		while (errorControl) {
+			try {
+				sDniCif = LibFrontend.leer("Introduzca dni/cif de un usuario para eliminar rol: ");
+				errorControl = false;
+			} catch (Exception ex) {
+				System.out.println("Error: " + ex.getMessage());
+			}
+		}
+		Usuario oUs = controller.getUsuarioCtrl().getUsCtrl().search(new Usuario(sDniCif));
+		System.out.println(oUs);
+		errorControl = true;
+
+		while (errorControl) {
+			try {
+				iIdProyecto = (int) LibFrontend.valida("Introduzca ID de un proyecto al que eliminar rol: ", 1, 1000,
+						1);
+				errorControl = false;
+			} catch (Exception ex) {
+				System.out.println("Error: " + ex.getMessage());
+			}
+		}
+		Proyecto oProyecto = controller.getProyectoCtrl().getProCtrl().searchProyecto(new Proyecto(iIdProyecto),
+				controller);
+		System.out.println(oProyecto);
+		errorControl = true;
+
+		Rol oRol = new Rol(oUs, oProyecto);
+
+		if (controller.getUsuarioCtrl().getRolCtrl().existeRol(oRol) > 0) {
+			System.out.println("Entro aquí " + oRol);
+			iRes = controller.getUsuarioCtrl().getRolCtrl().remove(oRol);
+			if (iRes > 0) {
+				DelRol = true;
+			}
+		}
+		return DelRol;
+	}
+
+	private static boolean modificar(GeneralController controller) {
+		byte bRol = 0;
+		String sDniCif = null;
+		boolean errorControl = true, ModRol = false;
+		int iIdProyecto = 0;
+
+		while (errorControl) {
+			try {
+				sDniCif = LibFrontend.leer("Introduzca dni/cif de un usuario para modificar rol: ");
+				errorControl = false;
+			} catch (Exception ex) {
+				System.out.println("Error: " + ex.getMessage());
+			}
+		}
+		Usuario oUs = controller.getUsuarioCtrl().getUsCtrl().search(new Usuario(sDniCif));
+		errorControl = true;
+
+		while (errorControl) {
+			try {
+				iIdProyecto = (int) LibFrontend.valida("Introduzca ID de un proyecto al que modificar rol: ", 1, 1000,
+						1);
+				errorControl = false;
+			} catch (Exception ex) {
+				System.out.println("Error: " + ex.getMessage());
+			}
+		}
+		Proyecto oProyecto = controller.getProyectoCtrl().getProCtrl().searchProyecto(new Proyecto(iIdProyecto),
+				controller);
+		errorControl = true;
+
+		if (oUs != null && oProyecto != null) {
+			while (errorControl) {
+				try {
+					bRol = (byte) LibFrontend.valida("Introduzca nuevo rol: ", 1, 3, 3);
+					errorControl = false;
+				} catch (Exception ex) {
+					System.out.println("Error: " + ex.getMessage());
+				}
+			}
+		}
+		Rol oRol = new Rol(bRol, oUs, oProyecto);
+		if (controller.getUsuarioCtrl().getRolCtrl().existeRol(oRol) == 1) {
+			System.out.println("Entra en " + oRol);
+			if (controller.getUsuarioCtrl().getRolCtrl().update(oRol) > 0) {
+				ModRol = true;
+			}
+		}
+		return ModRol;
+	}
+
 	public static void mostrar(GeneralController controller) {
-		System.out.println(controller.usuarioCtrl.getRolCtrl());
+		System.out.println(controller.usuarioCtrl.getRolCtrl().mostrarRol());
 	}
 }

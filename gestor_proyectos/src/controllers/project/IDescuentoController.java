@@ -11,6 +11,9 @@ public interface IDescuentoController {
 
 	public int update(Descuento oDescuento);
 
+	public String mostrarDescuento();
 	// Queires
 	public int existeDescuento(Descuento oDescuento);
+
+	
 }

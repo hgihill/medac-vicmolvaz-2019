@@ -9,20 +9,29 @@ public class AptitudView implements LimitsDB {
 
 	public static void subMenuAptitud(GeneralController controller) {
 		byte bOpcionSubMenu;
-		do {
-			bOpcionSubMenu = UsuarioView.subMenu(Aptitud.class.getSimpleName());
-			opcionMenuAptitud(bOpcionSubMenu, controller);
+		boolean bOperacionExito = false, errorControl;
 
-		} while (bOpcionSubMenu < 5);
+		do {
+
+			bOpcionSubMenu = UsuarioView.subMenu(Aptitud.class.getSimpleName());
+			errorControl = true;
+			while (errorControl) {
+				try {
+					opcionMenuAptitud(bOpcionSubMenu, controller);
+					errorControl = false;
+					bOperacionExito = true;
+				} catch (NullPointerException ex) {
+					System.out.println(ex.getMessage());
+				}
+			}
+		} while (bOpcionSubMenu != 5);
+
 	}
 
-	public static int opcionMenuAptitud(byte bOpcion, GeneralController controller) {
-		int iOperacionExito = 0;
-
+	public static void opcionMenuAptitud(byte bOpcion, GeneralController controller) {
 		switch (bOpcion) {
 		case 1: // Anadir
-			iOperacionExito = anadir(controller);
-			if (iOperacionExito != 0) {
+			if (anadir(controller) == true) {
 				System.out.println("Se ha anadido la aptitud.\n");
 			} else {
 				System.out.println("No se pudo anadir la aptitud.\n");
@@ -30,8 +39,7 @@ public class AptitudView implements LimitsDB {
 			break;
 
 		case 2: // Eliminar
-			iOperacionExito = eliminar(controller);
-			if (iOperacionExito != 0) {
+			if (eliminar(controller) == true) {
 				System.out.println("La aptitud ha sido eliminada.");
 			} else {
 				System.out.println("No se pudo eliminar la aptitud.\n");
@@ -49,50 +57,58 @@ public class AptitudView implements LimitsDB {
 			System.out.println("Regreso al menu anterior.");
 		}
 
-		return iOperacionExito;
 	}
 
-	public static int anadir(GeneralController controller) {
-		boolean errorControl = true;
+	public static boolean anadir(GeneralController controller) {
+		boolean errorControl = true, addAptitud = false;
 		String sNombre = null;
 
 		while (errorControl) {
 			try {
 				sNombre = LibFrontend.leer("Introduzca el nombre de la aptitud: ");
-				if (sNombre.length() <= LIMITGENERICO) {
-					errorControl = false;
-				}
+				errorControl = false;
+
 			} catch (Exception ex) {
 				System.out.println("Error: " + ex.getMessage());
 			}
 		}
-		errorControl = true;
 
 		Aptitud oAptitud = new Aptitud(sNombre);
-		return controller.getUsuarioCtrl().addAptitud(oAptitud);
+		if (controller.getUsuarioCtrl().existeAptitud(oAptitud) == 0) {
+			System.out.println(oAptitud);
+			if (controller.getUsuarioCtrl().addAptitud(oAptitud) > 0);
+			addAptitud = true;
+		}
+		return addAptitud;
 	}
 
-	public static int eliminar(GeneralController controller) {
-		boolean errorControl = true;
+	public static boolean eliminar(GeneralController controller) {
+		boolean errorControl = true, DelAptitud = false;
 		String sNombre = null;
-		int iError = 0;
+		int iRes = 0;
 
 		while (errorControl) {
 			try {
 				sNombre = LibFrontend.leer("Introduzca el nombre de la aptitud que desea eliminiar: ");
-				if (sNombre.length() <= LIMITGENERICO) {
-					errorControl = false;
-				}
+				errorControl = false;
+
 			} catch (Exception ex) {
 				System.out.println("Error: " + ex.getMessage());
 			}
-			Aptitud oAptitud = new Aptitud(sNombre);
-			iError = controller.getUsuarioCtrl().removeAptitud(oAptitud);
 		}
-		return iError;
+		Aptitud oAptitud = new Aptitud(sNombre);
+
+		if (controller.getUsuarioCtrl().existeAptitud(oAptitud) > 0) {
+			iRes = controller.getUsuarioCtrl().removeAptitud(oAptitud);
+			if (iRes > 0) {
+				DelAptitud = true;
+			}
+
+		}
+		return DelAptitud;
 	}
 
 	public static void mostrar(GeneralController controller) {
-		System.out.println(controller.usuarioCtrl.getAptCtrl());
+		System.out.println(controller.usuarioCtrl.getAptCtrl().mostrarAptitud());
 	}
 }

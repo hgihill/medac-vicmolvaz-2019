@@ -17,7 +17,7 @@ public class Aptitud implements IAptitud, LimitsDB {
 
 	private boolean setsNombreApt(String sNombreApt) {
 		boolean bExito = false;
-		if (sNombreApt != null && sNombreApt.length() > 0 && sNombreApt.length() < MAXCHARACTERS) {
+		if (sNombreApt != null && sNombreApt.length() > MINGENERICO && sNombreApt.length() < LIMITGENERICO) {
 			this.sNombreApt = sNombreApt;
 			bExito = true;
 		}

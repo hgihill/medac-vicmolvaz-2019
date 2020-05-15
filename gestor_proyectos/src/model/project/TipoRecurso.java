@@ -17,7 +17,7 @@ public class TipoRecurso implements ITipo_Recurso, LimitsDB {
 
 	private boolean setbTipoRecurso(byte bTipoRecurso) {
 		boolean bExito = false;
-		if (bTipoRecurso > 0 && bTipoRecurso <= LIMITBYTE) {
+		if (bTipoRecurso >= MINTIPOREC && bTipoRecurso <= MAXTIPOREC) {
 			this.bTipoRecurso = bTipoRecurso;
 			bExito = true;
 		}

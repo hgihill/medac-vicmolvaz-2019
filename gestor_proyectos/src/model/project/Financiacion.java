@@ -31,7 +31,7 @@ public class Financiacion implements IFinanciacion, LimitsDB {
 
 	private boolean setsCuenta(String sCuenta) {
 		boolean bExito = false;
-		if (sCuenta != null && sCuenta.length() == 24) {
+		if (sCuenta != null && sCuenta.length() == NUMCUENTA) {
 			this.sCuenta = sCuenta;
 			bExito = true;
 		}
@@ -46,7 +46,7 @@ public class Financiacion implements IFinanciacion, LimitsDB {
 	@Override
 	public boolean setsEntidad(String sEntidad) {
 		boolean bExito = false;
-		if (sEntidad != null && sEntidad.length() > 0 && sEntidad.length() < MAXCHARACTERS) {
+		if (sEntidad != null && sEntidad.length() > MINGENERICO && sEntidad.length() <= LIMITGENERICO) {
 			bExito = true;
 		}
 		return bExito;

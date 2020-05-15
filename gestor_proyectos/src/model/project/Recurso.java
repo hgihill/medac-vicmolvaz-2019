@@ -29,7 +29,7 @@ public class Recurso implements IRecurso, LimitsDB {
 
 	private boolean setsNombre(String sNombre) {
 		boolean bExito = false;
-		if (sNombre != null && sNombre.length() > 0 && sNombre.length() < MAXCHARACTERS) {
+		if (sNombre != null && sNombre.length() > MINGENERICO && sNombre.length() < LIMITGENERICO) {
 			this.sNombre = sNombre;
 			bExito = true;
 		}
@@ -43,7 +43,7 @@ public class Recurso implements IRecurso, LimitsDB {
 	@Override
 	public boolean setiCant(int iCant) {
 		boolean bExito = false;
-		if (iCant > 0 && iCant <= 5) {
+		if (iCant >= MINCANTRECURSOS && iCant <= MAXCANTRECURSOS) {
 			this.iCant = iCant;
 			bExito = true;
 		}

@@ -23,7 +23,7 @@ public class Inventario implements IInventario, LimitsDB {
 
 	private boolean setiIdInv(int iIdInv) {
 		boolean bExito = false;
-		if (iIdInv >= 0 && iIdInv < 100) {
+		if (iIdInv >= MININV && iIdInv <= MAXINV) {
 			this.iIdInv = iIdInv;
 			bExito = true;
 		}
@@ -38,7 +38,7 @@ public class Inventario implements IInventario, LimitsDB {
 	@Override
 	public boolean setiCant(int iCant) {
 		boolean bExito = false;
-		if (iCant >= 0 && iCant < 20) {
+		if (iCant >= MINCANT && iCant <= MAXCANT) {
 			this.iCant = iCant;
 			bExito = true;
 		}
@@ -83,7 +83,7 @@ public class Inventario implements IInventario, LimitsDB {
 		String sResultado = "";
 
 		sResultado += "ID inventario: " + getiIdInv() + "\n";
-		sResultado += "Recurso: " + getiCant() + "\n";
+		sResultado += "Recurso: " + getoRec().getsNombre() + "\n";
 		sResultado += "Cantidad de inventarios: " + getiCant();
 
 		return sResultado;

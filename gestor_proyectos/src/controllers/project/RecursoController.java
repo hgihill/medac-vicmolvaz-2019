@@ -5,8 +5,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import controllers.ConexionDB;
-import controllers.GeneralController;
 import model.project.Recurso;
+import model.project.TipoRecurso;
 
 public class RecursoController implements IRecursoController {
 
@@ -14,8 +14,10 @@ public class RecursoController implements IRecursoController {
 	public int add(Recurso oRecurso) {
 		int iRes = 0;
 		if (oRecurso.checkRecurso()) {
-			String sql = "INSERT INTO recurso VALUES (" + oRecurso.getsNombre() + ",\"" + oRecurso.getiCant() + ",\""
-					+ oRecurso.getoTipoRec() + "\")";
+			String sql = "INSERT INTO recurso VALUES (";
+			sql += "\"" + oRecurso.getsNombre() + "\",";
+			sql += "" + oRecurso.getiCant() + ",";
+			sql += "" + oRecurso.getoTipoRec().getbTipoRecurso() + ")";
 			iRes = ConexionDB.executeUpdate(sql);
 		}
 		return iRes;
@@ -24,7 +26,7 @@ public class RecursoController implements IRecursoController {
 	@Override
 	public int remove(Recurso oRecurso) {
 		int iRes = 0;
-		String sql = "DELETE FROM recurso WHERE nombre_rec =" + oRecurso.getsNombre();
+		String sql = "DELETE FROM recurso WHERE nombre_rec LIKE \"" + oRecurso.getsNombre() + "\"";
 		System.out.println(sql);
 		iRes = ConexionDB.executeUpdate(sql);
 		return iRes;
@@ -32,13 +34,14 @@ public class RecursoController implements IRecursoController {
 
 	@Override
 	public int update(Recurso oRecurso) {
-	int iRes = 0;
-	if (oRecurso.checkRecurso()) {
-		String sql = "UPDATE recurso ";
-		sql += "SET cantidad = \"" + oRecurso.getiCant() + "\",";
-		sql += "WHERE nombre = \"" + oRecurso.getsNombre() + "\",";
-		iRes = ConexionDB.executeUpdate(sql);
-	}
+		int iRes = 0;
+		if (oRecurso.checkRecurso()) {
+			String sql = "UPDATE recurso SET ";
+			sql += "cantidad_rec = " + oRecurso.getiCant() + ",";
+			sql += "tipo_rec = " + oRecurso.getoTipoRec().getbTipoRecurso() + " WHERE ";
+			sql += "nombre_rec = \"" + oRecurso.getsNombre() + "\"";
+			iRes = ConexionDB.executeUpdate(sql);
+		}
 		return iRes;
 	}
 
@@ -65,26 +68,25 @@ public class RecursoController implements IRecursoController {
 
 	@Override
 	public int existeRecurso(Recurso oRecurso) {
-		String sql = "SELECT COUNT (*) FROM recurso WHERE nombre_rec = (\"" + oRecurso.getsNombre() + "\"))";
+		String sql = "SELECT COUNT (*) FROM recurso WHERE nombre_rec = \"" + oRecurso.getsNombre() + "\"";
 		return ConexionDB.executeCount(sql);
 	}
 
 	@Override
-	public Recurso searchRecurso(Recurso oObjeto, GeneralController c) {
+	public Recurso search(Recurso oObjeto) {
 		Recurso oRecurso = null;
-		System.out.println(existeRecurso(oRecurso));
 		if (existeRecurso(oObjeto) > 0) {
 			String sql = "SELECT * FROM recurso WHERE nombre_rec = '" + oObjeto.getsNombre() + "'";
 			Statement stm = null;
-			System.out.println(ConexionDB.executeCount(sql));
 			try {
 				stm = ConexionDB.getConnection().createStatement();
 				ResultSet rs = stm.executeQuery(sql);
 				while (rs.next()) {
 					String sNombre = rs.getString(1);
 					int iCant = rs.getInt(2);
-
-					oRecurso = new Recurso(sNombre, iCant);
+					byte bTipoRec = rs.getByte(3);
+					TipoRecurso oTRec = new TipoRecurso(bTipoRec);
+					oRecurso = new Recurso(sNombre, iCant, oTRec);
 				}
 				stm.close();
 			} catch (SQLException ex) {

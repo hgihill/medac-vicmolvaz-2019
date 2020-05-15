@@ -27,7 +27,7 @@ public class Rol implements IRol, LimitsDB {
 	@Override
 	public boolean setbRol(byte bRol) {
 		boolean bExito = false;
-		if (bRol >= 0 && bRol < LIMITBYTE) {
+		if (bRol >= MINROL && bRol <= MAXROL) {
 			this.bRol = bRol;
 			bExito = true;
 		}

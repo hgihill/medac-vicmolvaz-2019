@@ -23,7 +23,7 @@ public class Provincia implements IProvincia, LimitsDB {
 
 	public boolean setsNombreProv(String sNombreProv) {
 		boolean bExito = false;
-		if (sNombreProv != null && sNombreProv.length() > 0 && sNombreProv.length() <= MAXCHARACTERS) {
+		if (sNombreProv != null && sNombreProv.length() > MINGENERICO && sNombreProv.length() <= LIMITGENERICO) {
 			this.sProv = sNombreProv;
 			bExito = true;
 		}

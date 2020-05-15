@@ -49,7 +49,7 @@ public class Proyecto implements IProyecto, LimitsDB {
 	@Override
 	public boolean setsNombre(String sNombre) {
 		boolean bExito = false;
-		if (sNombre != null && sNombre.length() > 0 && sNombre.length() < MAXCHARACTERS) {
+		if (sNombre != null && sNombre.length() > MINGENERICO && sNombre.length() <= LIMITGENERICO) {
 			this.sNombre = sNombre;
 			bExito = true;
 		}
@@ -64,7 +64,7 @@ public class Proyecto implements IProyecto, LimitsDB {
 	@Override
 	public boolean setsDescripcion(String sDescripcion) {
 		boolean bExito = false;
-		if (sDescripcion != null && sDescripcion.length() > 0 && sDescripcion.length() < 400) {
+		if (sDescripcion != null && sDescripcion.length() > MINCHARDESC && sDescripcion.length() <= MAXCHARDESC) {
 			this.sDescripcion = sDescripcion;
 			bExito = true;
 		}

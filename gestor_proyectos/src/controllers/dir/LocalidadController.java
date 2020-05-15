@@ -15,16 +15,12 @@ public class LocalidadController implements ILocalidadController {
 	// # CRUDS #
 	// #########
 	@Override
-	public int add(Localidad oLocalidad, ProvinciaController oProvinciaCtrl, PaisController paisCtrl) {
+	public int add(Localidad oLocalidad) {
 		int iRes = 0;
-		if (oLocalidad.checkLocalidad()) {
+		if (oLocalidad.checkLocalidad() && existeLocalidad(oLocalidad) == 0) {
 
-			// 1) Anadir la provincia
-			oProvinciaCtrl.add(oLocalidad.getoProv(), paisCtrl);
-
-			// 2) Anado la localidad
-			String sql = "INSERT INTO localidad VALUES (" + oLocalidad.getsCP() + ",\"" + oLocalidad.getsNombreLoc()
-					+ "\",\"" + oLocalidad.getoProv().getsNombreProv() + "\")";
+			String sql = "INSERT INTO localidad VALUES ('" + oLocalidad.getsCP() + "', '" + oLocalidad.getsNombreLoc()
+					+ "', '" + oLocalidad.getoProv().getsNombreProv() + "')";
 			iRes = ConexionDB.executeUpdate(sql);
 		}
 		return iRes;
@@ -39,48 +35,15 @@ public class LocalidadController implements ILocalidadController {
 	}
 
 	@Override
-	public Localidad searchLocalidadByPk(Localidad oLoc, GeneralController c) {
-		Localidad oLocalidad = null;
-		if (existeLocalidad(oLoc) > 0) {
-			String sql = "SELECT localidad.cp, localidad.nombre_loc, localidad.nombre_prov FROM localidad, provincia, pais  WHERE localidad.nombre_prov=provincia.nombre_prov AND provincia.nombre_pais=pais.nombre_pais AND localidad.cp='"
-					+ oLoc.getsCP() + "'";
-
-			Statement stm = null;
-			try {
-				stm = ConexionDB.getConnection().createStatement();
-				ResultSet rs = stm.executeQuery(sql);
-
-				while (rs.next()) {
-					String sLocCodigoPostal = rs.getString(1);
-					String sLocNombre = rs.getString(2);
-					String sNombreProv = rs.getString(3);
-					System.out.println(sNombreProv);
-					Provincia oProv = c.getDireccionCtrl().getProvinciaCtrl()
-							.searchProvincia(new Provincia(sNombreProv), c);
-					System.out.println(oProv);
-					oLocalidad = new Localidad(sLocCodigoPostal, sLocNombre, oProv);
-
-				}
-				stm.close();
-			} catch (SQLException e) {
-				oLocalidad = null;
-			}
-		}
-		return oLocalidad;
-	}
-
-	@Override
-	public int update(Localidad oLocalidad, ProvinciaController provinciaCtrl, PaisController paisCtrl) {
+	public int update(Localidad oLocalidad) {
 		int iRes = 0;
-
-		provinciaCtrl.add(oLocalidad.getoProv(), paisCtrl);
 
 		if (oLocalidad.checkLocalidad()) {
 			String sql = "UPDATE localidad ";
 			sql += "SET cp = \"" + oLocalidad.getsCP() + "\", ";
 			sql += "nombre_loc = \"" + oLocalidad.getsNombreLoc() + "\", ";
 			sql += "nombre_prov = \"" + oLocalidad.getoProv().getsNombreProv() + "\" ";
-			sql += "WHERE cp = \"" + oLocalidad.getsCP()+"\"";
+			sql += "WHERE cp = \"" + oLocalidad.getsCP() + "\"";
 			iRes = ConexionDB.executeUpdate(sql);
 		}
 		return iRes;
@@ -109,12 +72,40 @@ public class LocalidadController implements ILocalidadController {
 	// ##########
 	// # QUERYS #
 	// ##########
+
 	@Override
 	public int existeLocalidad(Localidad oLocalidad) {
 		int iRes = 0;
-		String sql = "SELECT COUNT(*) FROM localidad WHERE cp =" + oLocalidad.getsCP();
+		String sql = "SELECT COUNT(*) FROM localidad WHERE cp =\"" + oLocalidad.getsCP() + "\"";
 		iRes = ConexionDB.executeCount(sql);
+		System.out.println(sql);
+		System.out.println(iRes);
 		return iRes;
 	}
 
+	@Override
+	public Localidad searchLocalidadByPk(Localidad oLoc, GeneralController c) {
+		Localidad oLocalidad = null;
+		String sql = "SELECT * FROM localidad WHERE cp = \"" + oLoc.getsCP() + "\"";
+		Statement stm = null;
+		try {
+			stm = ConexionDB.getConnection().createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+
+			while (rs.next()) {
+				String sLocCodigoPostal = rs.getString(1);
+				String sLocNombre = rs.getString(2);
+				String sNombreProv = rs.getString(3);
+				Provincia oProv = c.getDireccionCtrl().getProvinciaCtrl().searchProvincia(new Provincia(sNombreProv),
+						c);
+
+				oLocalidad = new Localidad(sLocCodigoPostal, sLocNombre, oProv);
+			}
+			stm.close();
+		} catch (SQLException e) {
+			oLocalidad = null;
+		}
+
+		return oLocalidad;
+	}
 }

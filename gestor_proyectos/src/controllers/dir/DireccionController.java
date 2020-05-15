@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import controllers.ConexionDB;
+import controllers.GeneralController;
 import model.dir.Direccion;
 import model.dir.Localidad;
 import model.dir.Provincia;
@@ -17,21 +18,14 @@ public class DireccionController implements IDireccionController {
 	// # CRUDS #
 	// #########
 	@Override
-	public int add(Direccion oDireccion, LocalidadController oLocalidadCtrl, ProvinciaController oProvinciaCtrl,
-			PaisController oPaisCtrl) {
+	public int add(Direccion oDireccion) {
 		int iRes = 0;
 
 		if (oDireccion.checkDireccion()) {
-			// 1) Anadir localidad
-			oLocalidadCtrl.add(oDireccion.getoLoc(), oProvinciaCtrl, oPaisCtrl);
-			
-			// 2) Anado la direccion
-			String sql = "INSERT INTO direccion VALUES (";
-			sql += "\"" + oDireccion.getsCalle() + "\",";
-			sql += "" + oDireccion.getbNum() + ",";
-			sql += "" + oDireccion.getbBloque() + ",";
-			sql += "" + oDireccion.getbPortal() + ",";
-			sql += "\"" + oDireccion.getoLoc().getsCP() + "\")";
+
+			String sql = "INSERT INTO direccion VALUES ('" + oDireccion.getsCalle() + "', " + oDireccion.getbNum()
+					+ ", " + oDireccion.getbBloque() + ", " + oDireccion.getbPortal() + ", '"
+					+ oDireccion.getoLoc().getsCP() + "')";
 			iRes = ConexionDB.executeUpdate(sql);
 		}
 		return iRes;
@@ -40,33 +34,32 @@ public class DireccionController implements IDireccionController {
 	@Override
 	public int remove(Direccion oDireccion) {
 		int iRes = 0;
-		if (oDireccion.checkDireccion()) {
-			String sql = "DELETE FROM direccion WHERE calle LIKE \"" + oDireccion.getsCalle() + "\" AND numero LIKE \""
-					+ oDireccion.getbNum() + ")";
-			iRes = ConexionDB.executeUpdate(sql);
-			System.out.println(sql);
-			System.out.println(iRes);
-		}
+
+		String sql = "DELETE FROM direccion WHERE calle = '" + oDireccion.getsCalle() + "' AND numero ="
+				+ oDireccion.getbNum() + "";
+		iRes = ConexionDB.executeUpdate(sql);
+
 		return iRes;
 	}
-	
+
 	@Override
-	public int update(Direccion oDireccion, LocalidadController localidadCtrl, ProvinciaController provinciaCtrl, PaisController paisCtrl) {
+	public int update(Direccion oDireccion) {
 		int iRes = 0;
 		if (oDireccion.checkDireccion()) {
 			String sql = "UPDATE direccion SET ";
 			sql += "calle = \"" + oDireccion.getsCalle() + "\",";
 			sql += "numero = " + oDireccion.getbNum() + ",";
-			sql += "bloque = " + oDireccion.getbBloque() + ",";
 			sql += "portal = " + oDireccion.getbPortal() + ",";
-			sql += "cp = \"" + oDireccion.getoLoc().getsCP() +"\" WHERE calle = \"" + oDireccion.getsCalle() +"\" AND numero = " + oDireccion.getbNum();
+			sql += "bloque = " + oDireccion.getbBloque() + ",";
+			sql += "cp = \"" + oDireccion.getoLoc().getsCP() + "\" WHERE ";
+			sql += "calle = \"" + oDireccion.getsCalle() + "\" AND ";
+			sql += "numero = " + oDireccion.getbNum() + "";
 			iRes = ConexionDB.executeUpdate(sql);
 		}
-		
-		
+
 		return iRes;
 	}
-	
+
 	@Override
 	public String mostrarDireccion() {
 		String sResultado = "Mostrando listado de direcciones:\n";
@@ -92,19 +85,6 @@ public class DireccionController implements IDireccionController {
 	// ##########
 	// # QUERYS #
 	// ##########
-	@Override
-	public int existeDireccion(Direccion oDireccion) {
-		int iRes = 0;
-		if (oDireccion.checkDireccion()) {
-		
-			String sql = "SELECT COUNT(*) FROM direccion WHERE calle=\"" + oDireccion.getsCalle() + "\" AND numero="
-					+ oDireccion.getbNum();
-			iRes = ConexionDB.executeCount(sql);
-			
-		}
-		return iRes;
-	}
-
 	@Override
 	public List<Direccion> searchAddressesPorLocalidad(Localidad oLoc) {
 
@@ -156,5 +136,43 @@ public class DireccionController implements IDireccionController {
 			lAddresses = null;
 		}
 		return lAddresses;
+	}
+
+	@Override
+	public Direccion search(Direccion oObjeto, GeneralController c) {
+		Direccion oDir = null;
+		if (existeDireccion(oObjeto) > 0) {
+			String sql = "SELECT * FROM direccion WHERE calle = \"" + oObjeto.getsCalle() + "\" ";
+			sql += "AND numero=" + oObjeto.getbNum();
+			Statement stm = null;
+			try {
+				stm = ConexionDB.getConnection().createStatement();
+				ResultSet rs = stm.executeQuery(sql);
+				while (rs.next()) {
+					String sCalle = rs.getString(1);
+					byte bNum = rs.getByte(2);
+					byte bPortal = rs.getByte(3);
+					byte bBloque = rs.getByte(4);
+					String sCp = rs.getString(5);
+					Localidad oLoc = c.getDireccionCtrl().getLocalidadCtrl().searchLocalidadByPk(new Localidad(sCp), c);
+					oDir = new Direccion(sCalle, bNum, bBloque, bPortal, oLoc);
+				}
+				stm.close();
+			} catch (SQLException ex) {
+				oDir = null;
+			}
+		}
+		return oDir;
+	}
+
+	@Override
+	public int existeDireccion(Direccion oDireccion) {
+		int iRes = 0;
+
+		String sql = "SELECT COUNT(*) FROM direccion WHERE calle=\"" + oDireccion.getsCalle() + "\" AND numero="
+				+ oDireccion.getbNum();
+		iRes = ConexionDB.executeCount(sql);
+
+		return iRes;
 	}
 }

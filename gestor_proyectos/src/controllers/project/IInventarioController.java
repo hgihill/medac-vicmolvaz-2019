@@ -1,7 +1,5 @@
 package controllers.project;
 
-import java.util.List;
-
 import model.project.Inventario;
 
 public interface IInventarioController {
@@ -16,7 +14,7 @@ public interface IInventarioController {
 	public String mostrarInventario();
 
 	// Queries
-	public List<Inventario> searchInventario(Inventario oInventario);
+	public Inventario searchInventario(Inventario oInventario);
 	
 	public int existeInventario(Inventario oInventario);
 

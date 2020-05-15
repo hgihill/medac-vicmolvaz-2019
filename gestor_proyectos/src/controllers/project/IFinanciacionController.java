@@ -1,7 +1,7 @@
 package controllers.project;
 
-import java.util.List;
 
+import controllers.GeneralController;
 import model.project.Financiacion;
 
 public interface IFinanciacionController {
@@ -12,9 +12,18 @@ public interface IFinanciacionController {
 	public int remove(Financiacion oFinanciacion);
 
 	public int update(Financiacion oFinanciacion);
+	
+	public String mostrarFinanciacion();
 
 	// Queries
-	public List<Financiacion> searchFinanciacion(Financiacion oFinanciacion);
 	
 	public int existeFinanciacion(Financiacion oFinanciacion);
+
+	Financiacion search(Financiacion oFinanciacion, GeneralController c);
+
+	Financiacion searchByPK(Financiacion oFinanciacion);
+
+	
+
+	
 }

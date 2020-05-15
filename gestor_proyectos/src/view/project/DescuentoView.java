@@ -11,22 +11,29 @@ public class DescuentoView implements LimitsDB {
 
 	public static void subMenuDescuento(GeneralController controller) {
 		byte bOpcionSubMenu = 0;
+		boolean bOperacionExito = false, errorControl;
+
 		do {
+
 			bOpcionSubMenu = ProyectoView.subMenu(Descuento.class.getSimpleName());
-
-			opcionMenuDescuento(bOpcionSubMenu, controller);
-
-		} while (bOpcionSubMenu < 5);
-
+			errorControl = true;
+			while (errorControl) {
+				try {
+					opcionMenuDescuento(bOpcionSubMenu, controller);
+					errorControl = false;
+					bOperacionExito = true;
+				} catch (NullPointerException ex) {
+					System.out.println(ex.getMessage());
+				}
+			}
+		} while (bOpcionSubMenu != 5);
 	}
 
-	public static int opcionMenuDescuento(byte bOpcion, GeneralController controller) {
-		int iOperacionExito = 0;
+	public static void opcionMenuDescuento(byte bOpcion, GeneralController controller) {
 
 		switch (bOpcion) {
 		case 1: // Anadir
-			iOperacionExito = anadir(controller);
-			if (iOperacionExito != 0) {
+			if (anadir(controller) == true) {
 				System.out.println("Se ha anadido el descuento.\n");
 			} else {
 				System.out.println("No se pudo anadir el descuento.\n");
@@ -34,8 +41,7 @@ public class DescuentoView implements LimitsDB {
 			break;
 
 		case 2: // Eliminar
-			iOperacionExito = eliminar(controller);
-			if (iOperacionExito != 0) {
+			if (eliminar(controller) == true) {
 				System.out.println("El descuento ha sido eliminado.");
 			} else {
 				System.out.println("No se pudo eliminar el descuento.\n");
@@ -52,11 +58,10 @@ public class DescuentoView implements LimitsDB {
 			System.out.println("Regreso al menu anterior.");
 		}
 
-		return iOperacionExito;
 	}
 
-	public static int anadir(GeneralController controller) {
-		boolean errorControl = true;
+	public static boolean anadir(GeneralController controller) {
+		boolean errorControl = true, addDescuento = false;
 		String sDniCif = null;
 		int iIdInv = 0;
 		float fPorcentaje = 0;
@@ -64,87 +69,96 @@ public class DescuentoView implements LimitsDB {
 		while (errorControl) {
 			try {
 				sDniCif = LibFrontend.leer("Introduzca el dni/cif de un usuario existente: ");
-				if (sDniCif.length() == LIMITDNI) {
-					errorControl = false;
-				}
+				errorControl = false;
+
 			} catch (Exception ex) {
 				System.out.println("Error: " + ex.getMessage());
 			}
 		}
 		errorControl = true;
+		Usuario oUs = controller.getUsuarioCtrl().getUsCtrl().search(new Usuario(sDniCif));
 
 		while (errorControl) {
 			try {
 				iIdInv = (int) LibFrontend.valida("Introduzca el ID de un inventario existente: ", 1, 1000, 1);
-				if (iIdInv >= MINCANT && iIdInv <= MAXCANT) {
-					errorControl = false;
-				}
+				errorControl = false;
+
 			} catch (Exception ex) {
 				System.out.println("Error: " + ex.getMessage());
 			}
 		}
 		errorControl = true;
+		Inventario oInv = (Inventario) controller.getProyectoCtrl().getInvCtrl()
+				.searchInventario(new Inventario(iIdInv));
 
-		while (errorControl) {
-			try {
-				fPorcentaje = (byte) LibFrontend.valida("Indique el porcentaje que se va a aplicar: ", 0, 100, 4);
-				if (fPorcentaje >= MINPORC && fPorcentaje <= MAXPORC) {
+		if (oUs != null && oInv != null) {
+			while (errorControl) {
+				try {
+					fPorcentaje = (float) LibFrontend.valida("Indique el porcentaje que se va a aplicar: ", 0, 100, 2);
 					errorControl = false;
+
+				} catch (Exception ex) {
+					System.out.println("Error: " + ex.getMessage());
 				}
-			} catch (Exception ex) {
-				System.out.println("Error: " + ex.getMessage());
 			}
 		}
-		errorControl = true;
 
-		Usuario oUs = new Usuario(sDniCif);
-		Inventario oInv = new Inventario(iIdInv);
 		Descuento oDesc = new Descuento(oUs, oInv, fPorcentaje);
+		if (controller.getProyectoCtrl().getDescCtrl().existeDescuento(oDesc) == 0) {
+			System.out.println(oDesc);
+			if (controller.getProyectoCtrl().getDescCtrl().add(oDesc) > 0) {
+				addDescuento = true;
+			}
+		}
 
-		return controller.getProyectoCtrl().addDescuento(oDesc);
+		return addDescuento;
 	}
 
-	public static int eliminar(GeneralController controller) {
-		boolean errorControl = true;
+	public static boolean eliminar(GeneralController controller) {
+		boolean errorControl = true, DelDescuento = false;
 		String sDniCif = null;
 		int iIdInv = 0;
-		int iError = 0;
+		int iRes = 0;
 
 		while (errorControl) {
 			{
 				try {
-					sDniCif = LibFrontend.leer("Introduzca un dni/cif para dejar de aplciarle descuento: ");
-					if (sDniCif.length() == LIMITDNI) {
-						errorControl = false;
-					}
+					sDniCif = LibFrontend.leer("Introduzca dni/cif asociado para eliminar descuento: ");
+					errorControl = false;
+
 				} catch (Exception ex) {
 					System.out.println("Error: " + ex.getMessage());
 				}
 			}
-			errorControl = true;
-
-			while (errorControl) {
-				try {
-					iIdInv = (int) LibFrontend.valida("Introduzca el ID para dejar de aplciarle descuento: ", 1, 1000,
-							1);
-					if (iIdInv >= MINCANT && iIdInv <= MAXCANT) {
-						errorControl = false;
-					}
-				} catch (Exception ex) {
-					System.out.println("Error: " + ex.getMessage());
-				}
-			}
-
-			Usuario oUs = new Usuario(sDniCif);
-			Inventario oInv = new Inventario(iIdInv);
-			Descuento oDesc = new Descuento(oUs, oInv);
-			iError = controller.getProyectoCtrl().removeDescuento(oDesc);
 		}
-		return iError;
+		errorControl = true;
+		Usuario oUs = controller.getUsuarioCtrl().getUsCtrl().search(new Usuario(sDniCif));
+
+		while (errorControl) {
+			try {
+				iIdInv = (int) LibFrontend.valida("Introduzca ID de inventario asociado para eliminar descuento: ", 1,
+						1000, 1);
+				errorControl = false;
+
+			} catch (Exception ex) {
+				System.out.println("Error: " + ex.getMessage());
+			}
+		}
+		Inventario oInv = (Inventario) controller.getProyectoCtrl().getInvCtrl()
+				.searchInventario(new Inventario(iIdInv));
+
+		Descuento oDesc = new Descuento(oUs, oInv);
+		if (controller.getProyectoCtrl().getDescCtrl().existeDescuento(oDesc) > 0) {
+			iRes = controller.getProyectoCtrl().removeDescuento(oDesc);
+			if (iRes > 0) {
+				DelDescuento = true;
+			}
+		}
+		return DelDescuento;
 	}
 
 	public static void mostrar(GeneralController controller) {
-		System.out.println(controller.proyectoCtrl.getRecCtrl());
+		System.out.println(controller.proyectoCtrl.getDescCtrl().mostrarDescuento());
 	}
 
 }

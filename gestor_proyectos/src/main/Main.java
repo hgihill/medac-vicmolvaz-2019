@@ -65,11 +65,11 @@ public class Main {
 		System.out.println("1. Aniadir " + sClase);
 		System.out.println("2. Eliminar " + sClase);
 		System.out.println("3. Modificar " + sClase);
-		System.out.println("4. Buscar " + sClase);
+		System.out.println("4. Mostrar " + sClase + "\n ------------------");
 		System.out.println("5. Gestionar aptitud");
 		System.out.println("6. Gestionar conocimiento");
-		System.out.println("7. Gestionar rol");
-		System.out.println("8. Volver al menu anteior\n");
+		System.out.println("7. Gestionar rol" + "\n ------------------");
+		System.out.println("8. Volver al menu anterior\n");
 		boolean errorControl = true;
 		while (errorControl) {
 			try {
@@ -89,12 +89,12 @@ public class Main {
 		System.out.println("1. Aniadir " + sClase);
 		System.out.println("2. Eliminar " + sClase);
 		System.out.println("3. Modificar " + sClase);
-		System.out.println("4. Buscar " + sClase);
+		System.out.println("4. Mostrar " + sClase + "\n ------------------");
 		System.out.println("5. Gestionar financiacion");
 		System.out.println("6. Gestionar aporte");
 		System.out.println("7. Gestionar recurso");
 		System.out.println("8. Gestionar inventario");
-		System.out.println("9. Gestionar descuento");
+		System.out.println("9. Gestionar descuento" + "\n ------------------");
 		System.out.println("10. Volver al menu anterior\n");
 		boolean errorControl = true;
 		while (errorControl) {
@@ -115,10 +115,10 @@ public class Main {
 		System.out.println("1. Aniadir " + sClase);
 		System.out.println("2. Eliminar " + sClase);
 		System.out.println("3. Modificar " + sClase);
-		System.out.println("4. Buscar " + sClase);
+		System.out.println("4. Mostrar " + sClase + "\n ------------------");
 		System.out.println("5. Gestionar Localidad");
 		System.out.println("6. Gestionar Provincia");
-		System.out.println("7. Gestionar Pais");
+		System.out.println("7. Gestionar Pais" + "\n ------------------");
 		System.out.println("8. Volver al menu anteior\n");
 		boolean errorControl = true;
 		while (errorControl) {

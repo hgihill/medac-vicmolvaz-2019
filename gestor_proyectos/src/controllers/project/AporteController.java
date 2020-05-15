@@ -12,9 +12,10 @@ public class AporteController implements IAporteController{
 	@Override
 	public int add(Aporte oAporte) {
 		int iRes = 0;
-		String sql = "INSERT INTO aporte VALUES (\"" + oAporte.getoUs() + "\"," 
-				+ "\"" + oAporte.getoFin() + "\","
-				+ "\"" + oAporte.getiImporte() + "\")"; 
+		String sql = "INSERT INTO aporte VALUES (";
+		sql	+= "\"" + oAporte.getoUs().getsDniCif() + "\","; 
+		sql	+= "\"" + oAporte.getoFin().getsCuenta() + "\",";
+		sql	+= oAporte.getiImporte() + ")"; 
 		iRes = ConexionDB.executeUpdate(sql);
 		return iRes;
 	}
@@ -22,29 +23,22 @@ public class AporteController implements IAporteController{
 	@Override
 	public int remove(Aporte oAporte) {
 		int iRes = 0;
-		String sql = "DELETE FROM aporte WHERE dni_cif = \"" + oAporte.getoUs() + "\" AND "
-				+ "cuenta = \"" + oAporte.getoFin() + "\"";
+		String sql = "DELETE FROM aporte WHERE dni_cif = \"" + oAporte.getoUs().getsDniCif() + "\" AND "
+				+ "cuenta = \"" + oAporte.getoFin().getsCuenta() + "\"";
 		iRes = ConexionDB.executeUpdate(sql);
-		System.out.println(sql);
-		System.out.println(iRes);
 		return iRes;
 	}
 
 	@Override
 	public int update(Aporte oAporte) {
-		String sql = "UPDATE aporte SET (\"" + oAporte.getoUs() + "\","  
-				+ "\"" + oAporte.getoFin() + "\","  
-				+ "\"" + oAporte.getiImporte() + "\")";
+		String sql = "UPDATE aporte SET ";
+		sql += "importe = " + oAporte.getiImporte() + " WHERE ";
+		sql += "dni_cif = \"" + oAporte.getoUs().getsDniCif() + "\" AND ";  
+		sql += "cuenta = \"" + oAporte.getoFin().getsCuenta() + "\"";  
+		
 		return ConexionDB.executeUpdate(sql);
 	}
 
-	@Override
-	public int existeAporte(Aporte oAporte) {
-		String sql = "SELECT COUNT (*) FROM aporte WHERE dni_cif = (\"" + oAporte.getoUs() + "\" and "
-				+ "cuenta = (\"" + oAporte.getoFin() + "\"))";
-		return ConexionDB.executeCount(sql);
-	}
-	
 	@Override 
 	public String mostrarAporte() {
 		String sResultado = "Mostrando listado de aportes:\n";
@@ -65,4 +59,13 @@ public class AporteController implements IAporteController{
 		}
 		return sResultado;
 	}
+	
+	@Override
+	public int existeAporte(Aporte oAporte) {
+		String sql = "SELECT COUNT (*) FROM aporte WHERE dni_cif = \"" + oAporte.getoUs().getsDniCif() + "\" AND "
+				+ "cuenta = \"" + oAporte.getoFin().getsCuenta() + "\"";
+		return ConexionDB.executeCount(sql);
+	}
+	
+	
 }

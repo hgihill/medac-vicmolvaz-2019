@@ -16,7 +16,7 @@ public class TipoFinanciacion implements ITipo_Financiacion, LimitsDB {
 
 	private boolean setbTipoFinanciacion(byte bTipoFinanciacion) {
 		boolean bExito = false;
-		if (bTipoFinanciacion > 0 && bTipoFinanciacion <= LIMITBYTE) {
+		if (bTipoFinanciacion >= MINTIPOFIN && bTipoFinanciacion <= MAXTIPOFIN) {
 			this.bTipoFinanciacion = bTipoFinanciacion;
 			bExito = true;
 		}

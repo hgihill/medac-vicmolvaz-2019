@@ -1,9 +1,6 @@
 package view.dir;
 
 import controllers.GeneralController;
-import controllers.dir.LocalidadController;
-import controllers.dir.PaisController;
-import controllers.dir.ProvinciaController;
 import limites.LimitsDB;
 import main.Main;
 import medac.validaciones.LibFrontend;
@@ -36,7 +33,7 @@ public class DireccionView implements LimitsDB {
 	}
 
 	public static void opcionGestionarDireccion(byte bOpcion, GeneralController controller) {
-		
+
 		switch (bOpcion) {
 		case 1: // Anadir direccion
 			if (anadir(controller) == true)
@@ -57,8 +54,13 @@ public class DireccionView implements LimitsDB {
 				System.out.println("No se pudo actualizar la direccion.\n");
 			break;
 		case 4: // Mostrar direccion
-			mostrar(controller);
-
+			if (mostrar(controller) == true) {
+				System.out
+						.println("La direccion es: " + controller.direccionCtrl.getDireccionCtrl().mostrarDireccion());
+			} else {
+				System.out.println("No se ha podido mostrar.");
+			}
+			break;
 		case 5: // Gestionar localidades
 			LocalidadView.subMenuLocalidad(controller);
 			break;
@@ -87,9 +89,10 @@ public class DireccionView implements LimitsDB {
 		System.out.println("4. Mostrar " + sClase);
 		System.out.println("5. Volver al menu anterior\n");
 		boolean errorControl = true;
+
 		while (errorControl) {
 			try {
-				bOpcion = (byte) LibFrontend.valida("Indique una opcion", 1, 5, 3);
+				bOpcion = (byte) LibFrontend.valida("Indique una opcion: ", 1, 5, 3);
 				errorControl = false;
 			} catch (NumberFormatException ex) {
 				System.out.println(ex.getMessage());
@@ -106,41 +109,49 @@ public class DireccionView implements LimitsDB {
 		while (errorControl) {
 			try {
 				sPais = LibFrontend.leer("Indique pais en que se encuentra: ");
-					errorControl = false;
-				
+				errorControl = false;
+
 			} catch (Exception ex) {
 				System.out.println("Error: " + ex.getMessage());
 			}
 		}
+		controller.getDireccionCtrl().getPaisCtrl().add(new Pais(sPais));
+		Pais oPais = controller.getDireccionCtrl().getPaisCtrl().searchPais(new Pais(sPais));
 		errorControl = true;
 
 		while (errorControl) {
 			try {
 				sProvincia = LibFrontend.leer("Indique la provincia en que se encuentra: ");
-					errorControl = false;
-				
+				errorControl = false;
+
 			} catch (Exception ex) {
 				System.out.println("Error: " + ex.getMessage());
 			}
 		}
+		controller.getDireccionCtrl().getProvinciaCtrl().add(new Provincia(sProvincia, oPais));
+		Provincia oProvincia = controller.getDireccionCtrl().getProvinciaCtrl()
+				.searchProvincia(new Provincia(sProvincia), controller);
 		errorControl = true;
 
 		while (errorControl) {
 			try {
 				sCp = LibFrontend.leer("Indique el CP de la localidad en que se encuentra: ");
-					errorControl = false;
-				
+				errorControl = false;
+
 			} catch (Exception ex) {
 				System.out.println("Error: " + ex.getMessage());
 			}
 		}
+		controller.getDireccionCtrl().getLocalidadCtrl().add(new Localidad(sCp, oProvincia));
+		Localidad oLocalidad = controller.getDireccionCtrl().getLocalidadCtrl().searchLocalidadByPk(new Localidad(sCp),
+				controller);
 		errorControl = true;
 
 		while (errorControl) {
 			try {
 				sCalle = LibFrontend.leer("Introduzca la calle: ");
-					errorControl = false;
-				
+				errorControl = false;
+
 			} catch (Exception ex) {
 				System.out.println("Error: " + ex.getMessage());
 			}
@@ -150,8 +161,8 @@ public class DireccionView implements LimitsDB {
 		while (errorControl) {
 			try {
 				bNum = (byte) LibFrontend.valida("Introduzca el numero: ", 0, 300, 3);
-					errorControl = false;
-				
+				errorControl = false;
+
 			} catch (Exception ex) {
 				System.out.println("Error: " + ex.getMessage());
 			}
@@ -171,82 +182,36 @@ public class DireccionView implements LimitsDB {
 		while (errorControl) {
 			try {
 				bBloque = (byte) LibFrontend.valida("Introduzca el bloque (0 si no tiene bloque): ", 0, 10, 3);
-					errorControl = false;
-				
+				errorControl = false;
+
 			} catch (Exception ex) {
 				System.out.println("Error: " + ex.getMessage());
 			}
 		}
 		errorControl = true;
 
-		Pais oPais = new Pais(sPais);
-		Provincia oProvincia = new Provincia(sProvincia, oPais);
-		Localidad oLocalidad = new Localidad(sCp, oProvincia);
 		Direccion oDireccion = new Direccion(sCalle, bNum, bPortal, bBloque, oLocalidad);
-		if (controller.getDireccionCtrl().existeDireccion(oDireccion) == 0) {
+		if (controller.getDireccionCtrl().getDireccionCtrl().existeDireccion(oDireccion) == 0) {
 			System.out.println(oDireccion);
-			if (controller.getDireccionCtrl().addDireccion(oDireccion) > 0);
+			if (controller.getDireccionCtrl().getDireccionCtrl().add(oDireccion) > 0)
+				;
 			addDireccion = true;
 		}
 		return addDireccion;
 	}
 
 	public static boolean eliminar(GeneralController controller) {
-		boolean DelDireccion = false;
+		boolean errorControl = true, DelDireccion = false;
+		String sCalle = null;
+		byte bNum = 0;
 		int iRes = 0;
-		iRes = controller.getDireccionCtrl()
-				.removeDireccion(new Direccion(LibFrontend.leer("Introduzca el nombre de la calle a eliminar: "),
-						(byte) LibFrontend.valida("Introduzca el numero de la calle a eliminar: ", 0, 300, 3)));
-		if(iRes > 0) {
-			DelDireccion = true;
-		}
-		return DelDireccion;
-	}
 
-	public static boolean modificar(GeneralController controller) {
-		int iRes = 0;
-		boolean errorControl = true, ModDireccion = false;
-		String sCalle = null, sCp = null, sProvincia = null, sPais = null;
-		byte bNum = 0, bPortal = 0, bBloque = 0;
-		
-		while (errorControl) {
-			try {
-				sPais = LibFrontend.leer("Indique pais en que se encuentra: ");
-					errorControl = false;
-				
-			} catch (Exception ex) {
-				System.out.println("Error: " + ex.getMessage());
-			}
-		}
 		errorControl = true;
-
-		while (errorControl) {
-			try {
-				sProvincia = LibFrontend.leer("Indique la provincia en que se encuentra: ");
-					errorControl = false;
-				
-			} catch (Exception ex) {
-				System.out.println("Error: " + ex.getMessage());
-			}
-		}
-		errorControl = true;
-
-		while (errorControl) {
-			try {
-				sCp = LibFrontend.leer("Indique el CP de la localidad en que se encuentra: ");
-					errorControl = false;
-				
-			} catch (Exception ex) {
-				System.out.println("Error: " + ex.getMessage());
-			}
-		}
-		errorControl = true;
-
 		while (errorControl) {
 			try {
 				sCalle = LibFrontend.leer("Introduzca la calle: ");
-					errorControl = false;
-				
+				errorControl = false;
+
 			} catch (Exception ex) {
 				System.out.println("Error: " + ex.getMessage());
 			}
@@ -256,18 +221,32 @@ public class DireccionView implements LimitsDB {
 		while (errorControl) {
 			try {
 				bNum = (byte) LibFrontend.valida("Introduzca el numero: ", 0, 300, 3);
-					errorControl = false;
-				
-			} catch (Exception ex) {
-				System.out.println("Error: " + ex.getMessage());
-			}
-		}
-		errorControl = true;
-
-		while (errorControl) {
-			try {
-				bPortal = (byte) LibFrontend.valida("Introduzca el portal: ", 0, 10, 3);
 				errorControl = false;
+
+			} catch (Exception ex) {
+				System.out.println("Error: " + ex.getMessage());
+			}
+		}
+		Direccion oDir = new Direccion(sCalle, bNum);
+		if (controller.getDireccionCtrl().getDireccionCtrl().existeDireccion(oDir) > 0) {
+			iRes = controller.getDireccionCtrl().getDireccionCtrl().remove(oDir);
+			if (iRes > 0) {
+				DelDireccion = true;
+			}
+		}
+		return DelDireccion;
+	}
+
+	public static boolean modificar(GeneralController controller) {
+		boolean errorControl = true, ModDireccion = false;
+		String sCalle = null;
+		byte bNum = 0, bPortal = 0, bBloque = 0;
+
+		while (errorControl) {
+			try {
+				sCalle = LibFrontend.leer("Introduzca la calle: ");
+				errorControl = false;
+
 			} catch (Exception ex) {
 				System.out.println("Error: " + ex.getMessage());
 			}
@@ -276,29 +255,55 @@ public class DireccionView implements LimitsDB {
 
 		while (errorControl) {
 			try {
-				bBloque = (byte) LibFrontend.valida("Introduzca el bloque: ", 0, 10, 3);
-					errorControl = false;
-				
+				bNum = (byte) LibFrontend.valida("Introduzca el numero: ", 0, 300, 3);
+				errorControl = false;
+
 			} catch (Exception ex) {
 				System.out.println("Error: " + ex.getMessage());
 			}
 		}
 		errorControl = true;
-		
-		PaisController paisCtrl = new PaisController();
-		ProvinciaController provinciaCtrl = new ProvinciaController();
-		LocalidadController localidadCtrl = new LocalidadController();
-		Pais oPais = new Pais(sPais);
-		Provincia oProvincia = new Provincia(sProvincia, oPais);
-		Localidad oLocalidad = new Localidad(sCp, oProvincia);
-		Direccion oDireccion = new Direccion(sCalle, bNum, bPortal, bBloque, oLocalidad);
-		if (controller.direccionCtrl.getDireccionCtrl().update(oDireccion, localidadCtrl, provinciaCtrl, paisCtrl)  > 0) {
+
+		Direccion oDir = controller.getDireccionCtrl().getDireccionCtrl().search(new Direccion(sCalle, bNum),
+				controller);
+
+		if (oDir != null) {
+			while (errorControl) {
+				try {
+					bPortal = (byte) LibFrontend.valida("Actualice el portal: ", 0, 10, 3);
+					errorControl = false;
+				} catch (Exception ex) {
+					System.out.println("Error: " + ex.getMessage());
+				}
+			}
+			errorControl = true;
+
+			while (errorControl) {
+				try {
+					bBloque = (byte) LibFrontend.valida("Actualice el bloque: ", 0, 10, 3);
+					errorControl = false;
+
+				} catch (Exception ex) {
+					System.out.println("Error: " + ex.getMessage());
+				}
+			}
+		}
+		errorControl = true;
+
+		Direccion obDir = controller.getDireccionCtrl().getDireccionCtrl().search(new Direccion (sCalle, bNum), controller);
+		obDir.setbPortal(bPortal);
+		obDir.setbBloque(bBloque);
+		if (controller.direccionCtrl.getDireccionCtrl().update(obDir) > 0) {
 			ModDireccion = true;
 		}
 		return ModDireccion;
 	}
 
-	public static void mostrar(GeneralController controller) {
-		System.out.println(controller.direccionCtrl.getDireccionCtrl().mostrarDireccion());
+	public static boolean mostrar(GeneralController controller) {
+		boolean bMostrar = false;
+		if (controller.direccionCtrl.getDireccionCtrl().mostrarDireccion() != null) {
+			bMostrar = true;
+		}
+		return bMostrar;
 	}
 }

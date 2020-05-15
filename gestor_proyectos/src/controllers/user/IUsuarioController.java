@@ -12,6 +12,8 @@ public interface IUsuarioController {
 	public int remove(Usuario oUsuario);
 
 	public int update(Usuario oUsuario);
+	
+	public String mostrarUsuario();
 
 	// Queries
 	public int existeUsuario(Usuario oUsuario);
@@ -19,4 +21,8 @@ public interface IUsuarioController {
 	public List<Usuario> searchUsuario(Usuario oUsuario);
 
 	public List<Usuario> ususarioPorDireccion(Usuario oUsuario);
+
+	public Usuario search(Usuario oUs);
+
+
 }

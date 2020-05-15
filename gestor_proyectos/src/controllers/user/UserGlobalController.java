@@ -3,6 +3,7 @@ package controllers.user;
 import model.user.Aptitud;
 import model.user.Conocimiento;
 import model.user.Rol;
+import model.user.TipoUsuario;
 import model.user.Usuario;
 
 public class UserGlobalController {
@@ -10,12 +11,14 @@ public class UserGlobalController {
 	private ConocimientoController conCtrl;
 	private RolController rolCtrl;
 	private UsuarioController usCtrl;
+	private TipoUsuarioController tipoUsCtrl;
 
 	public UserGlobalController() {
 		aptCtrl = new AptitudController();
 		conCtrl = new ConocimientoController();
 		rolCtrl = new RolController();
 		usCtrl = new UsuarioController();
+		tipoUsCtrl = new TipoUsuarioController();
 	}
 
 	public AptitudController getAptCtrl() {
@@ -32,6 +35,10 @@ public class UserGlobalController {
 
 	public UsuarioController getUsCtrl() {
 		return usCtrl;
+	}
+	
+	public TipoUsuarioController getTipoUsCtrl() {
+		return tipoUsCtrl;
 	}
 
 	// Aptitud
@@ -92,5 +99,14 @@ public class UserGlobalController {
 
 	public int existeUsuario(Usuario oUsuario) {
 		return usCtrl.existeUsuario(oUsuario);
+	}
+	
+	// Tipo Usuario
+	public TipoUsuario search(TipoUsuario oTipo) {
+		return tipoUsCtrl.search(oTipo);
+	}
+
+	public int existeTipoUsuario(TipoUsuario oTipo) {
+		return tipoUsCtrl.existeTipoU(oTipo);
 	}
 }

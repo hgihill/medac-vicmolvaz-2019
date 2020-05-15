@@ -1,5 +1,9 @@
 package controllers.user;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import controllers.ConexionDB;
 import model.user.Aptitud;
 
@@ -15,6 +19,25 @@ public class AptitudController implements IAptitudController{
 	public int remove(Aptitud oApt) {
 		String sql = "DELETE FROM aptitud WHERE nombre_apt = (\"" + oApt.getsNombreApt() + "\")";
 		return ConexionDB.executeUpdate(sql);
+	}
+	
+	@Override
+	public String mostrarAptitud() {
+		String sResultado = "Mostrando listado de aptitudes:\n";
+		String sql = " SELECT * FROM aptitud";
+		Statement stm = null;
+		try {
+			stm = ConexionDB.getConnection().createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				String sApt = rs.getString(1);
+				sResultado += sApt + "\n";
+			}
+			stm.close();
+		} catch (SQLException ex) {
+
+		}
+		return sResultado;
 	}
 
 	@Override

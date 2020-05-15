@@ -74,7 +74,7 @@ public class PaisView implements LimitsDB {
 		}
 		Pais oPais = new Pais(sPais);
 		if (controller.direccionCtrl.getPaisCtrl().existePais(oPais) == 0) {
-			if(controller.getDireccionCtrl().addPais(oPais) > 0) {
+			if(controller.getDireccionCtrl().getPaisCtrl().add(oPais) > 0) {
 				addPais = true;
 			}
 		}

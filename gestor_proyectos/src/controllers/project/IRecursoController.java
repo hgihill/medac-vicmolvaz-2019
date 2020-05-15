@@ -1,6 +1,5 @@
 package controllers.project;
 
-import controllers.GeneralController;
 import model.project.Recurso;
 
 public interface IRecursoController {
@@ -17,6 +16,6 @@ public interface IRecursoController {
 	// Queries
 	public int existeRecurso(Recurso oRecurso);
 
-	Recurso searchRecurso(Recurso oObjeto, GeneralController c);
+	Recurso search(Recurso oObjeto);
 
 }

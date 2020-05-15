@@ -17,7 +17,7 @@ public class Pais implements IPais, LimitsDB {
 
 	public boolean setsNombre(String sNombre) {
 		boolean bExito = false;
-		if (sNombre != null && sNombre.length() > 0 && sNombre.length() < MAXCHARACTERS) {
+		if (sNombre != null && sNombre.length() > MINGENERICO && sNombre.length() <= LIMITGENERICO) {
 			this.sNombre = sNombre;
 			bExito = true;
 		}

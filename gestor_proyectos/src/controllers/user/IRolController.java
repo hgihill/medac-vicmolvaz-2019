@@ -10,7 +10,11 @@ public interface IRolController {
 	public int remove(Rol oRol);
 
 	public int update(Rol oRol);
+	
+	public String mostrarRol();
 
 	//Queries
 	public int existeRol(Rol oRol);
+
+	
 }

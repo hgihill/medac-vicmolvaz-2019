@@ -46,7 +46,7 @@ public class Usuario implements IUsuario, LimitsDB {
 
 	private boolean setsDniCif(String sDniCif) {
 		boolean bExito = false;
-		if (sDniCif != null && sDniCif.length() == 9) {
+		if (sDniCif != null && sDniCif.length() == LIMITDNI) {
 			this.sDniCif = sDniCif;
 			bExito = true;
 		}
@@ -61,7 +61,7 @@ public class Usuario implements IUsuario, LimitsDB {
 	@Override
 	public boolean setsNombre(String sNombre) {
 		boolean bExito = false;
-		if (sNombre != null && sNombre.length() > 0 && sNombre.length() < MAXCHARACTERS) {
+		if (sNombre != null && sNombre.length() > MINGENERICO && sNombre.length() <= LIMITGENERICO) {
 			this.sNombre = sNombre;
 			bExito = true;
 		}
@@ -76,7 +76,7 @@ public class Usuario implements IUsuario, LimitsDB {
 	@Override
 	public boolean setsMail(String sMail) {
 		boolean bExito = false;
-		if (sMail != null && sMail.length() > 0 && sMail.length() < MAXCHARACTERS) {
+		if (sMail != null && sMail.length() > MINGENERICO && sMail.length() < LIMITGENERICO) {
 			this.sMail = sMail;
 			bExito = true;
 		}
@@ -91,7 +91,7 @@ public class Usuario implements IUsuario, LimitsDB {
 	@Override
 	public boolean setsTelefono(String sTelefono) {
 		boolean bExito = false;
-		if (sTelefono != null && sTelefono.length() == 9) {
+		if (sTelefono != null && sTelefono.length() == LIMITPHONE) {
 			this.sTelefono = sTelefono;
 			bExito = true;
 		}
@@ -106,7 +106,7 @@ public class Usuario implements IUsuario, LimitsDB {
 	@Override
 	public boolean setsContrasena(String sContrasena) {
 		boolean bExito = false;
-		if (sContrasena != null && sContrasena.length() >= 8 && sContrasena.length() <= 20) {
+		if (sContrasena != null && sContrasena.length() >= MINCHARPASSWORD && sContrasena.length() <= MAXCHARPASSWORD) {
 			this.sContrasena = sContrasena;
 			bExito = true;
 		}

@@ -93,9 +93,9 @@ public class ProvinciaView implements LimitsDB {
 
 		Pais oPais = new Pais(sPais);
 		Provincia oProvincia = new Provincia(sProvincia, oPais);
-		if (controller.getDireccionCtrl().existeProvincia(oProvincia) == 0) {
+		if (controller.getDireccionCtrl().getProvinciaCtrl().existeProvincia(oProvincia) == 0) {
 			System.out.println(oProvincia);
-			if (controller.getDireccionCtrl().addProvincia(oProvincia) > 0);
+			if (controller.getDireccionCtrl().getProvinciaCtrl().add(oProvincia) > 0);
 			addProvincia = true;
 		}
 		return addProvincia;

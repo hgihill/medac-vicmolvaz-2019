@@ -15,9 +15,11 @@ public class PaisController implements IPaisController {
 	@Override
 	public int add(Pais oObject) {
 		int iRes = 0;
-		if (oObject.checkPais()) {
-			String sql = "INSERT INTO pais VALUES (\"" + oObject.getsNombre() + "\")";
-			iRes = ConexionDB.executeUpdate(sql);
+		if (existePais(oObject) == 0) {
+			if (oObject.checkPais()) {
+				String sql = "INSERT INTO pais VALUES (\"" + oObject.getsNombre() + "\")";
+				iRes = ConexionDB.executeUpdate(sql);
+			}
 		}
 		return iRes;
 	}
@@ -57,7 +59,7 @@ public class PaisController implements IPaisController {
 	public Pais searchPais(Pais oPais) {
 		Pais Pais = null;
 		if (existePais(oPais) > 0) {
-			String sql = " SELECT * FROM pais WHERE nombre_pais = (\"" + oPais.getsNombre() + "\")";
+			String sql = " SELECT * FROM pais WHERE nombre_pais = \"" + oPais.getsNombre() + "\"";
 			Statement stm = null;
 			try {
 				stm = ConexionDB.getConnection().createStatement();

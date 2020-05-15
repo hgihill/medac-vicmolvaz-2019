@@ -37,7 +37,7 @@ public class Aporte implements IAporte, LimitsDB {
 	@Override
 	public boolean setiImporte(int iImporte) {
 		boolean bExito = false;
-		if (iImporte >= 0 && iImporte < LIMITINT) {
+		if (iImporte >= MINAPORTE && iImporte <= MAXAPORTE) {
 			this.iImporte = iImporte;
 			bExito = true;
 		}

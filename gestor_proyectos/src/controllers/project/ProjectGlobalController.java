@@ -14,6 +14,8 @@ public class ProjectGlobalController {
 	private InventarioController invCtrl;
 	private ProyectoController proCtrl;
 	private RecursoController recCtrl;
+	private TipoRecursoController tRecCtrl;
+	private TipoFinanciacionController tFinCtrl;
 
 	public ProjectGlobalController() {
 		aptCtorl = new AporteController();
@@ -22,6 +24,8 @@ public class ProjectGlobalController {
 		invCtrl = new InventarioController();
 		proCtrl = new ProyectoController();
 		recCtrl = new RecursoController();
+		tRecCtrl = new TipoRecursoController();
+		tFinCtrl = new TipoFinanciacionController();
 	}
 
 	public AporteController getAptCtorl() {
@@ -47,7 +51,15 @@ public class ProjectGlobalController {
 	public RecursoController getRecCtrl() {
 		return recCtrl;
 	}
-	
+
+	public TipoRecursoController getTRecCtrl() {
+		return tRecCtrl;
+	}
+
+	public TipoFinanciacionController getTFinCtrl() {
+		return tFinCtrl;
+	}
+
 	// Aporte
 	public int addAporte(Aporte oAporte) {
 		return aptCtorl.add(oAporte);
@@ -97,6 +109,10 @@ public class ProjectGlobalController {
 
 	public int existeFinanciacion(Financiacion oFinanciacion) {
 		return finCtrl.existeFinanciacion(oFinanciacion);
+	}
+	
+	public String mostrarFinanciacion(Financiacion oFinanciacion) {
+		return finCtrl.mostrarFinanciacion();
 	}
 
 	// Inventario
