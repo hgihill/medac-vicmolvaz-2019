@@ -25,7 +25,7 @@ public class TipoRecursoController {
 		return lTipo;
 	}
 	
-	public int ExisteTipoU(TipoRecurso oTipo) {
+	public int ExisteTipoR(TipoRecurso oTipo) {
 		String sql = "SELECT COUNT(*) FROM tipo_recurso WHERE tipo_recurso = "+ oTipo.getbTipoRecurso();
 		return ConexionDB.executeCount(sql);
 	}

@@ -1,0 +1,216 @@
+ColWidths_connform.ListSessions<|||>1<|||>163,50,50,50,50,50,53
+ColsVisible_connform.ListSessions<|||>1<|||>0
+ColPositions_connform.ListSessions<|||>1<|||>0,1,2,3,4,5,6
+ColSort_connform.ListSessions<|||>1<|||>0,0
+MainWinLeft<|||>3<|||>-1313
+ColWidths_MainForm.ListDatabases<|||>1<|||>150,80,50,50,50,50,50,50,50,50,120
+ColsVisible_MainForm.ListDatabases<|||>1<|||>0,1,2,3,4,5,6,7,8,9,10
+ColPositions_MainForm.ListDatabases<|||>1<|||>0,1,2,3,4,5,6,7,8,9,10
+ColSort_MainForm.ListDatabases<|||>1<|||>0,0
+ColWidths_MainForm.ListVariables<|||>1<|||>160,200,428
+ColsVisible_MainForm.ListVariables<|||>1<|||>0,1,2
+ColPositions_MainForm.ListVariables<|||>1<|||>0,1,2
+ColSort_MainForm.ListVariables<|||>1<|||>0,0
+ColWidths_MainForm.ListStatus<|||>1<|||>160,428,100,100
+ColsVisible_MainForm.ListStatus<|||>1<|||>0,1,2,3
+ColPositions_MainForm.ListStatus<|||>1<|||>0,1,2,3
+ColSort_MainForm.ListStatus<|||>1<|||>0,0
+ColWidths_MainForm.ListProcesses<|||>1<|||>70,80,80,80,80,50,50,220
+ColsVisible_MainForm.ListProcesses<|||>1<|||>0,1,2,3,4,5,6,7
+ColPositions_MainForm.ListProcesses<|||>1<|||>0,1,2,3,4,5,6,7
+ColSort_MainForm.ListProcesses<|||>1<|||>0,1
+ColWidths_MainForm.ListCommandStats<|||>1<|||>120,100,100,100,368
+ColsVisible_MainForm.ListCommandStats<|||>1<|||>0,1,2,3,4
+ColPositions_MainForm.ListCommandStats<|||>1<|||>0,1,2,3,4
+ColSort_MainForm.ListCommandStats<|||>1<|||>1,1
+ColWidths_MainForm.ListTables<|||>1<|||>120,70,70,120,120,70,100,50,70,70,70,70,70,90,120,70,70,70,50
+ColsVisible_MainForm.ListTables<|||>1<|||>0,1,2,3,4,5,6,18
+ColPositions_MainForm.ListTables<|||>1<|||>0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18
+ColSort_MainForm.ListTables<|||>1<|||>0,0
+LastSessions<|||>1<|||>Proyecto_Programacion
+LastActiveSession<|||>1<|||>Proyecto_Programacion
+SessionManager_WindowLeft<|||>3<|||>207
+SessionManager_WindowTop<|||>3<|||>56
+SQL Attr Comment Foreground<|||>3<|||>8023636
+SQL Attr Comment Background<|||>3<|||>536870911
+SQL Attr Comment Style<|||>3<|||>2
+SQL Attr ConditionalComment Foreground<|||>3<|||>12108397
+SQL Attr ConditionalComment Background<|||>3<|||>536870911
+SQL Attr ConditionalComment Style<|||>3<|||>2
+SQL Attr ConsoleOutput Foreground<|||>3<|||>536870911
+SQL Attr ConsoleOutput Background<|||>3<|||>536870911
+SQL Attr ConsoleOutput Style<|||>3<|||>5
+SQL Attr DataType Foreground<|||>3<|||>15372999
+SQL Attr DataType Background<|||>3<|||>536870911
+SQL Attr DataType Style<|||>3<|||>1
+SQL Attr DefaultPackages Foreground<|||>3<|||>536870911
+SQL Attr DefaultPackages Background<|||>3<|||>536870911
+SQL Attr DefaultPackages Style<|||>3<|||>1
+SQL Attr DelimitedIdentifier Foreground<|||>3<|||>16757122
+SQL Attr DelimitedIdentifier Background<|||>3<|||>536870911
+SQL Attr DelimitedIdentifier Style<|||>3<|||>0
+SQL Attr Exception Foreground<|||>3<|||>536870911
+SQL Attr Exception Background<|||>3<|||>536870911
+SQL Attr Exception Style<|||>3<|||>2
+SQL Attr Function Foreground<|||>3<|||>14929603
+SQL Attr Function Background<|||>3<|||>536870911
+SQL Attr Function Style<|||>3<|||>1
+SQL Attr Identifier Foreground<|||>3<|||>16757122
+SQL Attr Identifier Background<|||>3<|||>536870911
+SQL Attr Identifier Style<|||>3<|||>0
+SQL Attr Key Foreground<|||>3<|||>14929603
+SQL Attr Key Background<|||>3<|||>536870911
+SQL Attr Key Style<|||>3<|||>1
+SQL Attr Number Foreground<|||>3<|||>7361535
+SQL Attr Number Background<|||>3<|||>536870911
+SQL Attr Number Style<|||>3<|||>0
+SQL Attr PLSQL-ReservedWord Foreground<|||>3<|||>536870911
+SQL Attr PLSQL-ReservedWord Background<|||>3<|||>536870911
+SQL Attr PLSQL-ReservedWord Style<|||>3<|||>1
+SQL Attr ProcName Foreground<|||>3<|||>536870911
+SQL Attr ProcName Background<|||>3<|||>536870911
+SQL Attr ProcName Style<|||>3<|||>0
+SQL Attr Space Foreground<|||>3<|||>536870911
+SQL Attr Space Background<|||>3<|||>536870911
+SQL Attr Space Style<|||>3<|||>0
+SQL Attr SQLPlus-Command Foreground<|||>3<|||>536870911
+SQL Attr SQLPlus-Command Background<|||>3<|||>536870911
+SQL Attr SQLPlus-Command Style<|||>3<|||>1
+SQL Attr String Foreground<|||>3<|||>8906947
+SQL Attr String Background<|||>3<|||>536870911
+SQL Attr String Style<|||>3<|||>0
+SQL Attr Symbol Foreground<|||>3<|||>12897152
+SQL Attr Symbol Background<|||>3<|||>536870911
+SQL Attr Symbol Style<|||>3<|||>0
+SQL Attr TableName Foreground<|||>3<|||>6911735
+SQL Attr TableName Background<|||>3<|||>536870911
+SQL Attr TableName Style<|||>3<|||>0
+SQL Attr Variable Foreground<|||>3<|||>7064575
+SQL Attr Variable Background<|||>3<|||>536870911
+SQL Attr Variable Style<|||>3<|||>0
+Theme<|||>1<|||>Windows10 Dark
+FieldColor_Numeric<|||>3<|||>16750469
+FieldColor_Real<|||>3<|||>13663613
+FieldColor_Text<|||>3<|||>7591283
+FieldColor_Binary<|||>3<|||>13203071
+FieldColor_Datetime<|||>3<|||>7566281
+FieldColor_Spatial<|||>3<|||>13553267
+FieldColor_Other<|||>3<|||>7586241
+FieldEditor_Set<|||>3<|||>1
+MainWinMaximized<|||>3<|||>0
+MainWinOnMonitor<|||>3<|||>1
+MemoEditorWidth<|||>3<|||>137
+MainWinTop<|||>3<|||>48
+MainWinWidth<|||>3<|||>993
+MainWinHeight<|||>3<|||>835
+ExportSQL_CreateDatabases<|||>3<|||>1
+ExportSQL_CreateTables<|||>3<|||>1
+ExportSQL_Filenames<|||>1<|||>C:\Users\PC\Documents\1º DAM\Programación\3er trimestre\BD_proyecto_programacion.sql<{{{><}}}>
+ColWidths_frmTableEditor.listColumns<|||>1<|||>70,131,154,90,96,98,126,117,130,140,100,100
+ColsVisible_frmTableEditor.listColumns<|||>1<|||>0,1,2,3,4,5,6,7,8,9,10,11
+ColPositions_frmTableEditor.listColumns<|||>1<|||>0,1,2,3,4,5,6,7,8,9,10,11
+ColSort_frmTableEditor.listColumns<|||>1<|||>-1,0
+ColWidths_frmTableEditor.treeIndexes<|||>1<|||>434,100,80
+ColsVisible_frmTableEditor.treeIndexes<|||>1<|||>0,1,2
+ColPositions_frmTableEditor.treeIndexes<|||>1<|||>0,1,2
+ColSort_frmTableEditor.treeIndexes<|||>1<|||>-1,0
+ColWidths_frmTableEditor.listForeignKeys<|||>1<|||>10,342,350,250,170,80
+ColsVisible_frmTableEditor.listForeignKeys<|||>1<|||>0,1,2,3,4,5
+ColPositions_frmTableEditor.listForeignKeys<|||>1<|||>0,1,2,3,4,5
+ColSort_frmTableEditor.listForeignKeys<|||>1<|||>-1,0
+DateTimeEditor_CursorPos_Type4<|||>3<|||>10
+StopOnErrorsInBatchMode<|||>3<|||>0
+dbtreewidth<|||>3<|||>251
+sqloutheight<|||>3<|||>267
+querymemoheight<|||>3<|||>37
+SQLFile0<|||>1<|||>C:\Users\PC\AppData\Roaming\HeidiSQL\Backups\query-tab-2020-05-06_14-29-26-715.sql
+SQLFile1<|||>1<|||>C:\Users\PC\AppData\Roaming\HeidiSQL\Backups\query-tab-2020-04-30_11-30-32-662.sql
+Servers\Proyecto_Programacion\SessionCreated<|||>1<|||>2020-04-14 17:32:06
+Servers\Proyecto_Programacion\Host<|||>1<|||>127.0.0.1
+Servers\Proyecto_Programacion\WindowsAuth<|||>3<|||>0
+Servers\Proyecto_Programacion\CleartextPluginEnabled<|||>3<|||>0
+Servers\Proyecto_Programacion\User<|||>1<|||>root
+Servers\Proyecto_Programacion\Password<|||>1<|||>3
+Servers\Proyecto_Programacion\LoginPrompt<|||>3<|||>0
+Servers\Proyecto_Programacion\Port<|||>1<|||>3306
+Servers\Proyecto_Programacion\NetType<|||>3<|||>0
+Servers\Proyecto_Programacion\Compressed<|||>3<|||>0
+Servers\Proyecto_Programacion\LocalTimeZone<|||>3<|||>0
+Servers\Proyecto_Programacion\QueryTimeout<|||>3<|||>30
+Servers\Proyecto_Programacion\KeepAlive<|||>3<|||>20
+Servers\Proyecto_Programacion\FullTableStatus<|||>3<|||>1
+Servers\Proyecto_Programacion\Databases<|||>1<|||>
+Servers\Proyecto_Programacion\Comment<|||>1<|||>
+Servers\Proyecto_Programacion\StartupScriptFilename<|||>1<|||>
+Servers\Proyecto_Programacion\TreeBackground<|||>3<|||>536870911
+Servers\Proyecto_Programacion\SSHtunnelHost<|||>1<|||>
+Servers\Proyecto_Programacion\SSHtunnelHostPort<|||>3<|||>22
+Servers\Proyecto_Programacion\SSHtunnelUser<|||>1<|||>
+Servers\Proyecto_Programacion\SSHtunnelPassword<|||>1<|||>2
+Servers\Proyecto_Programacion\SSHtunnelTimeout<|||>3<|||>4
+Servers\Proyecto_Programacion\SSHtunnelPrivateKey<|||>1<|||>
+Servers\Proyecto_Programacion\SSHtunnelPort<|||>3<|||>3307
+Servers\Proyecto_Programacion\SSL_Active<|||>3<|||>0
+Servers\Proyecto_Programacion\SSL_Key<|||>1<|||>
+Servers\Proyecto_Programacion\SSL_Cert<|||>1<|||>
+Servers\Proyecto_Programacion\SSL_CA<|||>1<|||>
+Servers\Proyecto_Programacion\SSL_Cipher<|||>1<|||>
+Servers\Proyecto_Programacion\RefusedCount<|||>3<|||>5
+Servers\Proyecto_Programacion\ServerVersionFull<|||>1<|||>10.4.12-MariaDB - mariadb.org binary distribution
+Servers\Proyecto_Programacion\ConnectCount<|||>3<|||>23
+Servers\Proyecto_Programacion\ServerVersion<|||>3<|||>100412
+Servers\Proyecto_Programacion\LastConnect<|||>1<|||>2020-05-20 08:18:38
+Servers\Proyecto_Programacion\lastUsedDB<|||>1<|||>victor_proyecto_prog
+Servers\Proyecto_Programacion\QueryHistory\1<|||>1<|||>2020-04-30 12:24:06|victor_proyecto_prog|0| SELECT nombre_us, calle FROM usuario WHERE DNI = '12345678N';
+Servers\Proyecto_Programacion\QueryHistory\2<|||>1<|||>2020-04-30 13:45:48|victor_proyecto_prog|0| SELECT nombre_us, calle FROM usuario WHERE dni_cif = '12345678N';
+Servers\Proyecto_Programacion\QueryHistory\4<|||>1<|||>2020-04-30 19:00:08|victor_proyecto_prog|0| SELECT nombre_apt, FROM aptitud;
+Servers\Proyecto_Programacion\QueryHistory\3<|||>1<|||>2020-04-30 19:00:35|victor_proyecto_prog|0| SELECT nombre_apt FROM aptitud;
+Servers\Proyecto_Programacion\QueryHistory\6<|||>1<|||>2020-04-30 19:16:18|victor_proyecto_prog|0| INSERT INTO conocimiento VALUES nombre_con;
+Servers\Proyecto_Programacion\QueryHistory\5<|||>1<|||>2020-04-30 19:16:46|victor_proyecto_prog|0| INSERT INTO conocimiento VALUES (nombre_con);
+Servers\Proyecto_Programacion\QueryHistory\7<|||>1<|||>2020-05-07 22:27:38|victor_proyecto_prog|16|UPDATE localidad<{{{><}}}>SET nombre_loc = 'San Fernando'<{{{><}}}>WHERE cp = '11100';
+Servers\Proyecto_Programacion\QueryHistory\8<|||>1<|||>2020-05-07 22:27:58|victor_proyecto_prog|31|UPDATE localidad<{{{><}}}>SET nombre_loc = 'Chiclana'<{{{><}}}>WHERE cp = '11100';
+Servers\Proyecto_Programacion\QueryHistory\10<|||>1<|||>2020-05-07 23:18:33|victor_proyecto_prog|0|SELECT localidad.nombre_loc, provincia.nombre_prov, pais.nombre_pais<{{{><}}}>FROM localidad, provincia, pais <{{{><}}}>WHERE localidad.cp= '11100';
+Servers\Proyecto_Programacion\QueryHistory\11<|||>1<|||>2020-05-07 23:19:58|victor_proyecto_prog|0|SELECT localidad.nombre_loc, provincia.nombre_prov, pais.nombre_pais<{{{><}}}>FROM localidad, provincia, pais <{{{><}}}>WHERE localidad.nombre_prov=provincia.nombre_prov AND provincia.nombre_pais=pais.nombre_pais AND localidad.cp= '11100';
+Servers\Proyecto_Programacion\QueryHistory\12<|||>1<|||>2020-05-08 00:01:35|victor_proyecto_prog|0| SELECT * FROM provincia WHERE nombre_provincia = Sevilla;
+Servers\Proyecto_Programacion\QueryHistory\9<|||>1<|||>2020-05-08 00:01:49|victor_proyecto_prog|0| SELECT * FROM provincia WHERE nombre_provincia = 'Sevilla';
+Servers\Proyecto_Programacion\QueryHistory\13<|||>1<|||>2020-05-08 00:01:56|victor_proyecto_prog|0| SELECT * FROM provincia WHERE nombre_provincia = 'caidz';
+Servers\Proyecto_Programacion\QueryHistory\14<|||>1<|||>2020-05-08 00:02:14|victor_proyecto_prog|0| SELECT * FROM provincia WHERE nombre_prov = 'Sevilla';
+Servers\Proyecto_Programacion\QueryHistory\15<|||>1<|||>2020-05-08 00:31:49|victor_proyecto_prog|0|SELECT LOCALIDAD.cp, localidad.nombre_loc, localidad.nombre_prov <{{{><}}}>FROM localidad, provincia, pais<{{{><}}}>WHERE localidad.nombre_prov=provincia.nombre_prov AND provincia.nombre_pais=pais.nombre_pais AND localidad.cp='11100'
+Servers\Proyecto_Programacion\QueryHistory\16<|||>1<|||>2020-05-08 00:39:10|victor_proyecto_prog|0|SELECT LOCALIDAD.cp, localidad.nombre_loc, localidad.nombre_prov FROM localidad, provincia, paisWHERE localidad.nombre_prov=provincia.nombre_prov AND provincia.nombre_pais=pais.nombre_pais AND localidad.cp='11100'
+Servers\Proyecto_Programacion\QueryHistory\17<|||>1<|||>2020-05-08 00:43:40|victor_proyecto_prog|0|SELECT * FROM PROVUNCUA WHERE NOMBRE_PROV = CADIZ
+Servers\Proyecto_Programacion\QueryHistory\18<|||>1<|||>2020-05-08 00:43:51|victor_proyecto_prog|0|SELECT * FROM PROVUNCUA WHERE NOMBRE_PROV = 'CADIZ'
+Servers\Proyecto_Programacion\QueryHistory\19<|||>1<|||>2020-05-08 00:44:05|victor_proyecto_prog|0|SELECT * FROM PROVINCIA WHERE NOMBRE_PROV = 'CADIZ'
+Servers\Proyecto_Programacion\QueryHistory\20<|||>1<|||>2020-05-08 19:55:45|victor_proyecto_prog|0|SELECT * FROM recurso; 
+Servers\Proyecto_Programacion\QueryHistory\22<|||>1<|||>2020-05-08 19:57:09|victor_proyecto_prog|0|SELECT catidad_rec FROM recurso WHERE nombre_rec  'mesas'; 
+Servers\Proyecto_Programacion\QueryHistory\23<|||>1<|||>2020-05-08 19:57:28|victor_proyecto_prog|0|SELECT catidad_rec FROM recurso WHERE nombre_rec like 'mesas'; 
+Servers\Proyecto_Programacion\QueryHistory\24<|||>1<|||>2020-05-08 19:57:48|victor_proyecto_prog|0|SELECT catidad_rec FROM recurso WHERE nombre_rec = 'mesas'; 
+Servers\Proyecto_Programacion\QueryHistory\21<|||>1<|||>2020-05-08 19:58:05|victor_proyecto_prog|15|SELECT cantidad_rec FROM recurso WHERE nombre_rec = 'mesas'; 
+Servers\Proyecto_Programacion\QueryHistory\25<|||>1<|||>2020-05-08 19:58:17|victor_proyecto_prog|0|DELETE cantidad_rec FROM recurso WHERE nombre_rec = 'mesas'; 
+Servers\Proyecto_Programacion\QueryHistory\26<|||>1<|||>2020-05-08 19:59:00|victor_proyecto_prog|281|DELETE  FROM recurso WHERE nombre_rec = 'mesas'; 
+Servers\Proyecto_Programacion\QueryHistory\27<|||>1<|||>2020-05-12 11:07:14|victor_proyecto_prog|0|UPDATE localidad SET cp = "11100", nombre_loc = "San Fernando", provincia = "cadiz" WHERE cp = "11100";
+Servers\Proyecto_Programacion\QueryHistory\28<|||>1<|||>2020-05-12 11:07:50|victor_proyecto_prog|0|UPDATE localidad SET cp = '11100', nombre_loc = 'San Fernando', provincia = 'cadiz' WHERE cp = '11100';
+Servers\Proyecto_Programacion\QueryHistory\29<|||>1<|||>2020-05-12 11:09:19|victor_proyecto_prog|15|UPDATE localidad SET cp = '11100', nombre_loc = 'San Fernando', nombre_prov = 'cadiz' WHERE cp = '11100';
+Servers\Proyecto_Programacion\QueryHistory\31<|||>1<|||>2020-05-12 11:36:09|victor_proyecto_prog|15|DELETE FROM direccion WHERE calle LIKE 'Luz' AND numero LIKE 26;
+Servers\Proyecto_Programacion\QueryHistory\30<|||>1<|||>2020-05-12 14:12:58|victor_proyecto_prog|0|INSERT INTO aporte VALUES dni/nif= '13246578N', cuenta = 'ES2100000000000000000000', importe = 150
+Servers\Proyecto_Programacion\QueryHistory\32<|||>1<|||>2020-05-12 14:14:41|victor_proyecto_prog|0|INSERT INTO aporte VALUES ('13246578N', 'ES2100000000000000000000', 150)
+Servers\Proyecto_Programacion\QueryHistory\33<|||>1<|||>2020-05-12 14:14:49|victor_proyecto_prog|0|INSERT INTO aporte VALUES ('13246578N', 'ES2100000000000000000000', 150);
+Servers\Proyecto_Programacion\QueryHistory\34<|||>1<|||>2020-05-12 14:15:37|victor_proyecto_prog|0|INSERT INTO aporte VALUES ('12346578N', 'ES2100000000000000000000', 150);
+Servers\Proyecto_Programacion\QueryHistory\35<|||>1<|||>2020-05-12 14:18:58|victor_proyecto_prog|0|INSERT INTO aporte VALUES SET dni_cif = '12346578N', cuenta = 'ES2100000000000000000000', importe = 150;
+Servers\Proyecto_Programacion\QueryHistory\36<|||>1<|||>2020-05-12 14:23:13|victor_proyecto_prog|0|INSERT INTO aporte VALUES  (dni_cif = '12346578N', cuenta = 'ES2100000000000000000000', importe = 150);
+Servers\Proyecto_Programacion\QueryHistory\37<|||>1<|||>2020-05-12 14:24:32|victor_proyecto_prog|0|INSERT INTO aporte VALUES  ( '12346578N', 'ES2100000000000000000000', 150);
+Servers\Proyecto_Programacion\QueryHistory\38<|||>1<|||>2020-05-12 17:17:14|victor_proyecto_prog|15|INSERT INTO inventario VALUES  (4, 'mesa', 6);
+Servers\Proyecto_Programacion\QueryHistory\39<|||>1<|||>2020-05-12 18:47:15|victor_proyecto_prog|31|INSERT INTO recurso VALUES  ('folios', 100, 3);
+Servers\Proyecto_Programacion\QueryHistory\40<|||>1<|||>2020-05-12 18:48:03|victor_proyecto_prog|0|DELETE FRO Mrecurso WHERE nombre rec = 'folios';
+Servers\Proyecto_Programacion\QueryHistory\41<|||>1<|||>2020-05-12 18:48:21|victor_proyecto_prog|0|DELETE FRO Mrecurso WHERE nombre_rec = 'folios';
+Servers\Proyecto_Programacion\QueryHistory\42<|||>1<|||>2020-05-12 18:48:27|victor_proyecto_prog|0|DELETE FRO Mrecurso WHERE nombre_rec LIKE 'folios';
+Servers\Proyecto_Programacion\QueryHistory\43<|||>1<|||>2020-05-12 18:48:51|victor_proyecto_prog|0|DELETE FROM recurso WHERE nombre_rec LIKE 'folios';
+Servers\Proyecto_Programacion\QueryHistory\44<|||>1<|||>2020-05-12 22:21:30|victor_proyecto_prog|0|UPDATE recurso SET cantidad_rec = 3,tipo_rec = 3 WHERE nombre = 'silla';
+Servers\Proyecto_Programacion\QueryHistory\45<|||>1<|||>2020-05-12 22:22:20|victor_proyecto_prog|16|UPDATE recurso SET cantidad_rec = 3, tipo_rec = 3 WHERE nombre_rec = 'silla';
+Servers\Proyecto_Programacion\QueryHistory\46<|||>1<|||>2020-05-13 17:30:36|victor_proyecto_prog|0|DELETE FROM direccion WHERE calle LIKE 'Milano Rojo' AND numero LIKE 37
+Servers\Proyecto_Programacion\QueryHistory\47<|||>1<|||>2020-05-13 19:18:01|victor_proyecto_prog|0|SELECT * FROM localdiad WHERE cp = '40000';
+Servers\Proyecto_Programacion\QueryHistory\49<|||>1<|||>2020-05-13 19:22:30|victor_proyecto_prog|0|SELECT * FROM localidad WHERE cp = '40000';
+Servers\Proyecto_Programacion\QueryHistory\48<|||>1<|||>2020-05-13 19:23:17|victor_proyecto_prog|0|SELECT COUNT(*) FROM localidad WHERE cp = '40000';
+Servers\Proyecto_Programacion\QueryHistory\50<|||>1<|||>2020-05-14 23:38:04|victor_proyecto_prog|0|DELETE FROM aporte WHERE dni_cif = '98765432F' AND cuenta = 'ES2100000000000000000000';
+Servers\Proyecto_Programacion\victor_proyecto_prog|recurso\Sort<|||>1<|||>1_nombre_rec|
+Servers\Proyecto_Programacion\victor_proyecto_prog|usuario\Sort<|||>1<|||>0_tipo_us|
+Servers\Unnamed\lastUsedDB<|||>1<|||>test
