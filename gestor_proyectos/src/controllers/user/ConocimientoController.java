@@ -39,6 +39,25 @@ public class ConocimientoController implements IConocimientoController {
 		}
 		return sResultado;
 	}
+	
+	@Override
+	public Conocimiento search(Conocimiento oCon) {
+		Conocimiento lCon = null;
+		String sql = "SELECT * FROM conocimiento where nombre_con = \"" + oCon.getsNombre() + "\"";
+		Statement stm = null;
+		try {
+			stm = ConexionDB.getConnection().createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				String sNombre = rs.getString(1);
+				
+				lCon = new Conocimiento(sNombre);
+			}
+		} catch (SQLException ex) {
+			lCon = null;
+		}
+		return lCon;
+	}
 
 	@Override
 	public int existeConocimiento(Conocimiento oCon) {

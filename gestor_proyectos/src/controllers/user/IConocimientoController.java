@@ -12,7 +12,8 @@ public interface IConocimientoController {
 	public String mostrarConocimiento();
 
 	//Queries
-	public int existeConocimiento(Conocimiento oCon);
+	public Conocimiento search(Conocimiento oCon);
 
+	public int existeConocimiento(Conocimiento oCon);
 	
 }

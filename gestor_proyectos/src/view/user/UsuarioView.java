@@ -59,12 +59,18 @@ public class UsuarioView implements LimitsDB {
 			AptitudView.subMenuAptitud(controller);
 			break;
 		case 6:
-			ConocimientoView.subMenuConocimineto(controller);
+			Apt_X_User_View.subMenuAptXUser(controller);
 			break;
 		case 7:
-			RolView.subMenuRol(controller);
+			ConocimientoView.subMenuConocimineto(controller);
 			break;
 		case 8:
+			Con_X_User_View.subMenuConXUser(controller);
+			break;	
+		case 9:
+			RolView.subMenuRol(controller);
+			break;
+		case 10:
 			System.out.println("Volviendo al menu anterior...");
 			break;
 		default:
@@ -218,7 +224,6 @@ public class UsuarioView implements LimitsDB {
 			}
 		}
 		Usuario oUs = controller.getUsuarioCtrl().getUsCtrl().search(new Usuario(sDniCif));
-
 		if (controller.getUsuarioCtrl().getUsCtrl().existeUsuario(oUs) > 0) {
 			iRes = controller.getUsuarioCtrl().getUsCtrl().remove(oUs);
 			if (iRes > 0) {

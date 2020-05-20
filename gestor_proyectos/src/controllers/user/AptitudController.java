@@ -39,6 +39,25 @@ public class AptitudController implements IAptitudController{
 		}
 		return sResultado;
 	}
+	
+	@Override
+	public Aptitud search(Aptitud oApt) {
+		Aptitud lApt = null;
+		String sql = "SELECT * FROM aptitud where nombre_apt = \"" + oApt.getsNombreApt() + "\"";
+		Statement stm = null;
+		try {
+			stm = ConexionDB.getConnection().createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				String sNombre = rs.getString(1);
+				
+				lApt = new Aptitud(sNombre);
+			}
+		} catch (SQLException ex) {
+			lApt = null;
+		}
+		return lApt;
+	}
 
 	@Override
 	public int ExisteAptitud(Aptitud oApt) {

@@ -12,7 +12,11 @@ public interface IAptitudController {
 	public String mostrarAptitud();
 
 	// Queries
+	public Aptitud search(Aptitud oApt);
+	
 	public int ExisteAptitud(Aptitud oApt);
+
+	
 
 	
 }

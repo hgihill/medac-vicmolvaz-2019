@@ -1,6 +1,8 @@
 package controllers.user;
 
+import model.user.Apt_X_User;
 import model.user.Aptitud;
+import model.user.Con_X_User;
 import model.user.Conocimiento;
 import model.user.Rol;
 import model.user.TipoUsuario;
@@ -12,6 +14,8 @@ public class UserGlobalController {
 	private RolController rolCtrl;
 	private UsuarioController usCtrl;
 	private TipoUsuarioController tipoUsCtrl;
+	private Apt_X_User_Controller aptXUsCtrl;
+	private Con_X_User_Controller conXUsCtrl;
 
 	public UserGlobalController() {
 		aptCtrl = new AptitudController();
@@ -19,6 +23,8 @@ public class UserGlobalController {
 		rolCtrl = new RolController();
 		usCtrl = new UsuarioController();
 		tipoUsCtrl = new TipoUsuarioController();
+		aptXUsCtrl = new Apt_X_User_Controller();
+		conXUsCtrl = new Con_X_User_Controller();
 	}
 
 	public AptitudController getAptCtrl() {
@@ -39,6 +45,14 @@ public class UserGlobalController {
 	
 	public TipoUsuarioController getTipoUsCtrl() {
 		return tipoUsCtrl;
+	}
+	
+	public Apt_X_User_Controller getAptXUsCtrl() {
+		return aptXUsCtrl;
+	}
+
+	public Con_X_User_Controller getConXUsCtrl() {
+		return conXUsCtrl;
 	}
 
 	// Aptitud
@@ -109,4 +123,40 @@ public class UserGlobalController {
 	public int existeTipoUsuario(TipoUsuario oTipo) {
 		return tipoUsCtrl.existeTipoU(oTipo);
 	}
+	
+	// Aptitud x Usuario
+	public int addApt_X_User(Apt_X_User oAptXUs) {
+		return aptXUsCtrl.add(oAptXUs);
+	}
+
+	public int removeApt_X_User(Apt_X_User oAptXUs) {
+		return aptXUsCtrl.remove(oAptXUs);
+	}
+
+	public String mostrarAptitudDeUsuario() {
+		return aptXUsCtrl.mostrarAptitudDeUsuario();
+	}
+
+	public int existeAptitudDeUsuario(Apt_X_User oAptXUs) {
+		return aptXUsCtrl.ExisteAptitudDeUsuario(oAptXUs);
+	}
+	
+	// Concocimiento x Usuario
+	public int addCon_X_User(Con_X_User oConXUs) {
+		return conXUsCtrl.add(oConXUs);
+	}
+
+	public int removeCon_X_User(Con_X_User oConXUs) {
+		return conXUsCtrl.remove(oConXUs);
+	}
+
+	public String mostrarConcocimientoDeUsuario() {
+		return conXUsCtrl.mostrarConocimientoDeUsuario();
+	}
+
+	public int existeConocimientoDeUsuario(Con_X_User oConXUs) {
+		return conXUsCtrl.existeConocimientoDeUsuario(oConXUs);
+	}
 }
+
+
